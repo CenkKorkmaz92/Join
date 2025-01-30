@@ -1,0 +1,216 @@
+@keyframes slideIn {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+body {
+    overflow: hidden;
+}
+
+.scroll-enabled {
+    overflow: auto;
+}
+
+/**
+ * Sign-Up Screen
+ */
+.sign-up-main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/**
+ * Navbar
+ */
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 1440px;
+    padding-top: 67px;
+}
+
+.navbar-left {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
+/**
+ * Sign-Up Container
+ */
+.sign-up-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 652px;
+    height: auto;
+    gap: 32px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 1s;
+}
+
+.sign-up-container .headline {
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 73.2px;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+}
+
+.sign-up-container .headline::after {
+    content: "";
+    display: block;
+    width: 150px;
+    height: 3px;
+    background: #29ABE2;
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    transform: translateX(-50%);
+}
+
+/**
+ * Input Fields
+ */
+.input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0px 15px;
+    width: 100%;
+    max-width: 422px;
+    height: 48px;
+    background-color: #fff;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 1.2s;
+}
+
+.input-container input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 16px;
+    padding: 8px;
+    background: transparent;
+}
+
+.input-container .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10px;
+}
+
+.input-container .icon img {
+    width: 20px;
+    height: 20px;
+}
+
+/**
+ * Checkbox Styling
+ */
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #A8A8A8;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 1.4s;
+}
+
+.form-check input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.form-check label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-check .privacy-policy {
+    color: #29ABE2;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/**
+ * Sign-Up Button
+ */
+.sign-in-btn-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 1.6s;
+}
+
+.sign-in-btn {
+    width: 110px;
+    height: 48px;
+    font-size: 21px;
+    font-weight: 700;
+    border-radius: 8px;
+    border: solid 1px #2A3647;
+    color: white;
+    background-color: #2A3647;
+    transition: all 0.3s ease;
+}
+
+.sign-in-btn:hover {
+    background-color: #29ABE2;
+    border-color: #29ABE2;
+}
+
+/**
+ * Legal Section
+ */
+.legal-btn-container {
+    display: flex;
+    width: 246px;
+    height: 35px;
+    gap: 8px;
+    padding-bottom: 32px;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 1.8s;
+}
+
+.legal-btn {
+    width: 121px;
+    height: 35px;
+    padding: 8px;
+    border: none;
+    background: none;
+    outline: none;
+    color: #A8A8A8;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.legal-btn:hover {
+    color: #29ABE2;
+}

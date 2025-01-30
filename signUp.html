@@ -1,11 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join - Sign up</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon/join_logo_dark.svg">
+    <link rel="stylesheet" href="./css/signUp.css">
+    <link rel="stylesheet" href="./css/main.css">
 </head>
+
 <body>
-    
+    <section class="sign-up-main">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <img class="navbar-left main-logo" src="./assets/img/logos/join_logo_dark.svg" alt="Join Logo">
+        </nav>
+
+        <!-- Sign-Up Form -->
+        <div class="sign-up-container">
+            <h1 class="headline">Sign up</h1>
+
+            <div class="input-container">
+                <input type="text" placeholder="Name">
+                <span class="icon">
+                    <img src="./assets/img/icons/signUp/avatar_icon.svg" alt="Avatar Icon">
+                </span>
+            </div>
+
+            <div class="input-container">
+                <input type="email" placeholder="Email">
+                <span class="icon">
+                    <img src="./assets/img/icons/login/mail_icon.svg" alt="Email Icon">
+                </span>
+            </div>
+
+            <div class="input-container">
+                <input type="password" placeholder="Password">
+                <span class="icon">
+                    <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
+                </span>
+            </div>
+
+            <div class="input-container">
+                <input type="password" placeholder="Confirm Password">
+                <span class="icon">
+                    <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
+                </span>
+            </div>
+
+            <!-- Terms and Conditions -->
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="termsCheckbox">
+                <label class="form-check-label" for="termsCheckbox">
+                    I accept the <span class="privacy-policy">Privacy Policy</span>
+                </label>
+            </div>
+
+            <!-- Sign-Up Button -->
+            <div class="sign-in-btn-container">
+                <button class="sign-in-btn dark-btn">Sign up</button>
+            </div>
+        </div>
+
+        <!-- Legal Information -->
+        <div class="legal-btn-container">
+            <button class="legal-btn">Privacy Policy</button>
+            <button class="legal-btn">Legal Notice</button>
+        </div>
+    </section>
+
+    <script src="./js/main.js"></script>
+    <script src="./js/signUp.js"></script>
 </body>
+
 </html>
