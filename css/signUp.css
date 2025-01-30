@@ -223,6 +223,21 @@ body {
     border-color: #29ABE2;
 }
 
+.form-check-label {
+    pointer-events: none; /* Prevents clicking the label from toggling the checkbox */
+}
+
+.privacy-policy {
+    pointer-events: auto; /* Allows clicking on the privacy policy link */
+    color: #29ABE2;
+    cursor: pointer;
+}
+
+.privacy-policy:hover {
+    scale: 1.1;
+}
+
+
 /**
  * Legal Section
  */

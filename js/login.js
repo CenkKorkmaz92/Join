@@ -1,12 +1,7 @@
-function redirectToSignUp() {
-    window.location.href = "signUp.html"; // Redirects to the sign-up page in the same tab
+/**
+ * Redirects the user to the specified page.
+ * @param {string} page - The name of the HTML page to navigate to.
+ */
+function redirectTo(page) {
+    window.location.href = page;
 }
-
-function redirectToPrivatePolicyExternal() {
-    window.location.href = "privatePolicyExternal.html"; // Redirects to the sign-up page in the same tab
-}
-
-function redirectToLegalNoticeExternal() {
-    window.location.href = "legalNoticeExternal.html"; // Redirects to the sign-up page in the same tab
-}
-

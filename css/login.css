@@ -260,20 +260,21 @@ body {
 }
 
 /**
- * Legal Section
+ * Legal Section (Matches Sign-Up Page)
  */
-.login-main .legal-btn-container {
-    display: flex;
-    width: 246px;
-    height: 35px;
-    gap: 8px;
-    padding-bottom: 32px;
-    opacity: 0;
+ .legal-btn-container {
+    padding-bottom: 30px;
     animation: slideIn 0.8s ease-out forwards;
-    animation-delay: 3s;
+    animation-delay: 1.2s;
+    opacity: 0;
+    display: flex;
+    gap: 10px;
 }
 
-.login-main .legal-btn {
+/**
+ * Legal Buttons (Matches Sign-Up Page)
+ */
+.legal-btn {
     width: 121px;
     height: 35px;
     padding: 8px;
@@ -281,12 +282,8 @@ body {
     background: none;
     outline: none;
     color: #A8A8A8;
-    opacity: 0;
-    animation: slideIn 0.8s ease-out forwards;
-    animation-delay: 3s;
-}
-
-.legal-btn {
+    cursor: pointer;
+    font-weight: bold;
     text-decoration: none;
 }
 
