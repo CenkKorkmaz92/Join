@@ -78,6 +78,21 @@ body {
     animation-delay: 0.5s;
 }
 
+.sign-up-container .back-arrow {
+    position: absolute;
+    top: 64px;
+    left: 114px;
+    width: 32px;
+    height: 32px;
+}
+
+.back-arrow:hover {
+    transform: scale(1.05);
+    background-color: rgb(233, 233, 233);
+    border-radius: 50%;
+    padding: 1px;
+}
+
 .sign-up-container .headline {
     font-size: 61px;
     font-weight: 700;
