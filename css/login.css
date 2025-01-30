@@ -88,7 +88,6 @@ body {
 }
 
 .login-main .navbar-left {
-    padding-left: 67px;
     padding-top: 67px;
 }
 
@@ -96,7 +95,6 @@ body {
     gap: 35px;
     display: flex;
     align-items: center;
-    padding-right: 67px;
     padding-top: 67px;
     height: 49px;
     opacity: 0;
@@ -277,4 +275,8 @@ body {
     opacity: 0;
     animation: slideIn 0.8s ease-out forwards;
     animation-delay: 3s;
+}
+
+.legal-btn:hover {
+    color: #29ABE2;
 }
