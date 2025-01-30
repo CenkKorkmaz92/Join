@@ -1,0 +1,223 @@
+@keyframes slideIn {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+body {
+    overflow: hidden;
+}
+
+.scroll-enabled {
+    overflow: auto;
+}
+
+.login-main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-main .navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1440px;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 0.1s;
+}
+
+.login-main .navbar-left {
+    padding-left: 67px;
+    padding-top: 67px;
+}
+
+.login-main .navbar-right {
+    gap: 35px;
+    display: flex;
+    align-items: center;
+    padding-right: 67px;
+    padding-top: 67px;
+    height: 49px;
+}
+
+.login-main .navbar-right span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.login-main .sign-up-btn {
+    width: 91px;
+    height: 49px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25.2px;
+    border: solid 1px #2A3647;
+    border-radius: 8px;
+    color: white;
+    background-color: #2A3647;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 0.6s;
+}
+
+.login-main .sign-up-btn:hover {
+    background-color: #29ABE2;
+    border-color: #29ABE2;
+}
+
+.login-main .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 652px;
+    height: 449px;
+    gap: 32px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 0.2s;
+}
+
+.login-main .login-container .headline {
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 73.2px;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+}
+
+.login-main .login-container .headline::after {
+    content: "";
+    display: block;
+    width: 150px;
+    height: 3px;
+    background: #29ABE2;
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    transform: translateX(-50%);
+}
+
+.login-main .input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0px 15px;
+    width: 100%;
+    max-width: 422px;
+    height: 48px;
+    background-color: #fff;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 0.3s;
+}
+
+.login-main .input-container input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 16px;
+    padding: 8px;
+    background: transparent;
+}
+
+.login-main .input-container .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10px;
+}
+
+.login-main .input-container .icon img {
+    width: 20px;
+    height: 20px;
+}
+
+.login-main .submit-buttons-login {
+    display: flex;
+    gap: 35px;
+}
+
+.login-main .login-btn {
+    width: 110px;
+    height: 48px;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    border: solid 1px #2A3647;
+    border-radius: 8px;
+    color: white;
+    background-color: #2A3647;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 0.4s;
+}
+
+.login-main .login-btn:hover {
+    background-color: #29ABE2;
+    border-color: #29ABE2;
+}
+
+.login-main .guest-login-btn {
+    width: 177px;
+    height: 48px;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    border: solid 1px #2A3647;
+    border-radius: 8px;
+    color: #2A3647;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.login-main .guest-login-btn:hover {
+    border-color: #29ABE2;
+    color: #29ABE2;
+}
+
+.login-main .legal-btn-container {
+    display: flex;
+    width: 246px;
+    height: 35px;
+    gap: 8px;
+    padding-bottom: 32px;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 0.7s;
+}
+
+.login-main .legal-btn {
+    width: 121px;
+    height: 35px;
+    padding: 8px;
+    gap: 8px;
+    border: none;
+    background: none;
+    outline: none;
+    color: #A8A8A8;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 0.8s;
+}
