@@ -3,10 +3,20 @@
         transform: translateY(50px);
         opacity: 0;
     }
-
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+@keyframes logoMove {
+    from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-600px, -275px) scale(0.3);
+        opacity: 0;
     }
 }
 
@@ -16,6 +26,50 @@ body {
 
 .scroll-enabled {
     overflow: auto;
+}
+
+/**
+ * Loading Screen
+ */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 1s ease-out;
+}
+
+.loading-logo {
+    width: 200px;
+    height: auto;
+    transition: transform 1s ease-out;
+}
+
+.loading-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-screen.fade-out .loading-logo {
+    transform: translate(-650px, -250px) scale(0.3);
+}
+
+/**
+ * Navbar
+ */
+.main-logo {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
+.main-logo.show {
+    opacity: 1;
 }
 
 .login-main {
@@ -31,9 +85,6 @@ body {
     justify-content: space-between;
     width: 100%;
     max-width: 1440px;
-    opacity: 0;
-    animation: slideIn 0.8s ease-out forwards;
-    animation-delay: 0.1s;
 }
 
 .login-main .navbar-left {
@@ -48,14 +99,14 @@ body {
     padding-right: 67px;
     padding-top: 67px;
     height: 49px;
+    opacity: 0;
+    animation: slideIn 0.8s ease-out forwards;
+    animation-delay: 3s;
 }
 
-.login-main .navbar-right span {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-}
-
+/**
+ * Sign-Up Button
+ */
 .login-main .sign-up-btn {
     width: 91px;
     height: 49px;
@@ -69,7 +120,7 @@ body {
     transition: all 0.3s ease;
     opacity: 0;
     animation: slideIn 0.8s ease-out forwards;
-    animation-delay: 0.6s;
+    animation-delay: 3s;
 }
 
 .login-main .sign-up-btn:hover {
@@ -77,6 +128,9 @@ body {
     border-color: #29ABE2;
 }
 
+/**
+ * Login Container
+ */
 .login-main .login-container {
     display: flex;
     flex-direction: column;
@@ -90,7 +144,7 @@ body {
     box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.1);
     opacity: 0;
     animation: slideIn 0.8s ease-out forwards;
-    animation-delay: 0.2s;
+    animation-delay: 3s;
 }
 
 .login-main .login-container .headline {
@@ -114,6 +168,9 @@ body {
     transform: translateX(-50%);
 }
 
+/**
+ * Input Fields
+ */
 .login-main .input-container {
     display: flex;
     align-items: center;
@@ -126,7 +183,7 @@ body {
     background-color: #fff;
     opacity: 0;
     animation: slideIn 0.8s ease-out forwards;
-    animation-delay: 0.3s;
+    animation-delay: 3s;
 }
 
 .login-main .input-container input {
@@ -150,25 +207,32 @@ body {
     height: 20px;
 }
 
+/**
+ * Buttons
+ */
 .login-main .submit-buttons-login {
     display: flex;
     gap: 35px;
 }
 
-.login-main .login-btn {
-    width: 110px;
-    height: 48px;
+.login-main .login-btn,
+.login-main .guest-login-btn {
     font-size: 21px;
     font-weight: 700;
     line-height: 25.2px;
-    border: solid 1px #2A3647;
     border-radius: 8px;
-    color: white;
-    background-color: #2A3647;
+    height: 48px;
     transition: all 0.3s ease;
     opacity: 0;
     animation: slideIn 0.8s ease-out forwards;
-    animation-delay: 0.4s;
+    animation-delay: 3s;
+}
+
+.login-main .login-btn {
+    width: 110px;
+    border: solid 1px #2A3647;
+    color: white;
+    background-color: #2A3647;
 }
 
 .login-main .login-btn:hover {
@@ -178,18 +242,9 @@ body {
 
 .login-main .guest-login-btn {
     width: 177px;
-    height: 48px;
-    font-size: 21px;
-    font-weight: 700;
-    line-height: 25.2px;
     border: solid 1px #2A3647;
-    border-radius: 8px;
     color: #2A3647;
     background-color: transparent;
-    transition: all 0.3s ease;
-    opacity: 0;
-    animation: slideIn 0.8s ease-out forwards;
-    animation-delay: 0.5s;
 }
 
 .login-main .guest-login-btn:hover {
@@ -197,6 +252,9 @@ body {
     color: #29ABE2;
 }
 
+/**
+ * Legal Section
+ */
 .login-main .legal-btn-container {
     display: flex;
     width: 246px;
@@ -205,19 +263,18 @@ body {
     padding-bottom: 32px;
     opacity: 0;
     animation: slideIn 0.8s ease-out forwards;
-    animation-delay: 0.7s;
+    animation-delay: 3s;
 }
 
 .login-main .legal-btn {
     width: 121px;
     height: 35px;
     padding: 8px;
-    gap: 8px;
     border: none;
     background: none;
     outline: none;
     color: #A8A8A8;
     opacity: 0;
     animation: slideIn 0.8s ease-out forwards;
-    animation-delay: 0.8s;
+    animation-delay: 3s;
 }

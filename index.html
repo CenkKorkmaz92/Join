@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,38 +9,59 @@
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="./css/main.css">
 </head>
+
 <body>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <img src="./assets/img/logos/join_logo_loading_screen.svg" alt="Loading Logo" class="loading-logo">
+    </div>
+
+    <!-- Login Screen -->
     <section class="login-main">
+
+        <!-- Navbar -->
         <nav class="navbar">
-            <img class="navbar-left" src="./assets/img/logos/join_logo_dark.svg" alt="logo_dark">
+            <img class="navbar-left main-logo" src="./assets/img/logos/join_logo_dark.svg" alt="Join Logo">
             <div class="navbar-right">
                 <span>Not a Join user?</span>
                 <button class="sign-up-btn dark-btn">Sign up</button>
             </div>
         </nav>
+
+        <!-- Login Form -->
         <div class="login-container">
             <h1 class="headline">Log in</h1>
+
             <div class="input-container">
                 <input type="email" placeholder="Email">
                 <span class="icon">
-                    <img src="./assets/img/icons/login/mail_icon.svg" alt="email_icon">
+                    <img src="./assets/img/icons/login/mail_icon.svg" alt="Email Icon">
                 </span>
             </div>
+
             <div class="input-container">
                 <input type="password" placeholder="Password">
                 <span class="icon">
-                    <img src="./assets/img/icons/login/lock_icon.svg" alt="lock_icon">
+                    <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
                 </span>
             </div>
+
             <div class="submit-buttons-login">
                 <button class="login-btn dark-btn">Log in</button>
                 <button class="guest-login-btn light-btn">Guest Log in</button>
             </div>
         </div>
+
+        <!-- Legal Information -->
         <div class="legal-btn-container">
             <button class="legal-btn">Privacy Policy</button>
-            <button class="legal-btn"> Legal notice</button>
+            <button class="legal-btn">Legal Notice</button>
         </div>
+
     </section>
+
+    <script src="./js/main.js"></script>
 </body>
+
 </html>
