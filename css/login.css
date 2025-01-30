@@ -3,6 +3,7 @@
         transform: translateY(50px);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
@@ -14,6 +15,7 @@
         transform: translateY(0) scale(1);
         opacity: 1;
     }
+
     to {
         transform: translate(-600px, -275px) scale(0.3);
         opacity: 0;
@@ -105,6 +107,13 @@ body {
 /**
  * Sign-Up Button
  */
+.sign-up-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
 .login-main .sign-up-btn {
     width: 91px;
     height: 49px;
@@ -275,6 +284,10 @@ body {
     opacity: 0;
     animation: slideIn 0.8s ease-out forwards;
     animation-delay: 3s;
+}
+
+.legal-btn {
+    text-decoration: none;
 }
 
 .legal-btn:hover {

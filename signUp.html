@@ -14,7 +14,7 @@
     <section class="sign-up-main">
         <!-- Navbar -->
         <nav class="navbar">
-            <img onclick="goBack()" class="navbar-left main-logo" src="./assets/img/logos/join_logo_dark.svg" alt="Join Logo">
+            <img class="navbar-left main-logo" src="./assets/img/logos/join_logo_dark.svg" alt="Join Logo">
             <div class="navbar-right">
                 <span>Not a Join user?</span>
                 <button class="sign-up-btn dark-btn">Sign up</button>
@@ -23,9 +23,10 @@
 
         <!-- Sign-Up Form -->
         <div class="sign-up-container">
-            <img class="back-arrow" src="./assets/img/icons/help/back-arrow-help.svg" alt="back-arrow">
+            <img onclick="goBack()" id="back-arrow" class="back-arrow" src="./assets/img/icons/help/back-arrow-help.svg"
+                alt="back-arrow">
             <h1 class="headline">Sign up</h1>
-            
+
             <div class="input-container">
                 <input type="text" placeholder="Name">
                 <span class="icon">
@@ -70,11 +71,11 @@
 
         <!-- Legal Information -->
         <div class="legal-btn-container">
-            <button class="legal-btn">Privacy Policy</button>
-            <button class="legal-btn">Legal Notice</button>
+            <a href="privacyPolicyExternal.html" class="legal-btn">Privacy Policy</a>
+            <a href="legalNoticeExternal.html" class="legal-btn">Legal Notice</a>
         </div>
-    </section>
 
+    </section>
     <script src="./js/main.js"></script>
     <script src="./js/signUp.js"></script>
 </body>

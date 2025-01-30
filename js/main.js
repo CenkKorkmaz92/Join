@@ -32,3 +32,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000); // Matches transition duration
     }, 2000); // Delay before animation starts
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    let backArrow = document.getElementById("back-arrow");
+
+    if (backArrow) {
+        backArrow.addEventListener("click", function () {
+            window.history.back(); // Go back to the previous page
+        });
+        console.log("Back arrow event listener added!");
+    } else {
+        console.error("Back arrow not found! Check the ID in your HTML.");
+    }
+});

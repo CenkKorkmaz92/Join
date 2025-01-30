@@ -238,6 +238,10 @@ body {
     font-weight: bold;
 }
 
+.legal-btn {
+    text-decoration: none;
+}
+
 .legal-btn:hover {
     color: #29ABE2;
 }
