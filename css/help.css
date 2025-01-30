@@ -1,0 +1,160 @@
+/*
+ * Global styles for smooth scrolling and hiding scrollbars
+ */
+ body,
+ html {
+     max-width: 1440px;
+     overflow: auto !important;
+     scrollbar-width: none !important; /* Firefox */
+     -ms-overflow-style: none !important; /* Internet Explorer 10+ */
+ }
+ 
+ body::-webkit-scrollbar,
+ html::-webkit-scrollbar {
+     display: none !important; /* Chrome, Safari, Opera */
+ }
+ 
+ /*
+  * Help container styling
+  * Flexbox layout with spacing and hidden scrollbar
+  */
+ .help-container {
+     display: flex;
+     flex-direction: column;
+     padding-top: 110px;
+     padding-left: 96px;
+     padding-right: 96px;
+     gap: 30px;
+     overflow: auto;
+     scrollbar-width: none; /* Firefox */
+     -ms-overflow-style: none; /* Internet Explorer 10+ */
+ }
+ 
+ .help-container::-webkit-scrollbar {
+     display: none; /* Chrome, Safari, Opera */
+ }
+ 
+ /*
+  * Span container for spacing adjustments
+  */
+ .span-container {
+     gap: 24px;
+ }
+ 
+ /*
+  * Headline and navigation arrow container
+  */
+ .headline-and-arrow {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+ }
+ 
+ /*
+  * Arrow styling for navigation
+  */
+ .arrow {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+ }
+ 
+ /*
+  * Hover effect for arrows
+  * Slight scale-up effect and background change on hover
+  */
+ .arrow:hover {
+     transform: scale(1.2);
+     background-color: rgb(233, 233, 233);
+     border-radius: 50%;
+     padding: 1px;
+     cursor: pointer;
+ }
+ 
+ /*
+  * Help button styling
+  */
+ .help-button {
+     display: none;
+ }
+ 
+ /*
+  * Headline styles
+  */
+ .headline-main {
+     font-size: 61px;
+     font-weight: 700;
+     line-height: 73.2px;
+     margin: 0;
+ }
+ 
+ .sub-headline {
+     font-size: 27px;
+     font-weight: 700;
+     line-height: 32.4px;
+ }
+ 
+ .sub-sub-headline {
+     font-size: 20px;
+     font-weight: 700;
+     line-height: 24px;
+ }
+ 
+ /*
+  * Number styling
+  */
+ .number {
+     font-size: 27px;
+     font-weight: 700;
+     line-height: 32.4px;
+ }
+ 
+ /*
+  * Join text color styling
+  */
+ .join {
+     color: #82CCEC;
+ }
+ 
+ /*
+  * Number and headline container
+  */
+ .number-and-headline {
+     display: flex;
+     align-items: center;
+     gap: 35px;
+     margin-bottom: 10px;
+ }
+ 
+ /*
+  * Unordered list styling
+  */
+ ul {
+     list-style-type: none;
+     padding: 0;
+ }
+ 
+ /*
+  * List item text styling
+  */
+ .li-text {
+     display: flex;
+     flex-direction: column;
+ }
+ 
+ /*
+  * List item container
+  */
+ .li-flexbox {
+     display: flex;
+     align-items: flex-start;
+     gap: 35px;
+ }
+ 
+ /*
+  * Paragraph styling
+  */
+ p {
+     margin-top: 0;
+ }
+ 

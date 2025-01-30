@@ -1,0 +1,80 @@
+/*
+ * Global styles for smooth scrolling and hiding scrollbars
+ */
+body,
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+}
+
+/*
+  * Privacy Policy container
+  * Limits max width and hides scrollbar
+  */
+.privacy-policy {
+  max-width: 1440px;
+  overflow: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+}
+
+/*
+  * Highlighted text styling
+  */
+.join {
+  color: #82CCEC;
+}
+
+/*
+  * Padding utility class for left and right spacing
+  */
+.pl {
+  padding-left: 96px;
+  padding-right: 96px;
+}
+
+/*
+  * Headline text styling
+  */
+.headline-p {
+  font-weight: 700;
+  font-size: 61px;
+  line-height: 73.2px;
+}
+
+/*
+  * Subtitle text styling
+  */
+.subtitle-p {
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 32.4px;
+}
+
+/*
+  * Headline image container
+  * Aligns images properly with flexbox and spacing
+  */
+.headline-img-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 96px;
+}
+
+/*
+  * Hover effect for arrows
+  * Slight scale-up effect and background change on hover
+  */
+.arrow:hover {
+  transform: scale(1.05);
+  background-color: rgb(233, 233, 233);
+  border-radius: 50%;
+  padding: 1px;
+  cursor: pointer;
+}
