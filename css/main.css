@@ -31,7 +31,6 @@ body {
 }
 
 /* === MAIN GRID LAYOUT === */
-/* === MAIN GRID LAYOUT === */
 .layout {
     display: grid;
     grid-template-columns: 232px auto; /* Sidebar fixed at 232px, content takes remaining space */
@@ -52,7 +51,6 @@ body {
     height: calc(100vh - 96px);
     overflow-y: auto;
 }
-
 
 /* === BUTTON STYLES === */
 button:hover {
