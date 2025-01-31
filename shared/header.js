@@ -11,8 +11,31 @@ function redirectTo(url) {
  */
 function toggleUserDropdown() {
     let dropdown = document.getElementById("user-dropdown");
+    
     if (dropdown) {
-        dropdown.classList.toggle("show");
+        // Toggle the dropdown visibility
+        let isOpen = dropdown.classList.toggle("show");
+
+        // If the dropdown is open, add the event listener to close it when clicking outside
+        if (isOpen) {
+            document.addEventListener("click", closeDropdownOnClickOutside);
+        } else {
+            document.removeEventListener("click", closeDropdownOnClickOutside);
+        }
+    }
+}
+
+/**
+ * Closes the dropdown when clicking outside of it.
+ * @param {Event} event - The click event.
+ */
+function closeDropdownOnClickOutside(event) {
+    let userProfile = document.getElementById("user-initials");
+    let dropdown = document.getElementById("user-dropdown");
+
+    if (dropdown && !dropdown.contains(event.target) && event.target !== userProfile) {
+        dropdown.classList.remove("show");
+        document.removeEventListener("click", closeDropdownOnClickOutside);
     }
 }
 
@@ -30,11 +53,10 @@ function logoutUser() {
 document.addEventListener("DOMContentLoaded", function () {
     let userProfile = document.getElementById("user-initials");
     let logoutLink = document.getElementById("logout-link");
-    let dropdown = document.getElementById("user-dropdown");
 
     if (userProfile) {
         userProfile.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevents event from immediately closing dropdown
+            event.stopPropagation(); // Prevents event bubbling to the document
             toggleUserDropdown();
         });
     }
@@ -42,12 +64,4 @@ document.addEventListener("DOMContentLoaded", function () {
     if (logoutLink) {
         logoutLink.addEventListener("click", logoutUser);
     }
-
-    // Close dropdown when clicking outside of it
-    document.addEventListener("click", function (event) {
-        if (dropdown && dropdown.classList.contains("show") && 
-            event.target !== userProfile && !dropdown.contains(event.target)) {
-            dropdown.classList.remove("show");
-        }
-    });
 });
