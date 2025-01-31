@@ -1,11 +1,15 @@
 .navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 232px;
+    height: 100vh;
+    background-color: #2A3647;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    width: 232px;
-    height: 100vh;
-    background-color: #2A3647;
+    z-index: 10; /* Ensures the navbar is on top */
 }
 
 .navbar-header {
