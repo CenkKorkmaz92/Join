@@ -7,21 +7,25 @@ function redirectTo(url) {
 }
 
 /**
- * Toggles the user dropdown menu.
+ * Toggles the visibility of the user dropdown menu.
  */
 function toggleUserDropdown() {
-    document.getElementById("user-dropdown").classList.toggle("show");
+    let dropdown = document.getElementById("user-dropdown");
+    if (dropdown) {
+        dropdown.classList.toggle("show");
+    }
 }
 
 /**
- * Logs out the user by redirecting to the index page.
+ * Logs out the user by redirecting them to the index page.
  */
 function logoutUser() {
-    window.location.href = "../index.html";
+    window.location.href = "./index.html";
 }
 
 /**
  * Adds event listeners after the header loads.
+ * Ensures the user dropdown opens on click and closes when clicking outside.
  */
 document.addEventListener("DOMContentLoaded", function () {
     let userProfile = document.getElementById("user-initials");
@@ -29,15 +33,20 @@ document.addEventListener("DOMContentLoaded", function () {
     let dropdown = document.getElementById("user-dropdown");
 
     if (userProfile) {
-        userProfile.addEventListener("click", toggleUserDropdown);
+        userProfile.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevents event from immediately closing dropdown
+            toggleUserDropdown();
+        });
     }
+
     if (logoutLink) {
         logoutLink.addEventListener("click", logoutUser);
     }
 
-    // Close dropdown when clicking outside
+    // Close dropdown when clicking outside of it
     document.addEventListener("click", function (event) {
-        if (!dropdown.contains(event.target) && !userProfile.contains(event.target)) {
+        if (dropdown && dropdown.classList.contains("show") && 
+            event.target !== userProfile && !dropdown.contains(event.target)) {
             dropdown.classList.remove("show");
         }
     });
