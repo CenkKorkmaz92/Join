@@ -14,17 +14,22 @@
 </head>
 
 <body>
-    <!-- Navbar -->
-    <div id="navbar-container"></div>
-    <!-- Header -->
-    <div id="header-container"></div>
+    <div class="layout">
+        <!-- Sidebar (Navbar) -->
+        <div id="navbar-container" class="navbar"></div>
 
+        <!-- Header -->
+        <div id="header-container" class="top-header"></div>
 
+        <!-- Main Content (Use `.content` class) -->
+        <main class="content">
+            <!-- Your page-specific content goes here -->
 
+            <h1>Your Page Title</h1>
+            <p>Your page content...</p>
 
-
-
-    
+        </main>
+    </div>
     <!-- Link Scripts -->
     <script src="./shared/includeHTML.js"></script>
     <script src="./shared/navbar.js"></script>
