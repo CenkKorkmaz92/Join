@@ -45,3 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Back arrow not found! Check the ID in your HTML.");
     }
 });
+
+function redirectTo(url) {
+    console.log("Redirecting to:", url);
+    window.location.href = url;
+}
+
