@@ -61,18 +61,29 @@
     font-style: normal;
 }
 
+/* Global Styles */
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     display: grid;
-    grid-template-columns: 232px auto; /* Sidebar fixed width, content expands */
-    grid-template-rows: 96px auto; /* Header fixed height */
-    width: 100%;
+    grid-template-columns: 232px 1208px; /* Sidebar fixed width, header & content fill remaining space */
+    grid-template-rows: 96px auto; /* Header fixed height, content fills remaining */
+    width: 1440px; /* Ensure the entire layout does not exceed this width */
     height: 100vh;
     overflow: hidden;
 }
 
-/* Sidebar (Navbar) */
+/* === MAIN GRID LAYOUT === */
+.layout {
+    display: grid;
+    grid-template-columns: 232px auto; /* Sidebar fixed, header & content take remaining space */
+    grid-template-rows: 96px auto; /* Header fixed height, content fills remaining */
+    width: 1440px;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* === SIDEBAR (NAVBAR) === */
 .navbar {
     grid-row: 1 / span 2; /* Navbar spans both header and content */
     background-color: #2A3647;
@@ -81,12 +92,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    z-index: 10; /* Always on top */
+    z-index: 10; /* Keeps navbar on top */
 }
 
-/* Header */
+/* === HEADER === */
 .top-header {
-    grid-column: 2; /* Starts after navbar */
+    grid-column: 2;
+    grid-row: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -94,27 +106,33 @@ body {
     padding: 20px 40px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     height: 96px;
-    z-index: 5; /* Stays behind the navbar */
+    width: 100%;
+    z-index: 5;
 }
 
-/* Header Title */
+/* ✅ FIX: Correct Header Title Alignment */
 .header-title {
     font-family: "Inter", sans-serif;
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
-    padding-left: 348px; /* Ensures proper alignment */
+    padding-left: 40px; /* Ensures proper spacing */
+    white-space: nowrap; /* Prevents wrapping */
 }
 
-/* Content Section */
+/* === CONTENT SECTION (GRID ITEM) === */
 .content {
-    grid-column: 2;
+    grid-column: 2; /* Ensures it starts in the second column */
+    grid-row: 2; /* Places content below the header */
     background-color: #f4f4f4;
     padding: 20px;
+    height: calc(100vh - 96px); /* Fills space under header */
     overflow-y: auto;
 }
 
-/* Dropdown Menu */
+
+
+/* === DROPDOWN MENU (HEADER) === */
 .dropdown-menu {
     display: none;
     position: absolute;
@@ -125,7 +143,7 @@ body {
     background-color: #2A3647;
     border-radius: 20px 0px 20px 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 15; /* Ensures dropdown is visible */
+    z-index: 15; /* Ensures dropdown stays above */
 }
 
 /* Show Dropdown */
@@ -133,6 +151,7 @@ body {
     display: block;
 }
 
+/* Button Hover */
 button:hover {
     cursor: pointer;
 }

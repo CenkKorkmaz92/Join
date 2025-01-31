@@ -1,16 +1,12 @@
 .navbar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 232px;
-    height: 100vh;
+    /* REMOVE display: flex; */
+    grid-row: 1 / span 2; /* Navbar spans both header and content */
     background-color: #2A3647;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    z-index: 10; /* Ensures the navbar is on top */
+    height: 100vh;
+    display: block; /* Ensures it acts as a standard grid child */
+    z-index: 10;
 }
+
 
 .navbar-header {
     display: flex;
