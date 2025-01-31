@@ -1,13 +1,23 @@
+/**
+ * Sidebar (Navbar) styles for the Kanban project.
+ * Ensures proper positioning and alignment of the sidebar and menu items.
+ */
+
+/* === NAVBAR === */
 .navbar {
-    /* REMOVE display: flex; */
-    grid-row: 1 / span 2; /* Navbar spans both header and content */
+    grid-row: 1 / span 2;
+    grid-column: 1;
     background-color: #2A3647;
     height: 100vh;
-    display: block; /* Ensures it acts as a standard grid child */
-    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 232px;
+    max-width: 232px;
 }
 
-
+/* === NAVBAR HEADER === */
 .navbar-header {
     display: flex;
     flex-direction: column;
@@ -15,19 +25,21 @@
     gap: 100px;
 }
 
+/* === NAVBAR LOGO === */
 .navbar-logo {
     width: 100px;
     height: 122px;
 }
 
+/* === NAVBAR MENU === */
 .navbar-menu {
     display: flex;
     flex-direction: column;
     width: 232px;
-    height: 229px;
     gap: 15px;
 }
 
+/* === NAVBAR ITEMS === */
 .navbar-item {
     display: flex;
     align-items: center;
@@ -54,6 +66,7 @@
     background-color: #091931;
 }
 
+/* === NAVBAR FOOTER === */
 .navbar-footer {
     display: flex;
     flex-direction: column;
@@ -61,6 +74,7 @@
     width: 100%;
 }
 
+/* === FOOTER LINKS === */
 .navbar-footer-item {
     font-size: 14px;
 }

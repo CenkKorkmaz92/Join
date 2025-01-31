@@ -1,37 +1,39 @@
+/* === HEADER === */
 .top-header {
-    /* REMOVE display: flex; */
     grid-column: 2;
     grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #FFFFFF;
-    padding: 20px 40px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     height: 96px;
-    width: 100%;
+    width: 100%; /* Ensures header fits inside 1440px */
+    max-width: 1440px;
+    margin: 0 auto;
     z-index: 5;
 }
 
 
-/* When dropdown is open, bring header above navbar */
-.top-header.dropdown-active {
-    z-index: 15;
-}
-
+/* === HEADER TITLE === */
 .header-title {
     font-family: "Inter", sans-serif;
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
-    padding-left: 348px; /* Ensures text does not overlap the navbar */
+    padding-left: 100px; /* Ensures text does not overlap the navbar */
 }
 
+/* === HEADER RIGHT SECTION === */
 .header-right {
     display: flex;
     align-items: center;
     gap: 16px;
     position: relative;
+    padding-right: 40px;
 }
 
-/* Help Icon */
+/* === HELP ICON === */
 .help-icon {
     width: 32px;
     height: 32px;
@@ -43,7 +45,7 @@
     transform: scale(1.1);
 }
 
-/* User Profile */
+/* === USER PROFILE (Initials Circle) === */
 .user-profile {
     display: flex;
     align-items: center;
@@ -64,7 +66,7 @@
     color: white;
 }
 
-/* Dropdown Menu */
+/* === DROPDOWN MENU === */
 .dropdown-menu {
     display: none;
     position: absolute;
@@ -75,9 +77,15 @@
     background-color: #2A3647;
     border-radius: 20px 0px 20px 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 15; /* Ensure it's above everything */
+    z-index: 15; /* Ensures dropdown stays above */
 }
 
+/* Show Dropdown */
+.show {
+    display: block;
+}
+
+/* Dropdown Menu Links */
 .dropdown-menu a {
     color: white;
     padding: 12px 16px;
@@ -88,15 +96,4 @@
 
 .dropdown-menu a:hover {
     background-color: #29ABE2;
-}
-
-#logout-link {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-}
-
-/* Dropdown Open State */
-.show {
-    display: block;
 }
