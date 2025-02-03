@@ -33,14 +33,17 @@ body {
 /* === MAIN GRID LAYOUT === */
 .layout {
     display: grid;
-    grid-template-columns: 232px auto; /* Sidebar fixed at 232px, content takes remaining space */
-    grid-template-rows: 96px auto; /* Header fixed at 96px, content fills remaining */
-    width: 1440px; /* Ensures fixed width */
-    max-width: 1440px; /* Prevents it from stretching */
-    height: 100vh;
-    margin: 0 auto; /* Centers the entire layout */
-    overflow: hidden;
+    grid-template-columns: 232px auto; /* Sidebar fixed, content flexible */
+    grid-template-rows: 96px auto; /* Header fixed, content flexible */
+    
+    width: 1440px; /* Full width */
+    max-width: 100vw; /* Prevents overflow on small screens */
+    height: 100vh; /* Full height */
+    
+    margin: 0 auto; /* Center the layout */
+    background: white;
 }
+
 
 /* === CONTENT SECTION === */
 .content {
