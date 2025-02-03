@@ -23,6 +23,7 @@
 }
 
 body {
+    max-width: 1440px;
     overflow: hidden;
     display: block !important;
 }
@@ -85,9 +86,8 @@ body {
 
 .login-main .navbar {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1440px;
+    width: 160%;
+    justify-content: space-around;
 }
 
 .login-main .navbar-left {
@@ -263,7 +263,7 @@ body {
 /**
  * Legal Section (Matches Sign-Up Page)
  */
- .legal-btn-container {
+.legal-btn-container {
     padding-bottom: 30px;
     animation: slideIn 0.8s ease-out forwards;
     animation-delay: 1.2s;

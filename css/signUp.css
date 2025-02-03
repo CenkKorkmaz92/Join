@@ -13,6 +13,7 @@
 body {
     overflow: hidden;
     display: block !important;
+    max-width: 1440px;
 }
 
 .scroll-enabled {
@@ -35,9 +36,8 @@ body {
  */
 .navbar {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1440px;
+    justify-content: space-around;
+    width: 162%;
     padding-top: 67px;
 }
 
@@ -225,11 +225,13 @@ body {
 }
 
 .form-check-label {
-    pointer-events: none; /* Prevents clicking the label from toggling the checkbox */
+    pointer-events: none;
+    /* Prevents clicking the label from toggling the checkbox */
 }
 
 .privacy-policy {
-    pointer-events: auto; /* Allows clicking on the privacy policy link */
+    pointer-events: auto;
+    /* Allows clicking on the privacy policy link */
     color: #29ABE2;
     cursor: pointer;
 }
