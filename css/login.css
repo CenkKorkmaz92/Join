@@ -25,6 +25,8 @@
 body {
     max-width: 1440px;
     overflow: hidden;
+    height: 100vh;
+    overflow: hidden;
     display: block !important;
 }
 
@@ -86,8 +88,8 @@ body {
 
 .login-main .navbar {
     display: flex;
-    width: 160%;
-    justify-content: space-around;
+    width: 95.76%;
+    justify-content: space-between;
 }
 
 .login-main .navbar-left {

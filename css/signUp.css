@@ -36,8 +36,8 @@ body {
  */
 .navbar {
     display: flex;
-    justify-content: space-around;
-    width: 162%;
+    justify-content: space-between;
+    width: 95.76%;
     padding-top: 67px;
 }
 
