@@ -25,8 +25,30 @@
         <main class="content">
             <!-- Your page-specific content goes here -->
 
-            <h1>Your Page Title</h1>
-            <p>Your page content...</p>
+            <div class="container">
+                <button id="addContactBtn">Add new contact <img src="./assets/img/icons/contact/person_add.svg" alt="" class="img-add-contact"></button>
+                <div id="contactList"></div>
+            </div>
+
+            <!-- Popup-Fenster für die Kontakterstellung -->
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <h2>Neuen Kontakt hinzufügen</h2>
+                    <input type="text" id="nameInput" placeholder="Name">
+                    <input type="email" id="emailInput" placeholder="E-Mail">
+                    <input type="tel" id="phoneInput" placeholder="Telefonnummer">
+                    
+                    <div class="popup-buttons">
+                        <button id="clearBtn">Abbrechen</button>
+                        <button id="saveBtn">Speichern</button>
+                    </div>
+                </div>
+            </div>
+
+
+</body>
+</html>
+
 
         </main>
     </div>
@@ -34,5 +56,6 @@
     <script src="./shared/includeHTML.js"></script>
     <script src="./shared/navbar.js"></script>
     <script src="./shared/header.js"></script>
+    <script src="./js/contacts.js"></script>
 </body>
 </html>
