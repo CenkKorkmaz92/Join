@@ -158,3 +158,22 @@ html {
     line-height: 24px; 
     text-align: center;
 }
+
+.task-summary-and-greeting-container {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+
+.day-time {
+    font-size: 47px;
+    font-weight: 500;
+    line-height: 56.4px;  
+}
+
+.user-name {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 76.8px;  
+    color: #29ABE2;
+}
