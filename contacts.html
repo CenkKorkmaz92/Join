@@ -24,23 +24,24 @@
         <!-- Main Content (Use `.content` class) -->
         <main class="content">
             <!-- Your page-specific content goes here -->
+            <div class="contact-body">
+                <div class="container">
+                    <button id="addContactBtn">Add new contact <img src="./assets/img/icons/contact/person_add.svg" alt="" class="img-add-contact"></button>
+                    <div id="contactList"></div>
+                </div>
 
-            <div class="container">
-                <button id="addContactBtn">Add new contact <img src="./assets/img/icons/contact/person_add.svg" alt="" class="img-add-contact"></button>
-                <div id="contactList"></div>
-            </div>
-
-            <!-- Popup-Fenster für die Kontakterstellung -->
-            <div id="popup" class="popup">
-                <div class="popup-content">
-                    <h2>Neuen Kontakt hinzufügen</h2>
-                    <input type="text" id="nameInput" placeholder="Name">
-                    <input type="email" id="emailInput" placeholder="E-Mail">
-                    <input type="tel" id="phoneInput" placeholder="Telefonnummer">
-                    
-                    <div class="popup-buttons">
-                        <button id="clearBtn">Abbrechen</button>
-                        <button id="saveBtn">Speichern</button>
+                <!-- Popup-Fenster für die Kontakterstellung -->
+                <div id="popup" class="popup">
+                    <div class="popup-content">
+                        <h2>Neuen Kontakt hinzufügen</h2>
+                        <input type="text" id="nameInput" placeholder="Name">
+                        <input type="email" id="emailInput" placeholder="E-Mail">
+                        <input type="tel" id="phoneInput" placeholder="Telefonnummer">
+                        
+                        <div class="popup-buttons">
+                            <button id="clearBtn">Abbrechen</button>
+                            <button id="saveBtn">Speichern</button>
+                        </div>
                     </div>
                 </div>
             </div>

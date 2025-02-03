@@ -1,8 +1,11 @@
-.content{
-    display: grid;
-    padding-left: 96px;
-    padding-top: 110px;
+body, html{
+    max-width: 1208px;
 }
+.contact-body{
+    /* display: grid; */
+}
+
+
 
 .container {
     display: flex;
@@ -18,6 +21,8 @@
 
 #contactList {
     width: 100%; /* Damit die Kontakte die volle Breite nutzen */
+    height: calc(1024px - 96px);
+    overflow: auto;
     margin-top: 10px;
 }
 
@@ -127,4 +132,43 @@ button:hover {
 #saveBtn {
     background: green;
     color: white;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    background: #e9ecef;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.contact-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    margin-right: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.contact-email {
+    font-size: 14px;
+    color: gray;
 }
