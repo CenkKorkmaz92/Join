@@ -1,5 +1,6 @@
-body, html {
-max-width: 1208px;
+body,
+html {
+    max-width: 1208px;
 }
 
 .headline-container {
@@ -7,6 +8,7 @@ max-width: 1208px;
     align-items: center;
     padding-left: 96px;
     padding-top: 110px;
+    padding-bottom: 40px;
     gap: 30px;
 }
 
@@ -30,6 +32,8 @@ max-width: 1208px;
 
 .task-summary {
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding-left: 96px;
     height: 562px;
     width: 560px;
@@ -52,6 +56,7 @@ max-width: 1208px;
     border-radius: 30px;
     gap: 18px;
     background-color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 .to-do-number-span {
@@ -60,10 +65,10 @@ max-width: 1208px;
     align-items: center;
 }
 
-.to-do-number-span span{
-   font-size: 20px;
-   font-weight: 400;
-   line-height: 24px; 
+.to-do-number-span span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
 }
 
 .to-do-number {
@@ -72,3 +77,84 @@ max-width: 1208px;
     line-height: 76.8px;
 }
 
+.icon-summary {
+    height: 69px;
+    width: 69px;
+}
+
+.summary-task-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 560px;
+    height: 168px;
+    border-radius: 30px;
+    gap: 61px;
+    background-color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.icon-summary-status {
+    width: 60px;
+    height: 60px;
+}
+
+.icon-and-span-task-status {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.gray-vector {
+    height: 102px;
+    border: solid 1px #D1D1D1;
+}
+
+.info-date {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.date {
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+}
+
+.info {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+}
+
+.summary-task-count-containers {
+    display: flex;
+    justify-content: space-between;
+}
+
+.count-number-span {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 168px;
+    height: 168px;
+    border-radius: 30px;
+    gap: 13px;
+    background-color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.count-number {
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 76.8px; 
+}
+
+.count-number-span span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px; 
+    text-align: center;
+}
