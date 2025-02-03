@@ -39,6 +39,10 @@
     gap: 15px;
 }
 
+.login {
+    display: none !important;
+}
+
 /* === NAVBAR ITEMS === */
 .navbar-item {
     display: flex;
