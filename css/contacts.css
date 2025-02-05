@@ -14,7 +14,7 @@ body, html{
     background: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     width: 352px;
     text-align: center;
 }
@@ -27,7 +27,7 @@ body, html{
 }
 
 
-button {
+.addContactBtn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,9 +45,9 @@ button {
     line-height: 25.2px;
 }
 
-button:hover {
+.addContactBtn:hover {
     background-color: #29ABE2;
-    box-shadow: 5px 2.5px 2.5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 .contact {
@@ -93,7 +93,7 @@ button:hover {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 300px;
 }
