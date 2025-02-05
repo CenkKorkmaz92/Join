@@ -37,10 +37,14 @@ saveBtn.addEventListener("click", function () {
         email,
         phone,
         initials: getInitials(fullName),
+        firstLetter: fullName.charAt(0).toUpperCase(), // Erster Buchstabe für Sortierung
         color: getRandomColor()
     };
 
     contacts.push(newContact);
+
+    // Kontakte immer sortiert halten
+    contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
 
     renderContacts();
 
@@ -59,22 +63,42 @@ function clearInputs() {
 function renderContacts() {
     contactList.innerHTML = "";
 
-    contacts.forEach((contact, index) => {
-        const contactDiv = document.createElement("div");
-        contactDiv.classList.add("contact");
+    let groupedContacts = {};
 
-        contactDiv.innerHTML = `
-            <div class="contact-circle" style="background: ${contact.color};">
-                ${contact.initials}
-            </div>
-            <div class="contact-info">
-                <div class="contact-name">${contact.fullName}</div>
-                <div class="contact-email">${contact.email}</div>
-            </div>
-            <button class="delete-btn" onclick="removeContact(${index})">X</button>
-        `;
+    // Kontakte nach Anfangsbuchstaben gruppieren
+    contacts.forEach(contact => {
+        let firstLetter = contact.firstLetter;
+        if (!groupedContacts[firstLetter]) {
+            groupedContacts[firstLetter] = [];
+        }
+        groupedContacts[firstLetter].push(contact);
+    });
 
-        contactList.appendChild(contactDiv);
+    // Alphabetisch durchgehen und Kontakte rendern
+    Object.keys(groupedContacts).sort().forEach(letter => {
+        // Buchstabenüberschrift hinzufügen
+        const letterHeader = document.createElement("div");
+        letterHeader.classList.add("letter-header");
+        letterHeader.innerText = letter;
+        contactList.appendChild(letterHeader);
+
+        // Kontakte unter dem jeweiligen Buchstaben anzeigen
+        groupedContacts[letter].forEach(contact => {
+            const contactDiv = document.createElement("div");
+            contactDiv.classList.add("contact");
+
+            contactDiv.innerHTML = `
+                <div class="contact-circle" style="background: ${contact.color};">
+                    ${contact.initials}
+                </div>
+                <div class="contact-info">
+                    <div class="contact-name">${contact.fullName}</div>
+                    <div class="contact-email">${contact.email}</div>
+                </div>
+            `;
+
+            contactList.appendChild(contactDiv);
+        });
     });
 }
 
@@ -89,10 +113,4 @@ function getInitials(name) {
 function getRandomColor() {
     const colors = ["#FF5733", "#33A1FF", "#33FF57", "#FFC133", "#A133FF", "#FF33A8", "#33FFD5"];
     return colors[Math.floor(Math.random() * colors.length)];
-}
-
-// Löscht einen Kontakt
-function removeContact(index) {
-    contacts.splice(index, 1);
-    renderContacts();
 }
