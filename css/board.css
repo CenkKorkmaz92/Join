@@ -112,7 +112,7 @@
 
 .board-list {
     display: flex;
-    height: 628px;
+    height: 100%;
     gap: 44px;
     padding-top: 8px;
     
