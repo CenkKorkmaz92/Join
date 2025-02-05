@@ -1,0 +1,61 @@
+.subtask-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.input-subtask-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.input-subtask-wrapper input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.subtask-buttons {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.subtask-buttons button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Hide elements dynamically */
+.hidden {
+    display: none;
+}
+
+/* List Styling */
+#subtask-list {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.subtask-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.subtask-item span {
+    font-size: 16px;
+}

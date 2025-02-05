@@ -23,16 +23,81 @@
 
         <!-- Main Content (Use `.content` class) -->
         <main class="content">
-            <!-- Your page-specific content goes here -->
-
-            <h1>Your Page Title</h1>
-            <p>Your page content...</p>
-
+            <div class="add-task-main-container">
+                <h1 class="headline-add-task">Add Task</h1>
+                <div class="add-task-input-containers">
+                    <div class="left-input-fields">
+                        <div class="input-title-container">
+                            <span>Title<span style="color: red;">*</span></span>
+                            <input type="text" placeholder="Enter a title">
+                        </div>
+                        <div class="input-description-container">
+                            <span>Description</span>
+                            <input type="text" placeholder="Enter a Description">
+                        </div>
+                        <div class="drop-down-assignt-to-container"></div>
+                        <span>Assigned to</span>
+                        <input list="assignees" placeholder="Select a person">
+                        <datalist id="assignees">
+                        </datalist>
+                    </div>
+                    <div class="grey-vector"></div>
+                    <div class="right-input-fields">
+                        <div class="input-due-date-container">
+                            <span>Due date<span style="color: red;">*</span></span>
+                            <input type="date">
+                        </div>
+                        <div class="prio-selection-container">
+                            <div class="prio-option high">
+                                <span>Urgent</span>
+                                <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority">
+                            </div>
+                            <div class="prio-option medium">
+                                <span>Medium</span>
+                                <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority">
+                            </div>
+                            <div class="prio-option low">
+                                <span>Low</span>
+                                <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority">
+                            </div>
+                        </div>
+                        <div class="input-category-container">
+                            <label for="category">Category<span style="color: red;">*</span></label>
+                            <select id="category">
+                                <option selected disabled>Select task category</option>
+                                <option value="user-story">User Story</option>
+                                <option value="technical-task">Technical Task</option>
+                            </select>
+                        </div>
+                        <div class="subtask-container">
+                            <label for="subtask">Subtasks</label>
+                            <div class="input-subtask-wrapper">
+                                <input type="text" id="subtask-input" placeholder="Add new subtask">
+                                <div class="subtask-buttons">
+                                    <button id="clear-subtask" class="hidden">✖</button>
+                                    <button id="confirm-subtask" class="hidden">✔</button>
+                                    <button id="add-subtask-btn">+</button>
+                                </div>
+                            </div>
+                            <ul id="subtask-list"></ul>
+                        </div>
+                    </div>
+                </div> 
+                <div class="add-task-bottom-container">
+                    <span><span style="color: red;">*</span>This field is required</span>
+                    <div class="add-task-create-btn-container">
+                        <button class="legal-btn">Clear <img src="./assets/img/icons/addTask/add_task_x_icon.svg" alt=""></button>
+                        <button class="legal-btn">Create Task <img src="./assets/img/icons/addTask/add_task_check_icon.svg" alt=""></button>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
-  <!-- Link Scripts -->
-  <script src="./shared/includeHTML.js"></script>
-  <script src="./shared/navbar.js"></script>
-  <script src="./shared/header.js"></script>
+    <!-- Link Scripts -->
+    <script src="./shared/includeHTML.js"></script>
+    <script src="./js/addTask.js"></script>
+    <script src="./shared/navbar.js"></script>
+    <script src="./shared/header.js"></script>
 </body>
+
 </html>
