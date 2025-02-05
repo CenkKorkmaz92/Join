@@ -10,19 +10,17 @@ const emailInput = document.getElementById("emailInput");
 const phoneInput = document.getElementById("phoneInput");
 const contactList = document.getElementById("contactList");
 
-// Öffne das Popup nur, wenn auf "Add new contact" geklickt wird
-addContactBtn.addEventListener("click", function () {
+// Event-Funktionen direkt in die HTML-Elemente setzen
+addContactBtn.onclick = function () {
     popup.style.display = "flex";
-});
+};
 
-// Popup schließen und Eingaben leeren, wenn "Abbrechen" gedrückt wird
-clearBtn.addEventListener("click", function () {
+clearBtn.onclick = function () {
     clearInputs();
     popup.style.display = "none";
-});
+};
 
-// Speichert den Kontakt und schließt das Popup
-saveBtn.addEventListener("click", function () {
+saveBtn.onclick = function () {
     let fullName = nameInput.value.trim();
     let email = emailInput.value.trim();
     let phone = phoneInput.value.trim();
@@ -37,20 +35,17 @@ saveBtn.addEventListener("click", function () {
         email,
         phone,
         initials: getInitials(fullName),
-        firstLetter: fullName.charAt(0).toUpperCase(), // Erster Buchstabe für Sortierung
+        firstLetter: fullName.charAt(0).toUpperCase(),
         color: getRandomColor()
     };
 
     contacts.push(newContact);
-
-    // Kontakte immer sortiert halten
     contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
 
     renderContacts();
-
     clearInputs();
-    popup.style.display = "none"; // Popup nach dem Speichern schließen
-});
+    popup.style.display = "none";
+};
 
 // Funktion zum Eingaben leeren
 function clearInputs() {
@@ -65,7 +60,6 @@ function renderContacts() {
 
     let groupedContacts = {};
 
-    // Kontakte nach Anfangsbuchstaben gruppieren
     contacts.forEach(contact => {
         let firstLetter = contact.firstLetter;
         if (!groupedContacts[firstLetter]) {
@@ -74,19 +68,19 @@ function renderContacts() {
         groupedContacts[firstLetter].push(contact);
     });
 
-    // Alphabetisch durchgehen und Kontakte rendern
     Object.keys(groupedContacts).sort().forEach(letter => {
-        // Buchstabenüberschrift hinzufügen
         const letterHeader = document.createElement("div");
         letterHeader.classList.add("letter-header");
         letterHeader.innerText = letter;
         contactList.appendChild(letterHeader);
 
-        // Kontakte unter dem jeweiligen Buchstaben anzeigen
+        const divider = document.createElement("hr");
+        divider.classList.add("letter-divider");
+        contactList.appendChild(divider);
+
         groupedContacts[letter].forEach(contact => {
             const contactDiv = document.createElement("div");
             contactDiv.classList.add("contact");
-
             contactDiv.innerHTML = `
                 <div class="contact-circle" style="background: ${contact.color};">
                     ${contact.initials}
@@ -97,19 +91,85 @@ function renderContacts() {
                 </div>
             `;
 
+            // Klick-Funktion direkt zuweisen
+            contactDiv.onclick = function () {
+                showContactDetails(contact);
+            };
+
             contactList.appendChild(contactDiv);
         });
     });
 }
 
-// Erstellt Initialen aus dem Namen (z.B. "Max Mustermann" → "MM")
+// Funktion zum Anzeigen der Kontaktdetails
+function showContactDetails(contact) {
+    let contactInfo = document.querySelector(".contact-info");
+
+    if (contactInfo) {
+        contactInfo.classList.remove("hidden");
+    }
+
+    document.getElementById("contactName").innerText = contact.fullName;
+    document.getElementById("contactEmail").innerText = "Email: " + contact.email;
+    document.getElementById("contactPhone").innerText = "Phone: " + contact.phone;
+
+    let contactCircle = document.getElementById("contactCircle");
+    contactCircle.innerText = contact.initials;
+    contactCircle.style.backgroundColor = contact.color;
+
+    document.getElementById("editContactBtn").onclick = function () {
+        editContact(contact);
+    };
+
+    document.getElementById("deleteContactBtn").onclick = function () {
+        deleteContact(contact);
+    };
+}
+
+function deleteContact(contact) {
+    let index = contacts.findIndex(c => c.email === contact.email);
+    if (index !== -1) {
+        contacts.splice(index, 1);
+        renderContacts();
+        resetContactDetail();
+    }
+}
+
+function resetContactDetail() {
+    document.getElementById("contactName").innerText = "Select a contact";
+    document.getElementById("contactEmail").innerText = "";
+    document.getElementById("contactPhone").innerText = "";
+    document.getElementById("contactCircle").innerText = "";
+    document.getElementById("contactCircle").style.backgroundColor = "transparent";
+}
+
+function editContact(contact) {
+    nameInput.value = contact.fullName;
+    emailInput.value = contact.email;
+    phoneInput.value = contact.phone;
+
+    popup.style.display = "flex";
+
+    saveBtn.onclick = function () {
+        contact.fullName = nameInput.value.trim();
+        contact.email = emailInput.value.trim();
+        contact.phone = phoneInput.value.trim();
+        contact.initials = getInitials(contact.fullName);
+        contact.firstLetter = contact.fullName.charAt(0).toUpperCase();
+
+        renderContacts();
+        showContactDetails(contact);
+        clearInputs();
+        popup.style.display = "none";
+    };
+}
+
 function getInitials(name) {
     let nameParts = name.split(" ");
     let initials = nameParts.map(part => part.charAt(0).toUpperCase()).join("");
-    return initials.slice(0, 2); // Maximal 2 Buchstaben
+    return initials.slice(0, 2);
 }
 
-// Generiert eine zufällige Farbe für den Kreis
 function getRandomColor() {
     const colors = ["#FF5733", "#33A1FF", "#33FF57", "#FFC133", "#A133FF", "#FF33A8", "#33FFD5"];
     return colors[Math.floor(Math.random() * colors.length)];

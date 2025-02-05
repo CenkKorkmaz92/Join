@@ -46,13 +46,17 @@ body, html{
 }
 
 .contact {
-    background: #e9ecef;
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
     display: flex;
     align-items: center;
     gap: 30px;
+}
+
+.contact-body{
+    display: flex;
+    flex-direction: row;
 }
 
 .delete-btn {
@@ -132,7 +136,6 @@ body, html{
 .contact {
     display: flex;
     align-items: center;
-    background: #e9ecef;
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
@@ -180,3 +183,117 @@ body, html{
     margin-bottom: 24px;
     margin-top: 16px;
 }
+
+.letter-divider {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin-bottom: 24px;
+}
+
+/* Container für die Kontaktliste und Detailansicht */
+.contact-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Kontaktliste */
+.contact-list {
+    width: 350px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+/* Kontakt-Details */
+.contact-detail {
+    flex-grow: 1;
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+/* Header bleibt immer sichtbar */
+.contact-header {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    text-align: center;
+    margin-bottom: 20px;
+    gap: 16px;
+}
+
+/* Infos anfangs verstecken */
+.hidden {
+    display: none;
+}
+
+/* Kontakt-Infos */
+.contact-info-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+.contact-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.contact-buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#editContactBtn {
+    background: #ffc107;
+    color: black;
+}
+
+#deleteContactBtn {
+    background: red;
+    color: white;
+}
+
+/* Telefonnummer & Email */
+.contact-details {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.contact-details p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+
