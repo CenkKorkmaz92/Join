@@ -112,9 +112,10 @@
 
 .board-list {
     display: flex;
-    height: 688px;
+    height: 628px;
     gap: 44px;
     padding-top: 8px;
+    
 }
 
 .board-list-column {

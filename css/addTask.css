@@ -1,4 +1,6 @@
 .add-task-main-container {
+    display: flex;
+    flex-direction: column;  
     padding-top: 110px;
     padding-left: 96px;
     padding-right: 96px;
@@ -260,7 +262,8 @@ select {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 64px;
+    padding-top: 150px;
+    padding-bottom: 40px;
 }
 
 .add-task-create-btn-container {
