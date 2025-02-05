@@ -262,3 +262,55 @@ select {
     justify-content: space-between;
     padding-top: 64px;
 }
+
+.add-task-create-btn-container {
+    display: flex;
+    gap: 16px;
+}
+
+.clear-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 110px;
+    height: 56px;
+    border-radius: 10px;
+    border: solid 1px #2A3647;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    transition: filter 0.3s ease-in-out;
+}
+
+.clear-btn:hover {
+    cursor: pointer;
+    color: #29ABE2;
+    border-color: #29ABE2;
+}
+
+.clear-btn:hover img {
+    filter: invert(55%) sepia(64%) saturate(523%) hue-rotate(173deg) brightness(95%) contrast(88%);
+}
+
+
+.create-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 183px;
+    height: 56px;
+    border-radius: 10px;
+    background-color: #2A3647;
+    border: solid 1px #2A3647;
+    color: white;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    transition: filter 0.3s ease-in-out;
+}
+
+.create-btn:hover {
+    cursor: pointer;
+    background-color: #29ABE2;
+    border: #29ABE2;
+}
