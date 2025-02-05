@@ -57,8 +57,12 @@
 }
 
 .input-container .icon img {
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
+}
+
+.input-container .icon img:hover {
+    cursor: pointer;
 }
 
 .add-task-btn-summary {
