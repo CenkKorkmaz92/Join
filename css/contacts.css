@@ -1,11 +1,6 @@
 body, html{
     max-width: 1208px;
 }
-.contact-body{
-    /* display: grid; */
-}
-
-
 
 .container {
     display: flex;
