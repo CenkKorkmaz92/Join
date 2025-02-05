@@ -1,3 +1,168 @@
+.add-task-main-container {
+    padding-top: 110px;
+    padding-left: 96px;
+    padding-right: 96px;
+}
+
+.add-task-input-containers {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 67px;
+}
+
+.headline-add-task {
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 73.2px;
+    margin: 0;
+}
+
+.left-input-fields {
+    width: 440px;
+    height: 376px;
+}
+
+.input-title-container {
+    display: flex;
+    flex-direction: column;
+    height: 96px;
+    gap: 8px;
+}
+
+.input-title-container span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.input-title-container input {
+    height: 48px;
+    width: 100%;
+    border-radius: 10px;
+    border: solid 1px #D1D1D1;
+    color: #D1D1D1;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.input-description-container {
+    display: flex;
+    flex-direction: column;
+    height: 168px;
+    gap: 8px;
+}
+
+.input-description-container span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.input-description-container input {
+    height: 120px;
+    width: 100%;
+    border-radius: 10px;
+    border: solid 1px #D1D1D1;
+    color: #D1D1D1;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.drop-down-assignt-to-container {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    gap: 8px;
+}
+
+.drop-down-assignt-to-container span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.drop-down-assignt-to-container input {
+    height: 48px;
+    width: 100%;
+    border-radius: 10px;
+    border: solid 1px #D1D1D1;
+    color: #D1D1D1;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.grey-vector {
+    border: solid 1px #D1D1D1;
+}
+
+.right-input-fields {
+    width: 440px;
+    height: 416px;
+}
+
+.input-due-date-container {
+    display: flex;
+    flex-direction: column;
+    height: 96px;
+    gap: 8px;
+}
+
+.input-due-date-container span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.input-due-date-container input {
+    height: 48px;
+    width: 100%;
+    border-radius: 10px;
+    border: solid 1px #D1D1D1;
+    color: #D1D1D1;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.prio-selection-container {
+    display: flex;
+    flex-direction: column;
+    height: 88px;
+    gap: 8px;
+}
+
+.prio-selector-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+}
+
+.prio-option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 136px;
+    height: 56px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    gap: 8px;
+}
+
+.prio-selection-container span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+
+
+
+
 .subtask-container {
     width: 100%;
     max-width: 400px;
@@ -36,12 +201,10 @@
     cursor: pointer;
 }
 
-/* Hide elements dynamically */
 .hidden {
     display: none;
 }
 
-/* List Styling */
 #subtask-list {
     margin-top: 10px;
     padding-left: 20px;
@@ -58,4 +221,11 @@
 
 .subtask-item span {
     font-size: 16px;
+}
+
+.add-task-bottom-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 64px;
 }

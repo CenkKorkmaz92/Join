@@ -35,11 +35,13 @@
                             <span>Description</span>
                             <input type="text" placeholder="Enter a Description">
                         </div>
-                        <div class="drop-down-assignt-to-container"></div>
-                        <span>Assigned to</span>
-                        <input list="assignees" placeholder="Select a person">
-                        <datalist id="assignees">
-                        </datalist>
+                        <div class="drop-down-assignt-to-container">
+                            <span>Assigned to</span>
+                            <input list="assignees" placeholder="Select a person">
+                            <datalist id="assignees">
+                            </datalist>
+                        </div>
+
                     </div>
                     <div class="grey-vector"></div>
                     <div class="right-input-fields">
@@ -48,18 +50,22 @@
                             <input type="date">
                         </div>
                         <div class="prio-selection-container">
-                            <div class="prio-option high">
-                                <span>Urgent</span>
-                                <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority">
+                            <span>Prio</span>
+                            <div class="prio-selector-container">
+                                <div class="prio-option">
+                                    <span>Urgent</span>
+                                    <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority">
+                                </div>
+                                <div class="prio-option">
+                                    <span>Medium</span>
+                                    <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority">
+                                </div>
+                                <div class="prio-option">
+                                    <span>Low</span>
+                                    <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority">
+                                </div>
                             </div>
-                            <div class="prio-option medium">
-                                <span>Medium</span>
-                                <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority">
-                            </div>
-                            <div class="prio-option low">
-                                <span>Low</span>
-                                <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority">
-                            </div>
+
                         </div>
                         <div class="input-category-container">
                             <label for="category">Category<span style="color: red;">*</span></label>
@@ -82,12 +88,14 @@
                             <ul id="subtask-list"></ul>
                         </div>
                     </div>
-                </div> 
+                </div>
                 <div class="add-task-bottom-container">
                     <span><span style="color: red;">*</span>This field is required</span>
                     <div class="add-task-create-btn-container">
-                        <button class="legal-btn">Clear <img src="./assets/img/icons/addTask/add_task_x_icon.svg" alt=""></button>
-                        <button class="legal-btn">Create Task <img src="./assets/img/icons/addTask/add_task_check_icon.svg" alt=""></button>
+                        <button class="legal-btn">Clear <img src="./assets/img/icons/addTask/add_task_x_icon.svg"
+                                alt=""></button>
+                        <button class="legal-btn">Create Task <img
+                                src="./assets/img/icons/addTask/add_task_check_icon.svg" alt=""></button>
                     </div>
                 </div>
             </div>
