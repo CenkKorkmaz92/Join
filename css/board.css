@@ -106,6 +106,7 @@
 }
 
 .subline-container img:hover {
+    cursor: pointer;
     filter: brightness(0) saturate(100%) invert(56%) sepia(57%) saturate(415%) hue-rotate(173deg) brightness(97%) contrast(91%);
 }
 
