@@ -23,28 +23,61 @@
 
         <!-- Main Content (Use `.content` class) -->
         <main class="content">
-           <div class="board-main-content">
-            <div class="board-header">
-                <div class="headline-and-input-with-btn">
-                    <h1 class="headline-board">Board</h1>
-                    <div class="input-and-btn">
-                        <div class="input-container">
-                            <input type="text" placeholder="Name">
-                            <span class="icon">
-                                <img src="./assets/img/icons/board/search_icon.svg" alt="search Icon">
-                            </span>
+            <div class="board-main-content">
+                <div class="board-header">
+                    <div class="headline-and-input-with-btn">
+                        <h1 class="headline-board">Board</h1>
+                        <div class="input-and-btn">
+                            <div class="input-container">
+                                <input type="text" placeholder="Name">
+                                <span class="icon">
+                                    <img src="./assets/img/icons/board/search_icon.svg" alt="search Icon">
+                                </span>
+                            </div>
+                            <button class="add-task-btn-summary">Add task <img src="./assets/img/icons/board/+_icon.svg"
+                                    alt=""></button>
                         </div>
-                        <button class="add-task-btn-summary">Add task <img src="./assets/img/icons/board/+_icon.svg" alt=""></button>
+                    </div>
+                </div>
+                <div class="board-subline-and-add-btn">
+                    <div class="subline-container">
+                        <span>To do</span>
+                        <img src="./assets/img/icons/board/add_btn_subline_icon.svg" alt="">
+                    </div>
+                    <div class="subline-container">
+                        <span>In progress</span>
+                        <img src="./assets/img/icons/board/add_btn_subline_icon.svg" alt="">
+                    </div>
+                    <div class="subline-container">
+                        <span>Await feedback</span>
+                        <img src="./assets/img/icons/board/add_btn_subline_icon.svg" alt="">
+                    </div>
+                    <div class="subline-container">
+                        <span>Done</span>
+                        <img src="./assets/img/icons/board/add_btn_subline_icon.svg" style="visibility: hidden;" alt="">
+                    </div>
+                </div>
+                <div class="board-list">
+                    <div class="board-list-column">
+                        <div class="board-task-element">No tasks To do</div>
+                    </div>
+                    <div class="board-list-column">
+                        <div class="board-task-element">No tasks To do</div>
+                    </div>
+                    <div class="board-list-column">
+                        <div class="board-task-element">No tasks To do</div>
+                    </div>
+                    <div class="board-list-column">
+                        <div class="board-task-element">No tasks To do</div>
                     </div>
                 </div>
             </div>
-            <div class="board-list"></div>
-           </div>
         </main>
     </div>
-   <!-- Link Scripts -->
-   <script src="./shared/includeHTML.js"></script>
-   <script src="./shared/navbar.js"></script>
-   <script src="./shared/header.js"></script>
+    <!-- Link Scripts -->
+    <script src="./shared/includeHTML.js"></script>
+    <script src="./shared/navbar.js"></script>
+    <script src="./shared/header.js"></script>
 </body>
+
 </html>
