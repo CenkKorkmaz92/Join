@@ -18,6 +18,9 @@
 }
 
 .left-input-fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 440px;
     height: 376px;
 }
@@ -40,7 +43,6 @@
     width: 100%;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
-    color: #D1D1D1;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
@@ -64,7 +66,6 @@
     width: 100%;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
-    color: #D1D1D1;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
@@ -88,7 +89,6 @@
     width: 100%;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
-    color: #D1D1D1;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
@@ -99,6 +99,9 @@
 }
 
 .right-input-fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 440px;
     height: 416px;
 }
@@ -149,6 +152,7 @@
     width: 136px;
     height: 56px;
     background-color: #FFFFFF;
+    border: solid 1px #D1D1D1;
     border-radius: 10px;
     gap: 8px;
 }
@@ -159,13 +163,43 @@
     line-height: 24px;
 }
 
+.input-category-container {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    gap: 8px;
+}
 
+.input-category-container label,
+select {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
 
-
+.input-category-container select {
+    height: 48px;
+    width: 100%;
+    border-radius: 10px;
+    border: solid 1px #D1D1D1;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    cursor: pointer;
+}
 
 .subtask-container {
-    width: 100%;
-    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    gap: 8px;
+}
+
+.subtask-container label,
+select {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
 }
 
 .input-subtask-wrapper {
@@ -174,16 +208,15 @@
     align-items: center;
     width: 100%;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
+    border-radius: 10px;
 }
 
 .input-subtask-wrapper input {
     flex: 1;
     border: none;
     outline: none;
-    padding: 8px;
-    font-size: 16px;
+    height: 48px;
+    border-radius: 10px;
 }
 
 .subtask-buttons {
