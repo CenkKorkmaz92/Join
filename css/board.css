@@ -1,0 +1,84 @@
+.board-main-content {
+    padding-top: 110px;
+    padding-left: 96px;
+    padding-right: 96px;
+}
+
+.board-header {
+    display: flex;
+}
+
+.headline-and-input-with-btn {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.headline-board {
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 73.2px;
+    margin: 0;
+}
+
+.input-and-btn {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0px 15px;
+    width: 100%;
+    max-width: 422px;
+    height: 48px;
+    background-color: #fff;
+}
+
+.input-container input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 16px;
+    padding: 8px;
+    background: transparent;
+}
+
+.input-container .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10px;
+    border-left: solid 1px #A8A8A8;
+}
+
+.input-container .icon img {
+    width: 20px;
+    height: 20px;
+}
+
+.add-task-btn-summary {
+    display: flex;
+    align-items: center;
+    width: 244px;
+    height: 48px;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    border-radius: 10px;
+    border: solid 1px #2A3647;
+    color: white;
+    background-color: #2A3647;
+    transition: all 0.3s ease;
+    gap: 4px;
+    padding: 8px 16px 8px 16px;
+}
+
+.add-task-btn-summary:hover {
+    background-color: #29ABE2;
+    border-color: #29ABE2;
+}
