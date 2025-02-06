@@ -1,4 +1,5 @@
 let contacts = [];
+let selectedContactDiv = null;
 
 // HTML-Elemente abrufen
 const popup = document.getElementById("popup");
@@ -91,8 +92,13 @@ function renderContacts() {
                 </div>
             `;
 
-            // Klick-Funktion direkt zuweisen
+            // Klick-Event für den Kontakt
             contactDiv.onclick = function () {
+                if (selectedContactDiv) {
+                    selectedContactDiv.classList.remove("selected"); // Entferne die Markierung vom vorherigen Kontakt
+                }
+                contactDiv.classList.add("selected"); // Markiere den neuen Kontakt
+                selectedContactDiv = contactDiv; // Speichere die Referenz auf den neuen Kontakt
                 showContactDetails(contact);
             };
 
@@ -100,18 +106,17 @@ function renderContacts() {
         });
     });
 }
-
 // Funktion zum Anzeigen der Kontaktdetails
 function showContactDetails(contact) {
-    let contactInfo = document.querySelector(".contact-info");
+    let contactInfo = document.getElementById("detailedContactInfo"); // Direkt auf die ID zugreifen
 
     if (contactInfo) {
-        contactInfo.classList.remove("hidden");
+        contactInfo.classList.remove("hidden"); // Entfernt die "hidden"-Klasse
     }
 
     document.getElementById("contactName").innerText = contact.fullName;
-    document.getElementById("contactEmail").innerText = "Email: " + contact.email;
-    document.getElementById("contactPhone").innerText = "Phone: " + contact.phone;
+    document.getElementById("contactEmail").innerText = contact.email;
+    document.getElementById("contactPhone").innerText = contact.phone;
 
     let contactCircle = document.getElementById("contactCircle");
     contactCircle.innerText = contact.initials;
@@ -125,6 +130,7 @@ function showContactDetails(contact) {
         deleteContact(contact);
     };
 }
+
 
 function deleteContact(contact) {
     let index = contacts.findIndex(c => c.email === contact.email);

@@ -22,7 +22,7 @@ body, html{
 }
 
 
-.addContactBtn {
+.add-contact-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,7 +32,7 @@ body, html{
     background-color: #2A3647;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     margin-bottom: 10px;
     font-size: 21px;
@@ -40,9 +40,9 @@ body, html{
     line-height: 25.2px;
 }
 
-.addContactBtn:hover {
+.add-contact-btn:hover {
     background-color: #29ABE2;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
 .contact {
@@ -86,51 +86,143 @@ body, html{
     align-items: center;
 }
 
+.popup-header{
+    background-color: #2A3647;
+    width: 467px;
+    height: 594px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
 
+.popup-header-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+    margin-top: -100px;
+}
+
+.popup-header-logo-box{
+    display: flex;
+    align-items: start;
+    justify-content: flex-start;
+    width: 100%;
+    margin-left: 47px;
+}
+
+.popup-header-text-box{
+    display: flex;
+    align-items: start;
+    width: 100%;
+    margin-top: 12px;
+    margin-left: 47px;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+.popup-header-text-box-headline{
+    font-size: 61px;
+    font-weight: 700;
+}
+
+.popup-header-text-box-subtext{
+    font-size: 27px;
+    font-weight: 400;
+}
+
+.popup-header-separator-box{
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: flex-start !important;
+    margin-left: 47px;
+    margin-top: 16px;
+}
 
 .popup-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     background: white;
-    padding: 20px;
-    border-radius: 8px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 300px;
+    width: 745px;
+    height: 594px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    gap: 50px;
 }
 
-
-.popup-content input {
-    display: block;
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.popup-main-section{
+    margin-top: -75px;
 }
 
+.popup-input {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.popup-input-field{
+    border-radius: 10px;
+    border: solid 1px black;
+    width: 422px;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 21px 13px 21px 13px;
+}
 
 .popup-buttons {
     display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 36px;
 }
 
 .popup-buttons button {
-    flex: 1;
-    padding: 10px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
+    gap: 20px;
 }
 
-#clearBtn {
-    background: red;
-    color: white;
+.popup-button-cancel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 400;
+    background-color: transparent;
+    border: solid 1px black !important;
+    width: 126px !important;
+    height: 56px !important;
 }
 
-#saveBtn {
-    background: green;
+.popup-button-cancel:hover{
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.popup-button-check{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2A3647;
     color: white;
+    font-size: 21px;
+    font-weight: 700;
+    border: none;
+    width: 214px !important;
+    height: 56px !important;
+}
+
+.popup-button-check:hover{
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
 .contact {
@@ -138,22 +230,8 @@ body, html{
     align-items: center;
     padding: 10px;
     margin: 5px 0;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 332px;
-}
-
-.contact-circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: white;
-    margin-right: 10px;
-    font-size: 16px;
-    text-transform: uppercase;
 }
 
 .contact-info {
@@ -169,8 +247,9 @@ body, html{
 }
 
 .contact-email {
+    margin-top: 3px;
     font-size: 14px;
-    color: gray;
+    color: #007cee;
 }
 
 .letter-header {
@@ -212,7 +291,6 @@ body, html{
 /* Kontakt-Details */
 .contact-detail {
     flex-grow: 1;
-    background: white;
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
@@ -232,6 +310,16 @@ body, html{
     gap: 16px;
 }
 
+.contact-detail-headline{
+    font-size: 61px;
+    font-weight: 700;
+}
+
+.contact-detail-subheadline{
+    font-size: 27px;
+    font-weight: 400;
+}
+
 /* Infos anfangs verstecken */
 .hidden {
     display: none;
@@ -240,31 +328,52 @@ body, html{
 /* Kontakt-Infos */
 .contact-info-section {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     text-align: center;
     margin-bottom: 20px;
+    gap: 24px;
 }
 
-.contact-circle {
-    width: 48px;
-    height: 48px;
+.contact-detailed-name{
+    font-size: 47px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.contact-circle-detail{
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
+    font-size: 47px !important;
+    font-weight: 500;
     color: white;
-    font-size: 18px;
+    font-size: 24px;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    border: solid 2px white;
+}
+
+.contact-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: normal;
+    color: white;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: solid 2px white;
 }
 
 /* Buttons */
 .contact-buttons {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
 }
 
 .contact-buttons button {
@@ -275,25 +384,112 @@ body, html{
     font-weight: bold;
 }
 
-#editContactBtn {
-    background: #ffc107;
-    color: black;
+.button-edit, .button-delete {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #2A3647;
+    font-size: 16px;
+    font-weight: 400 !important;
 }
 
-#deleteContactBtn {
-    background: red;
-    color: white;
+.button-edit:hover, .button-delete:hover {
+    color: #007cee;
+    font-weight: 500 !important;
 }
+
+/* Standard-Icon */
+.button-edit img, .button-delete img {
+    width: 14px;
+    height: 14px;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Bild beim Hover ausblenden */
+.button-edit:hover img, .button-delete:hover img {
+    opacity: 0;
+}
+
+/* Hintergrundbild beim Hover */
+.button-edit:hover::after {
+    content: "";
+    position: absolute;
+    background: url('/assets/img/icons/contact/contact_edit_color.svg') no-repeat center;
+    background-size: contain;
+    width: 14px;
+    height: 14px;
+}
+
+.button-delete:hover::after {
+    content: "";
+    position: absolute;
+    background: url('/assets/img/icons/contact/contact_delete_color.svg') no-repeat center;
+    background-size: contain;
+    width: 14px;
+    height: 14px;
+}
+
+.icons-contact-detail-edit{
+    width: 14px;
+    height: 14px;
+    margin-right: 3px;
+}
+
+
+.icons-contact-detail-delete{
+    width: 14px;
+    height: 14px;
+    margin-right: 3px;
+}
+
 
 /* Telefonnummer & Email */
 .contact-details {
-    text-align: center;
+    text-align: Start;
     margin-top: 20px;
 }
 
-.contact-details p {
+.contact-information-phone{
+    margin-top: 30px;
+}
+
+#contactPhone{
+    color: #007cee;
     font-size: 16px;
-    margin: 5px 0;
+    font-weight: 400;
+}
+
+.contact-information-mail{
+    margin-top: 55px;
+}
+
+#contactEmail{
+    color: #007cee;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.contact-details-headline{
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.contact-details-subtitel{
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.contact:hover {
+    background-color: #2A3647; /* Leichter Hover-Effekt */
+    color: white;
+    cursor: pointer;
+}
+
+.contact.selected {
+    background-color: #2A3647; /* Farbe für den ausgewählten Kontakt */
+    color: white
 }
 
 

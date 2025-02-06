@@ -26,21 +26,46 @@
             <!-- Your page-specific content goes here -->
             <div class="contact-body">
                 <div class="container">
-                    <button class="addContactBtn" id="addContactBtn">Add new contact <img src="./assets/img/icons/contact/person_add.svg" alt="" class="img-add-contact"></button>
+                    <button class="add-contact-btn" id="addContactBtn">Add new contact <img src="./assets/img/icons/contact/person_add.svg" alt="" class="img-add-contact"></button>
                     <div id="contactList"></div>
                 </div>
 
                 <!-- Popup-Fenster für die Kontakterstellung -->
                 <div id="popup" class="popup" style="display: none;">
+                    <div class="popup-header">
+                        <div class="popup-header-main">
+                            <div class="popup-header-logo-box">
+                                <img src="/assets/img/icons/contact/contact_logo.svg" alt="">
+                            </div>
+                            <div class="popup-header-text-box">
+                                <span class="popup-header-text-box-headline">Add contact</span>
+                                <span class="popup-header-text-box-subtext">Tasks are better with a team!</span>
+                            </div>
+                            <div class="popup-header-separator-box">
+                                <img src="/assets/img/icons/contact/contact_separator.svg" alt="">
+                            </div>
+                        </div>
+                    </div>
                     <div class="popup-content">
-                        <h2>Neuen Kontakt hinzufügen</h2>
-                        <input type="text" id="nameInput" placeholder="Name">
-                        <input type="email" id="emailInput" placeholder="E-Mail">
-                        <input type="tel" id="phoneInput" placeholder="Telefonnummer">
-                        
-                        <div class="popup-buttons">
-                            <button id="clearBtn">Abbrechen</button>
-                            <button id="saveBtn">Speichern</button>
+                        <div class="popup-main-section">
+                            <img src="/assets/img/icons/contact/contact_profile_blanco.svg" alt="">
+                        </div>
+                        <div class="popup-sub-section">
+                            <div class="popup-input">
+                                <input type="text" id="nameInput" placeholder="Name" class="popup-input-field">
+                                <input type="email" id="emailInput" placeholder="E-Mail" class="popup-input-field">
+                                <input type="tel" id="phoneInput" placeholder="Telefonnummer" class="popup-input-field">
+                            </div>
+                            <div class="popup-buttons">
+                                <button id="clearBtn" class="popup-button-cancel">
+                                    Cancel 
+                                    <img src="/assets/img/icons/contact/contact_cancel.svg" alt="">
+                                </button>
+                                <button id="saveBtn" class="popup-button-check">
+                                    Create contact 
+                                    <img src="/assets/img/icons/contact/contact_check.svg" alt="">
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -48,26 +73,40 @@
                 <div class="contact-detail" id="contactDetail">
                     <!-- Header bleibt immer sichtbar -->
                     <div class="contact-header">
-                        <h2>Contact</h2>
+                        <p class="contact-detail-headline">Contact</p>
                         <img src="./assets/img/icons/contact/separator-contact.svg" alt="">
-                        <h3>Better with a team</h3>
+                        <p class="contact-detail-subheadline">Better with a team</p>
                     </div>
             
                     <!-- Diese Infos sind anfangs versteckt -->
-                    <div class="contact-info hidden">
+                    <div class="contact-info hidden" id="detailedContactInfo">
                         <div class="contact-info-section">
-                            <div id="contactCircle" class="contact-circle"></div>
-                            <h3 id="contactName">Select a contact</h3>
-            
-                            <div class="contact-buttons">
-                                <button id="editContactBtn">Edit</button>
-                                <button id="deleteContactBtn">Delete</button>
+                            <div id="contactCircle" class="contact-circle-detail"></div>
+                            <div class="contact-personal-info">
+                                <p id="contactName" class="contact-detailed-name"></p>
+                                <div class="contact-buttons">
+                                    <button id="editContactBtn" class="button-edit">
+                                        <img src="/assets/img/icons/contact/contact_edit.svg" alt="" class="icons-contact-detail-edit">
+                                        Edit
+                                    </button>
+                                    <button id="deleteContactBtn" class="button-delete">
+                                        <img src="/assets/img/icons/contact/contact_delete.svg" alt="" class="icons-contact-detail-delete">
+                                        Delete
+                                    </button>
+                                </div>
                             </div>
                         </div>
             
                         <div class="contact-details">
-                            <p id="contactPhone">Phone: -</p>
-                            <p id="contactEmail">Email: -</p>
+                            <p class="contact-details-headline">Contact Information</p>
+                            <div class="contact-information-mail">
+                                <p class="contact-details-subtitel">Email:</p>
+                                <p id="contactEmail">-</p>
+                            </div>
+                            <div class="contact-information-phone">
+                                <p class="contact-details-subtitel">Phone:</p>
+                                <p id="contactPhone">-</p>
+                            </div>
                         </div>
                     </div>
                 </div>
