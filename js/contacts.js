@@ -177,6 +177,11 @@ function getInitials(name) {
 }
 
 function getRandomColor() {
-    const colors = ["#FF5733", "#33A1FF", "#33FF57", "#FFC133", "#A133FF", "#FF33A8", "#33FFD5"];
-    return colors[Math.floor(Math.random() * colors.length)];
+    // Generiert zufällige Werte für Rot, Grün und Blau (0–255)
+    let r = Math.floor(Math.random() * 256);
+    let g = Math.floor(Math.random() * 256);
+    let b = Math.floor(Math.random() * 256);
+
+    // Erstellt eine RGB-Farbe im Hexadezimalformat
+    return `rgb(${r}, ${g}, ${b})`;
 }
