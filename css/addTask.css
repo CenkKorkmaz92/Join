@@ -127,8 +127,8 @@
 
 /* Black color when a valid date is selected */
 .input-due-date-container input:valid {
-    color: black; 
-  }
+    color: black;
+}
 
 .input-due-date-container span {
     font-size: 20px;
@@ -254,11 +254,13 @@
 
 .subtask-container {
     /* Force it to a fixed height so it won't keep growing */
-    height: 260px;  /* ~3 items worth of space */
+    height: 260px;
+    /* ~3 items worth of space */
     display: flex;
     flex-direction: column;
-    gap: 8px; /* If you want a small gap between label, input & list */
-  }
+    gap: 8px;
+    /* If you want a small gap between label, input & list */
+}
 
 .subtask-container label,
 select {
@@ -277,7 +279,7 @@ select {
 
 .input-subtask-wrapper input:focus {
     border: 1px solid #29ABE2;
-  }
+}
 
 .input-subtask-wrapper input {
     flex: 1;
@@ -327,14 +329,14 @@ select {
     font-size: 16px;
     padding: 4px 6px;
     outline: none;
-  }
+}
 
-  .editing-subtask input:focus {
+.editing-subtask input:focus {
     border: none;
     border-bottom: 2px solid #29ABE2;
-  }
-  
-  
+}
+
+
 
 /* ───────────────────────────────────────────────────
    Updated subtask-item styling for hover & icons
