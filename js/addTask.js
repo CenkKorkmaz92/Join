@@ -65,27 +65,68 @@ document.addEventListener("DOMContentLoaded", () => {
         const subtaskText = inputField.value.trim();
         if (subtaskText === "") return;
 
-        // Create subtask item
+        // Create the <li> element
         const listItem = document.createElement("li");
         listItem.classList.add("subtask-item");
         listItem.innerHTML = `
             <div class="subtask-item-container">
-                <span>• ${subtaskText}</span>
+                <!-- Use a class .subtask-text so we can easily edit it -->
+                <span class="subtask-text">• ${subtaskText}</span>
+    
                 <div class="subtask-li-icons-container">
-                    <img src="./assets/img/icons/addTask/edit_icon.svg" alt="Edit Icon">
+                    <!-- Pencil Icon for edit -->
+                    <img src="./assets/img/icons/addTask/edit_icon.svg" 
+                         alt="Edit Icon" 
+                         class="edit-subtask">
+    
                     <div>|</div>
-                    <img src="./assets/img/icons/addTask/delete_icon.svg" alt="Delete Icon">
+    
+                    <!-- Trash Icon for delete -->
+                    <img src="./assets/img/icons/addTask/delete_icon.svg" 
+                         alt="Delete Icon" 
+                         class="delete-subtask">
                 </div>
             </div>
         `;
 
-        // Append to list
+        // Append the subtask item
         subtaskList.appendChild(listItem);
 
-        // Reset input field and buttons
+        // 1) Get references to the new elements
+        const editIcon = listItem.querySelector(".edit-subtask");
+        const deleteIcon = listItem.querySelector(".delete-subtask");
+        const subtaskSpan = listItem.querySelector(".subtask-text");
+
+        // 2) Define a function to edit the text
+        function handleEdit() {
+            // Remove the leading "• " to prompt only the actual text
+            const currentText = subtaskSpan.textContent.replace(/^•\s/, "");
+
+            // Ask the user for a new text; if they click cancel, it returns null
+            const updatedText = prompt("Edit subtask:", currentText);
+
+            // If the user pressed OK and typed something non-empty
+            if (updatedText !== null && updatedText.trim() !== "") {
+                subtaskSpan.textContent = `• ${updatedText}`;
+            }
+        }
+
+        // 3) Pencil icon click => edit
+        editIcon.addEventListener("click", handleEdit);
+
+        // 4) Double-click on the text => edit
+        subtaskSpan.addEventListener("dblclick", handleEdit);
+
+        // 5) Trash icon => delete subtask
+        deleteIcon.addEventListener("click", () => {
+            listItem.remove();
+        });
+
+        // Finally, reset the input & toggle subtask input buttons
         inputField.value = "";
         toggleButtons(false);
     }
+
 
     /**
      * Clears ALL fields in the Add Task form (title, description, date, etc.),
