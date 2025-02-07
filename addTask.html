@@ -78,6 +78,7 @@
 
                         <div class="subtask-container">
                             <label for="subtask">Subtasks</label>
+
                             <div class="input-subtask-wrapper">
                                 <input type="text" id="subtask-input" placeholder="Add new subtask">
                                 <div class="subtask-buttons">
@@ -87,7 +88,11 @@
                                     <button id="add-subtask-btn">+</button>
                                 </div>
                             </div>
-                            <ul id="subtask-list"></ul>
+
+                            <!-- Wrap just the subtasks list in its own scrollable div -->
+                            <div class="subtask-list-wrapper">
+                                <ul id="subtask-list"></ul>
+                            </div>
                         </div>
                     </div>
                 </div>

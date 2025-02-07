@@ -43,7 +43,6 @@
 .input-title-container input {
     height: 32px;
     padding: 8px;
-    width: 100%;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
     font-size: 20px;
@@ -68,7 +67,6 @@
 .input-description-container textarea {
     min-height: 104px;
     /* Ensures starting height */
-    width: 100%;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
     font-size: 20px;
@@ -101,7 +99,6 @@
 .drop-down-assignt-to-container input {
     height: 32px;
     padding: 8px;
-    width: 100%;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
     font-size: 20px;
@@ -118,7 +115,7 @@
     flex-direction: column;
     justify-content: space-between;
     width: 440px;
-    height: 416px;
+    gap: 12px;
 }
 
 .input-due-date-container {
@@ -251,11 +248,12 @@
 }
 
 .subtask-container {
+    /* Force it to a fixed height so it won't keep growing */
+    height: 260px;  /* ~3 items worth of space */
     display: flex;
     flex-direction: column;
-    height: 80px;
-    gap: 8px;
-}
+    gap: 8px; /* If you want a small gap between label, input & list */
+  }
 
 .subtask-container label,
 select {
@@ -268,7 +266,6 @@ select {
     position: relative;
     display: flex;
     align-items: center;
-    width: 100%;
     border: 1px solid #ccc;
     border-radius: 10px;
 }
@@ -307,6 +304,11 @@ select {
 #subtask-list {
     margin-top: 10px;
     padding-left: 20px;
+}
+
+.subtask-list-wrapper {
+    overflow-y: auto;
+    height: 146px;
 }
 
 /* ───────────────────────────────────────────────────
@@ -384,7 +386,6 @@ select {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 150px;
     padding-bottom: 40px;
 }
 
