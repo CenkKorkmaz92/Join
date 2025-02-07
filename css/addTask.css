@@ -470,3 +470,13 @@ select {
     background-color: #29ABE2;
     border: #29ABE2;
 }
+
+.create-btn:disabled {
+    background-color: #cccccc;
+    border-color: #aaaaaa;
+    color: #666666;
+}
+
+.create-btn:disabled:hover {
+    cursor: not-allowed !important;
+}
