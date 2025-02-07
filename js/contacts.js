@@ -154,6 +154,19 @@ function showContactDetails(contact) {
     };
 }
 
+function closeWindow() {
+    // Popup für Kontakterstellung schließen
+    const addContactPopup = document.getElementById("popup");
+    if (addContactPopup) {
+        addContactPopup.style.display = "none";
+    }
+
+    // Popup für die Kontaktbearbeitung schließen
+    const editContactPopup = document.getElementById("editPopup");
+    if (editContactPopup) {
+        editContactPopup.style.display = "none";
+    }
+}
 
 
 
