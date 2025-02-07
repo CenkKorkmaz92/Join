@@ -125,6 +125,11 @@
     gap: 8px;
 }
 
+/* Black color when a valid date is selected */
+.input-due-date-container input:valid {
+    color: black; 
+  }
+
 .input-due-date-container span {
     font-size: 20px;
     font-weight: 400;
@@ -338,6 +343,10 @@ select {
     display: flex;
     align-items: center;
     gap: 4px;
+}
+
+.subtask-li-icons-container img:hover {
+    cursor: pointer;
 }
 
 .vector-subtask-btn {
