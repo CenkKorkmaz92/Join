@@ -316,6 +316,16 @@ select {
     height: 146px;
 }
 
+.subtask-edit-input {
+    width: 76%;
+    border: none;
+    border-bottom: 1px solid #005DFF;
+    font-size: 16px;
+    padding: 4px 6px;
+    outline: none;
+  }
+  
+
 /* ───────────────────────────────────────────────────
    Updated subtask-item styling for hover & icons
    ─────────────────────────────────────────────────── */
