@@ -356,6 +356,21 @@ body, html{
     border: solid 2px white;
 }
 
+.contact-circle-detail-edit{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 47px !important;
+    font-weight: 500;
+    color: white;
+    font-size: 24px;
+    text-transform: uppercase;
+    border: solid 2px white;
+}
+
 .contact-circle {
     width: 42px;
     height: 42px;
