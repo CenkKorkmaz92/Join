@@ -11,7 +11,10 @@ const emailInput = document.getElementById("emailInput");
 const phoneInput = document.getElementById("phoneInput");
 const contactList = document.getElementById("contactList");
 
-// Event-Funktionen direkt in die HTML-Elemente setzen
+// Kontakte aus localStorage laden
+loadContactsFromLocalStorage();
+
+// Event-Funktionen für Buttons
 addContactBtn.onclick = function () {
     popup.style.display = "flex";
 };
@@ -37,12 +40,14 @@ saveBtn.onclick = function () {
         phone,
         initials: getInitials(fullName),
         firstLetter: fullName.charAt(0).toUpperCase(),
-        color: getRandomColor()
+        color: getRandomColor(),
+        profileImage: "/assets/img/icons/contact/contact_profile_blanco.svg" // Standardbild
     };
 
     contacts.push(newContact);
     contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
 
+    saveContactsToLocalStorage();
     renderContacts();
     clearInputs();
     popup.style.display = "none";
@@ -95,10 +100,10 @@ function renderContacts() {
             // Klick-Event für den Kontakt
             contactDiv.onclick = function () {
                 if (selectedContactDiv) {
-                    selectedContactDiv.classList.remove("selected"); // Entferne die Markierung vom vorherigen Kontakt
+                    selectedContactDiv.classList.remove("selected");
                 }
-                contactDiv.classList.add("selected"); // Markiere den neuen Kontakt
-                selectedContactDiv = contactDiv; // Speichere die Referenz auf den neuen Kontakt
+                contactDiv.classList.add("selected");
+                selectedContactDiv = contactDiv;
                 showContactDetails(contact);
             };
 
@@ -106,12 +111,13 @@ function renderContacts() {
         });
     });
 }
+
 // Funktion zum Anzeigen der Kontaktdetails
 function showContactDetails(contact) {
-    let contactInfo = document.getElementById("detailedContactInfo"); // Direkt auf die ID zugreifen
+    let contactInfo = document.getElementById("detailedContactInfo");
 
     if (contactInfo) {
-        contactInfo.classList.remove("hidden"); // Entfernt die "hidden"-Klasse
+        contactInfo.classList.remove("hidden");
     }
 
     document.getElementById("contactName").innerText = contact.fullName;
@@ -131,16 +137,15 @@ function showContactDetails(contact) {
     };
 }
 
-
+// Kontakt löschen
 function deleteContact(contact) {
-    let index = contacts.findIndex(c => c.email === contact.email);
-    if (index !== -1) {
-        contacts.splice(index, 1);
-        renderContacts();
-        resetContactDetail();
-    }
+    contacts = contacts.filter(c => c.email !== contact.email);
+    saveContactsToLocalStorage();
+    renderContacts();
+    resetContactDetail();
 }
 
+// Kontaktdetail-Felder zurücksetzen
 function resetContactDetail() {
     document.getElementById("contactName").innerText = "Select a contact";
     document.getElementById("contactEmail").innerText = "";
@@ -149,39 +154,91 @@ function resetContactDetail() {
     document.getElementById("contactCircle").style.backgroundColor = "transparent";
 }
 
+// Kontakt bearbeiten
 function editContact(contact) {
-    nameInput.value = contact.fullName;
-    emailInput.value = contact.email;
-    phoneInput.value = contact.phone;
+    const editPopup = document.getElementById("editPopup");
+    editPopup.style.display = "flex";
 
-    popup.style.display = "flex";
+    document.getElementById("editNameInput").value = contact.fullName;
+    document.getElementById("editEmailInput").value = contact.email;
+    document.getElementById("editPhoneInput").value = contact.phone;
 
-    saveBtn.onclick = function () {
-        contact.fullName = nameInput.value.trim();
-        contact.email = emailInput.value.trim();
-        contact.phone = phoneInput.value.trim();
-        contact.initials = getInitials(contact.fullName);
-        contact.firstLetter = contact.fullName.charAt(0).toUpperCase();
+    const profileImage = document.getElementById("editProfileImage");
+    profileImage.src = contact.profileImage || "/assets/img/icons/contact/contact_profile_blanco.svg";
 
+    // Profilbild ändern
+    profileImage.onclick = function () {
+        let fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = "image/*";
+        fileInput.onchange = function (event) {
+            let file = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                profileImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+        fileInput.click();
+    };
+
+    document.getElementById("saveEditBtn").onclick = function () {
+        let updatedFullName = document.getElementById("editNameInput").value.trim();
+        let updatedEmail = document.getElementById("editEmailInput").value.trim();
+        let updatedPhone = document.getElementById("editPhoneInput").value.trim();
+
+        if (updatedFullName === "" || updatedEmail === "" || updatedPhone === "") {
+            alert("Bitte alle Felder ausfüllen!");
+            return;
+        }
+
+        contacts = contacts.filter(c => c.email !== contact.email);
+
+        let updatedContact = {
+            fullName: updatedFullName,
+            email: updatedEmail,
+            phone: updatedPhone,
+            initials: getInitials(updatedFullName),
+            firstLetter: updatedFullName.charAt(0).toUpperCase(),
+            color: contact.color,
+            profileImage: profileImage.src
+        };
+
+        contacts.push(updatedContact);
+        contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
+
+        saveContactsToLocalStorage();
         renderContacts();
-        showContactDetails(contact);
-        clearInputs();
-        popup.style.display = "none";
+        showContactDetails(updatedContact);
+        editPopup.style.display = "none";
+    };
+
+    document.getElementById("deleteBtn").onclick = function () {
+        deleteContact(contact);
+        editPopup.style.display = "none";
     };
 }
 
-function getInitials(name) {
-    let nameParts = name.split(" ");
-    let initials = nameParts.map(part => part.charAt(0).toUpperCase()).join("");
-    return initials.slice(0, 2);
+// Kontakte in localStorage speichern
+function saveContactsToLocalStorage() {
+    localStorage.setItem("contacts", JSON.stringify(contacts));
 }
 
-function getRandomColor() {
-    // Generiert zufällige Werte für Rot, Grün und Blau (0–255)
-    let r = Math.floor(Math.random() * 256);
-    let g = Math.floor(Math.random() * 256);
-    let b = Math.floor(Math.random() * 256);
+// Kontakte aus localStorage laden
+function loadContactsFromLocalStorage() {
+    let storedContacts = localStorage.getItem("contacts");
+    if (storedContacts) {
+        contacts = JSON.parse(storedContacts);
+        renderContacts();
+    }
+}
 
-    // Erstellt eine RGB-Farbe im Hexadezimalformat
-    return `rgb(${r}, ${g}, ${b})`;
+// Initialen berechnen
+function getInitials(name) {
+    return name.split(" ").map(part => part.charAt(0).toUpperCase()).join("").slice(0, 2);
+}
+
+// Zufällige Farbe generieren
+function getRandomColor() {
+    return `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
 }
