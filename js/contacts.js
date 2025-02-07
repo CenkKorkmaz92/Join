@@ -56,6 +56,15 @@ saveBtn.onclick = function () {
     renderContacts();
     clearInputs();
     popup.style.display = "none";
+
+    // Zeige das Erfolgspopup an
+    const popupSuccess = document.getElementById("popupSuccess");
+    popupSuccess.style.display = "flex";
+
+    // Das Popup nach 3 Sekunden automatisch schließen
+    setTimeout(function() {
+        popupSuccess.style.display = "none";
+    }, 800);  // Das Popup verschwindet nach 3 Sekunden
 };
 
 // Eingaben leeren
@@ -167,6 +176,7 @@ function closeWindow() {
         editContactPopup.style.display = "none";
     }
 }
+
 
 
 
