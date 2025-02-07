@@ -17,15 +17,30 @@ contacts.forEach(contact => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const inputField     = document.getElementById("subtask-input");
-    const addButton      = document.getElementById("add-subtask-btn");
-    const clearButton    = document.getElementById("clear-subtask");
-    const confirmButton  = document.getElementById("confirm-subtask");
-    const vector         = document.getElementById("vector");        // <-- The gray separator
-    const subtaskList    = document.getElementById("subtask-list");
+    // References for subtask input / buttons
+    const inputField = document.getElementById("subtask-input");
+    const addButton = document.getElementById("add-subtask-btn");
+    const clearButton = document.getElementById("clear-subtask");
+    const confirmButton = document.getElementById("confirm-subtask");
+    const vector = document.getElementById("vector");
+    const subtaskList = document.getElementById("subtask-list");
+    const prioOptions = document.querySelectorAll(".prio-option");
+
+    // Listen for clicks on each priority button
+    prioOptions.forEach(option => {
+        option.addEventListener("click", () => {
+            // Remove 'selected' from all first
+            prioOptions.forEach(o => o.classList.remove("selected"));
+            // Add 'selected' to the clicked option
+            option.classList.add("selected");
+        });
+    });
+
+    // Reference to the bottom Clear button (the big one in the bottom container)
+    const bottomClearButton = document.getElementById("clear-all-fields-btn");
 
     /**
-     * Toggles visibility of the confirm, clear, and vector elements
+     * Toggles visibility of the subtask confirm, clear, and vector elements
      * depending on whether the user is currently typing a subtask.
      */
     function toggleButtons(showConfirm) {
@@ -72,7 +87,46 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleButtons(false);
     }
 
-    // Show confirm & clear buttons (and the gray separator) when typing
+    /**
+     * Clears ALL fields in the Add Task form (title, description, date, etc.),
+     * as well as subtasks and priority selection. Invoked by bottomClearButton.
+     */
+    function clearAllFields() {
+        // 1) Clear Title & Description
+        document.querySelector('input[placeholder="Enter a title"]').value = "";
+        document.querySelector('textarea[placeholder="Enter a Description"]').value = "";
+
+        // 2) Clear Assigned to
+        document.querySelector('input[list="assignees"]').value = "";
+
+        // 3) Clear Date
+        document.querySelector('input[type="date"]').value = "";
+
+        // 4) Reset Category (go back to placeholder)
+        document.getElementById("category").value = "";
+
+        // 5) Clear Subtask list
+        subtaskList.innerHTML = "";
+
+        // 6) Reset subtask input field & hide confirm/clear buttons
+        inputField.value = "";
+        confirmButton.classList.add("hidden");
+        clearButton.classList.add("hidden");
+        vector.classList.add("hidden");
+        addButton.classList.remove("hidden");
+
+        // 7) (Optional) Reset priority to "Medium"
+        document.querySelectorAll('.prio-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        // Then set "medium" as selected again
+        const mediumOption = document.querySelector('.prio-option[data-prio="medium"]');
+        if (mediumOption) {
+            mediumOption.classList.add('selected');
+        }
+    }
+
+    // Subtask Input Field events
     inputField.addEventListener("input", () => {
         if (inputField.value.trim()) {
             toggleButtons(true);
@@ -81,19 +135,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Confirm button adds subtask
+    // Confirm button for subtask
     confirmButton.addEventListener("click", addSubtask);
 
-    // Enter key adds subtask
+    // Add subtask on Enter key
     inputField.addEventListener("keypress", (event) => {
         if (event.key === "Enter") {
             addSubtask();
         }
     });
 
-    // Clear button resets input and hides confirm & vector
+    // Clear button (X) for subtask input
     clearButton.addEventListener("click", () => {
         inputField.value = "";
         toggleButtons(false);
+    });
+
+    // Bottom Clear button (the big one in add-task-bottom-container)
+    bottomClearButton.addEventListener("click", (event) => {
+        event.preventDefault(); // Prevent default if inside a <form>
+        clearAllFields(); d
     });
 });
