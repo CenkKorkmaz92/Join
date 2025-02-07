@@ -52,28 +52,30 @@
                         <div class="prio-selection-container">
                             <span>Prio</span>
                             <div class="prio-selector-container">
-                                <div class="prio-option">
+                                <div class="prio-option" data-prio="urgent">
                                     <span>Urgent</span>
                                     <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority">
                                 </div>
-                                <div class="prio-option">
+                                <div class="prio-option selected" data-prio="medium">
                                     <span>Medium</span>
                                     <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority">
                                 </div>
-                                <div class="prio-option">
+                                <div class="prio-option" data-prio="low">
                                     <span>Low</span>
                                     <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority">
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="input-category-container">
                             <label for="category">Category<span style="color: red;">*</span></label>
-                            <select id="category">
-                                <option selected disabled>Select task category</option>
+                            <select id="category" required>
+                                <option value="" selected hidden>Select task category</option>
                                 <option value="user-story">User Story</option>
                                 <option value="technical-task">Technical Task</option>
                             </select>
                         </div>
+                        
                         <div class="subtask-container">
                             <label for="subtask">Subtasks</label>
                             <div class="input-subtask-wrapper">

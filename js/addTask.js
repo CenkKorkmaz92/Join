@@ -79,4 +79,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const prioOptions = document.querySelectorAll(".prio-option");
+
+    prioOptions.forEach(option => {
+        option.addEventListener("click", () => {
+            // Remove 'selected' class from all options
+            prioOptions.forEach(opt => opt.classList.remove("selected"));
+
+            // Add 'selected' class to clicked option
+            option.classList.add("selected");
+        });
+    });
+});
+
 

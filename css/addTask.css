@@ -41,7 +41,8 @@
 }
 
 .input-title-container input {
-    height: 48px;
+    height: 32px;
+    padding: 8px;
     width: 100%;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
@@ -64,13 +65,14 @@
 }
 
 .input-description-container input {
-    height: 120px;
+    height: 104px;
     width: 100%;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
+    padding: 8px;
 }
 
 .drop-down-assignt-to-container {
@@ -87,7 +89,8 @@
 }
 
 .drop-down-assignt-to-container input {
-    height: 48px;
+    height: 32px;
+    padding: 8px;
     width: 100%;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
@@ -122,8 +125,8 @@
 }
 
 .input-due-date-container input {
-    height: 48px;
-    width: 100%;
+    height: 32px;
+    padding: 8px;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
     color: #D1D1D1;
@@ -157,13 +160,41 @@
     border: solid 1px #D1D1D1;
     border-radius: 10px;
     gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.prio-selection-container span {
+/* Default text color */
+.prio-option span {
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
+    color: black;
 }
+
+/* Selected effect - Ensures text turns white */
+.prio-option.selected span {
+    color: white !important;
+}
+
+
+.prio-option.selected img {
+    filter: brightness(0) invert(1); /* Makes the image white */
+}
+
+/* Background colors for different selections */
+.prio-option[data-prio="urgent"].selected {
+    background-color: #FF3D00;
+}
+
+.prio-option[data-prio="medium"].selected {
+    background-color: #FFA800;
+}
+
+.prio-option[data-prio="low"].selected {
+    background-color: #7AE229;
+}
+
 
 .input-category-container {
     display: flex;
@@ -173,7 +204,7 @@
 }
 
 .input-category-container label,
-select {
+.input-category-container select {
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
@@ -181,6 +212,7 @@ select {
 
 .input-category-container select {
     height: 48px;
+    padding: 8px;
     width: 100%;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
@@ -188,7 +220,25 @@ select {
     font-weight: 400;
     line-height: 24px;
     cursor: pointer;
+    color: black; /* Default text color */
 }
+
+/* Placeholder (hidden option) style */
+.input-category-container select:invalid {
+    color: gray; /* Placeholder color */
+}
+
+/* Hide the empty placeholder option */
+.input-category-container select option[value=""] {
+    display: none;
+}
+
+/* Change font color to black when a valid option is selected */
+.input-category-container select:focus,
+.input-category-container select:valid {
+    color: black;
+}
+
 
 .subtask-container {
     display: flex;
@@ -217,8 +267,12 @@ select {
     flex: 1;
     border: none;
     outline: none;
-    height: 48px;
+    height: 32px;
+    padding: 8px;
     border-radius: 10px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
 }
 
 .subtask-buttons {
