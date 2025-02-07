@@ -53,38 +53,92 @@ const contacts = [
       }
     }
   
+ /**
+ * Opens an inline edit mode for the clicked subtask:
+ * - Replaces the text + icons with an input field
+ * - Presents a trash icon (cancel) and a check icon (save) inside the input area
+ */
+function handleInlineEdit(subtaskSpan) {
+    // Grab the original text, ignoring the leading bullet + space
+    const originalText = subtaskSpan.textContent.replace(/^•\s*/, "");
+  
+    // The parent container that holds text + icons
+    const container = subtaskSpan.closest(".subtask-item-container");
+  
+    // Build an editing UI similar to the "Add new subtask" input
+    container.innerHTML = `
+      <div class="input-subtask-wrapper editing-subtask">
+        <input 
+          type="text" 
+          class="subtask-edit-input" 
+          value="${originalText}"
+        />
+        <div class="subtask-buttons">
+          <!-- Trash: discards changes -->
+          <button class="cancel-edit"><img src="./assets/img/icons/addTask/delete_icon.svg" alt="Delete Icon"></button>
+          <!-- If you want a separator line, uncomment:
+          <div class="vector-subtask-btn"></div> 
+          -->
+          <!-- Check: saves changes -->
+          <button class="confirm-edit"><img src="./assets/img/icons/addTask/check_Subtasks_icon.svg" alt="Delete Icon"></button>
+        </div>
+      </div>
+    `;
+  
+    // Now get references to the new elements
+    const editInput    = container.querySelector(".subtask-edit-input");
+    const cancelBtn    = container.querySelector(".cancel-edit");
+    const confirmBtn   = container.querySelector(".confirm-edit");
+  
+    // Focus immediately
+    editInput.focus();
+  
     /**
-     * Opens an inline edit mode for a given subtask.
-     * @function handleInlineEdit
-     * @param {HTMLSpanElement} subtaskSpan - The <span> containing the subtask text.
+     * Restore the normal "view" mode with the final text.
+     * @param {string} text - The subtask text to display.
      */
-    function handleInlineEdit(subtaskSpan) {
-      const currentText = subtaskSpan.textContent.replace(/^•\s/, "");
-      const input = document.createElement("input");
-      input.type = "text";
-      input.value = currentText;
-      input.classList.add("subtask-edit-input");
-      subtaskSpan.parentNode.replaceChild(input, subtaskSpan);
-      input.focus();
+    function restoreView(text) {
+      container.innerHTML = `
+        <span class="subtask-text">• ${text}</span>
+        <div class="subtask-li-icons-container">
+          <img src="./assets/img/icons/addTask/edit_icon.svg" alt="Edit Icon" class="edit-subtask">
+          <div>|</div>
+          <img src="./assets/img/icons/addTask/delete_icon.svg" alt="Delete Icon" class="delete-subtask">
+        </div>
+      `;
+      // Re-wire the edit/delete listeners on the new elements
+      const newSpan   = container.querySelector(".subtask-text");
+      const editIcon  = container.querySelector(".edit-subtask");
+      const deleteIcon= container.querySelector(".delete-subtask");
   
-      /**
-       * Finalizes inline editing, either saving or discarding changes.
-       * @param {boolean} save - If true, use new text; if false, revert to old text.
-       */
-      function finalizeEdit(save) {
-        const newText = (save && input.value.trim()) ? input.value.trim() : currentText;
-        subtaskSpan.textContent = `• ${newText}`;
-        input.parentNode.replaceChild(subtaskSpan, input);
-      }
-  
-      input.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") finalizeEdit(true);
-      });
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") finalizeEdit(false);
-      });
-      input.addEventListener("blur", () => finalizeEdit(true));
+      editIcon.addEventListener("click", () => handleInlineEdit(newSpan));
+      newSpan.addEventListener("dblclick", () => handleInlineEdit(newSpan));
+      deleteIcon.addEventListener("click", () => container.parentNode.remove());
     }
+  
+    // Cancel => discard changes, revert to original text
+    cancelBtn.addEventListener("click", () => restoreView(originalText));
+  
+    // Confirm => save typed text
+    confirmBtn.addEventListener("click", () => {
+      const newText = editInput.value.trim() || originalText;
+      restoreView(newText);
+    });
+  
+    // Handle Enter/Esc keys
+    editInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        confirmBtn.click();
+      } else if (e.key === "Escape") {
+        cancelBtn.click();
+      }
+    });
+  
+    // If user clicks away, you could also save or revert. 
+    // For example, to auto-save on blur:
+    // editInput.addEventListener("blur", () => confirmBtn.click());
+  }
+  
   
     /**
      * Creates a new subtask <li>, attaches edit/delete logic, and appends it to #subtask-list.

@@ -275,11 +275,16 @@ select {
     border-radius: 10px;
 }
 
+.input-subtask-wrapper input:focus {
+    border: 1px solid #29ABE2;
+  }
+
 .input-subtask-wrapper input {
     flex: 1;
     border: none;
     outline: none;
     height: 32px;
+    width: 390px;
     padding: 8px;
     border-radius: 10px;
     font-size: 20px;
@@ -319,11 +324,16 @@ select {
 .subtask-edit-input {
     width: 76%;
     border: none;
-    border-bottom: 1px solid #005DFF;
     font-size: 16px;
     padding: 4px 6px;
     outline: none;
   }
+
+  .editing-subtask input:focus {
+    border: none;
+    border-bottom: 2px solid #29ABE2;
+  }
+  
   
 
 /* ───────────────────────────────────────────────────
