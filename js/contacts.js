@@ -6,38 +6,54 @@ function generateUUID() {
 let contacts = [];
 let selectedContactDiv = null;
 
-// HTML-Elemente abrufen
+// HTML element references
 const popup = document.getElementById("popup");
 const addContactBtn = document.getElementById("addContactBtn");
-const saveBtn = document.getElementById("saveBtn");
 const clearBtn = document.getElementById("clearBtn");
 const nameInput = document.getElementById("nameInput");
 const emailInput = document.getElementById("emailInput");
 const phoneInput = document.getElementById("phoneInput");
 const contactList = document.getElementById("contactList");
+const contactForm = document.getElementById("contactForm");
 
-// Kontakte aus localStorage laden
+// Load any existing contacts from localStorage
 loadContactsFromLocalStorage();
 
+// Open popup when "Add new contact" is clicked
 addContactBtn.onclick = function () {
     popup.style.display = "flex";
 };
 
+// Cancel/close button: clear inputs and close the popup
 clearBtn.onclick = function () {
     clearInputs();
     popup.style.display = "none";
 };
 
-saveBtn.onclick = function () {
+// Attach a submit event listener to the form
+contactForm.addEventListener('submit', function (event) {
+    event.preventDefault();  // Prevent default form submission
+
+    // Check form validity (HTML5 validation)
+    if (!contactForm.checkValidity()) {
+        // This will show the browser's default validation messages
+        contactForm.reportValidity();
+        return;
+    }
+
+    // Retrieve trimmed values
     let fullName = nameInput.value.trim();
     let email = emailInput.value.trim();
     let phone = phoneInput.value.trim();
 
+    // Although required and pattern attributes handle validation,
+    // you can add extra JavaScript validation if needed.
     if (fullName === "" || email === "" || phone === "") {
         alert("Bitte alle Felder ausfüllen!");
         return;
     }
 
+    // Create a new contact object
     let newContact = {
         id: generateUUID(),
         fullName,
@@ -46,28 +62,30 @@ saveBtn.onclick = function () {
         initials: getInitials(fullName),
         firstLetter: fullName.charAt(0).toUpperCase(),
         color: getRandomColor(),
-        profileImage: "" // Standard: leer, falls kein Bild hochgeladen wird
+        profileImage: "" // No image uploaded initially
     };
 
+    // Add the new contact and update localStorage
     contacts.push(newContact);
     contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
-
     saveContactsToLocalStorage();
     renderContacts();
+
+    // Clear the form fields and close the popup
     clearInputs();
     popup.style.display = "none";
 
-    // Zeige das Erfolgspopup an
+    // Show the success popup
     const popupSuccess = document.getElementById("popupSuccess");
     popupSuccess.style.display = "flex";
-
-    // Das Popup nach 3 Sekunden automatisch schließen
     setTimeout(function() {
         popupSuccess.style.display = "none";
-    }, 800);  // Das Popup verschwindet nach 3 Sekunden
-};
+    }, 800);  // Popup hides after 800ms (adjust as needed)
+});
 
-// Eingaben leeren
+// --- Existing functions below (generateUUID, clearInputs, renderContacts, etc.) ---
+// For example:
+
 function clearInputs() {
     nameInput.value = "";
     emailInput.value = "";

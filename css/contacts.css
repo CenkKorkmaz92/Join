@@ -1,10 +1,12 @@
-body, html{
+body,
+html {
     max-width: 1208px;
 }
 
 .container {
     display: flex;
-    flex-direction: column; /* Stackt Elemente untereinander */
+    flex-direction: column;
+    /* Stackt Elemente untereinander */
     align-items: center;
     background: white;
     padding: 20px;
@@ -15,7 +17,8 @@ body, html{
 }
 
 #contactList {
-    width: 100%; /* Damit die Kontakte die volle Breite nutzen */
+    width: 100%;
+    /* Damit die Kontakte die volle Breite nutzen */
     height: calc(1024px - 96px);
     overflow: auto;
     margin-top: 10px;
@@ -54,7 +57,7 @@ body, html{
     gap: 30px;
 }
 
-.contact-body{
+.contact-body {
     display: flex;
     flex-direction: row;
 }
@@ -68,13 +71,14 @@ body, html{
     border-radius: 3px;
 }
 
-.img-add-contact{
+.img-add-contact {
     margin-left: 16px;
 }
 
 /* Popup-Overlay */
 .popup {
-    display: none; /* Popup standardmäßig unsichtbar */
+    display: none;
+    /* Popup standardmäßig unsichtbar */
     position: fixed;
     top: 0;
     left: 0;
@@ -86,7 +90,7 @@ body, html{
     align-items: center;
 }
 
-.popup-header{
+.popup-header {
     background-color: #2A3647;
     width: 467px;
     height: 594px;
@@ -98,7 +102,7 @@ body, html{
     border-bottom-left-radius: 30px;
 }
 
-.popup-header-main{
+.popup-header-main {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -107,7 +111,7 @@ body, html{
     margin-top: -100px;
 }
 
-.popup-header-logo-box{
+.popup-header-logo-box {
     display: flex;
     align-items: start;
     justify-content: flex-start;
@@ -115,7 +119,7 @@ body, html{
     margin-left: 47px;
 }
 
-.popup-header-text-box{
+.popup-header-text-box {
     display: flex;
     align-items: start;
     width: 100%;
@@ -126,17 +130,17 @@ body, html{
     color: white;
 }
 
-.popup-header-text-box-headline{
+.popup-header-text-box-headline {
     font-size: 61px;
     font-weight: 700;
 }
 
-.popup-header-text-box-subtext{
+.popup-header-text-box-subtext {
     font-size: 27px;
     font-weight: 400;
 }
 
-.popup-header-separator-box{
+.popup-header-separator-box {
     width: 100%;
     display: flex;
     align-items: start;
@@ -158,7 +162,7 @@ body, html{
     align-items: center;
 }
 
-.pop-up-close-button{
+.pop-up-close-button {
     display: flex;
     justify-content: end;
     align-items: start;
@@ -168,16 +172,16 @@ body, html{
     margin-top: -90px;
 }
 
-.pop-up-close-button-img{
+.pop-up-close-button-img {
     border-radius: 50%;
 }
 
-.pop-up-close-button-img:hover{
+.pop-up-close-button-img:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.popup-overclass{
+.popup-overclass {
     display: flex;
     flex-direction: row;
     gap: 50px;
@@ -186,7 +190,7 @@ body, html{
     text-align: center;
 }
 
-.popup-main-section{
+.popup-main-section {
     margin-top: -75px;
 }
 
@@ -196,7 +200,7 @@ body, html{
     gap: 20px
 }
 
-.popup-input-field{
+.popup-input-field {
     border-radius: 10px;
     border: solid 1px black;
     width: 422px;
@@ -218,7 +222,7 @@ body, html{
     gap: 20px;
 }
 
-.popup-button-cancel{
+.popup-button-cancel {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -230,11 +234,11 @@ body, html{
     height: 56px !important;
 }
 
-.popup-button-cancel:hover{
+.popup-button-cancel:hover {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
-.popup-button-check{
+.popup-button-check {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -247,7 +251,7 @@ body, html{
     height: 56px !important;
 }
 
-.popup-button-check:hover{
+.popup-button-check:hover {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -336,12 +340,12 @@ body, html{
     gap: 16px;
 }
 
-.contact-detail-headline{
+.contact-detail-headline {
     font-size: 61px;
     font-weight: 700;
 }
 
-.contact-detail-subheadline{
+.contact-detail-subheadline {
     font-size: 27px;
     font-weight: 400;
 }
@@ -361,13 +365,13 @@ body, html{
     gap: 24px;
 }
 
-.contact-detailed-name{
+.contact-detailed-name {
     font-size: 47px;
     font-weight: 500;
     margin: 0;
 }
 
-.contact-circle-detail{
+.contact-circle-detail {
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -382,7 +386,7 @@ body, html{
     border: solid 2px white;
 }
 
-.contact-circle-detail-edit{
+.contact-circle-detail-edit {
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -425,7 +429,8 @@ body, html{
     font-weight: bold;
 }
 
-.button-edit, .button-delete {
+.button-edit,
+.button-delete {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -436,20 +441,23 @@ body, html{
     font-weight: 400 !important;
 }
 
-.button-edit:hover, .button-delete:hover {
+.button-edit:hover,
+.button-delete:hover {
     color: #007cee;
     font-weight: 500 !important;
 }
 
 /* Standard-Icon */
-.button-edit img, .button-delete img {
+.button-edit img,
+.button-delete img {
     width: 14px;
     height: 14px;
     transition: opacity 0.2s ease-in-out;
 }
 
 /* Bild beim Hover ausblenden */
-.button-edit:hover img, .button-delete:hover img {
+.button-edit:hover img,
+.button-delete:hover img {
     opacity: 0;
 }
 
@@ -472,14 +480,14 @@ body, html{
     height: 14px;
 }
 
-.icons-contact-detail-edit{
+.icons-contact-detail-edit {
     width: 14px;
     height: 14px;
     margin-right: 3px;
 }
 
 
-.icons-contact-detail-delete{
+.icons-contact-detail-delete {
     width: 14px;
     height: 14px;
     margin-right: 3px;
@@ -492,44 +500,46 @@ body, html{
     margin-top: 20px;
 }
 
-.contact-information-phone{
+.contact-information-phone {
     margin-top: 30px;
 }
 
-#contactPhone{
+#contactPhone {
     color: #007cee;
     font-size: 16px;
     font-weight: 400;
 }
 
-.contact-information-mail{
+.contact-information-mail {
     margin-top: 55px;
 }
 
-#contactEmail{
+#contactEmail {
     color: #007cee;
     font-size: 16px;
     font-weight: 400;
 }
 
-.contact-details-headline{
+.contact-details-headline {
     font-size: 20px;
     font-weight: 400;
 }
 
-.contact-details-subtitel{
+.contact-details-subtitel {
     font-size: 16px;
     font-weight: 700;
 }
 
 .contact:hover {
-    background-color: #2A3647; /* Leichter Hover-Effekt */
+    background-color: #2A3647;
+    /* Leichter Hover-Effekt */
     color: white;
     cursor: pointer;
 }
 
 .contact.selected {
-    background-color: #2A3647; /* Farbe für den ausgewählten Kontakt */
+    background-color: #2A3647;
+    /* Farbe für den ausgewählten Kontakt */
     color: white
 }
 
@@ -540,7 +550,8 @@ body, html{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* halbtransparenter Hintergrund */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* halbtransparenter Hintergrund */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -555,4 +566,21 @@ body, html{
     font-size: 18px;
     text-align: center;
     color: white;
+}
+
+/* Reset any default styling on the form element within the popup */
+#contactForm.popup-form {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    /* Ensure it behaves like a block-level container if needed */
+    display: block;
+}
+
+/* If necessary, force the form to inherit the popup’s layout rules */
+.popup .popup-content {
+    /* This rule is here in case any extra spacing was added by the form element */
+    box-sizing: border-box;
 }
