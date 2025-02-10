@@ -28,21 +28,21 @@
             <h1 class="headline">Sign up</h1>
 
             <div class="input-container">
-                <input type="text" placeholder="Name">
+                <input type="text" placeholder="Name" id="name">
                 <span class="icon">
                     <img src="./assets/img/icons/signUp/avatar_icon.svg" alt="Avatar Icon">
                 </span>
             </div>
 
             <div class="input-container">
-                <input type="email" placeholder="Email">
+                <input type="email" placeholder="Email" id="email">
                 <span class="icon">
                     <img src="./assets/img/icons/login/mail_icon.svg" alt="Email Icon">
                 </span>
             </div>
 
             <div class="input-container">
-                <input type="password" placeholder="Password">
+                <input type="password" placeholder="Password" id="password">
                 <span class="icon">
                     <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
                 </span>
@@ -67,7 +67,7 @@
 
             <!-- Sign-Up Button -->
             <div class="sign-in-btn-container">
-                <button class="sign-in-btn dark-btn">Sign up</button>
+                <button onclick="signUp()" class="sign-in-btn dark-btn">Sign up</button>
             </div>
         </div>
 
@@ -77,8 +77,10 @@
             <button onclick="redirectTo('./privacyPolicyExternal.html')" class="legal-btn">Privacy Policy</button>
         </div>
     </section>
-    <script src="./js/main.js"></script>
-    <script src="./js/signUp.js"></script>
-    <script src="./js/firebase.js"></script>
+    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/firebase.js"></script>
+    <script type="module" src="./js/signUp.js"></script>
+
 </body>
+
 </html>

@@ -6,14 +6,14 @@
 /* === Font Imports === */
 @font-face {
     font-family: 'Inter';
-    src: url('../fonts/static/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    src: url('./assets/fonts/static/Inter-VariableFont_opsz,wght.ttf') format('truetype');
     font-weight: 100 900; /* Supports the full range of weights */
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Inter';
-    src: url('../fonts/static/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+    src: url('./assets/fonts/static/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
     font-weight: 100 900;
     font-style: italic;
 }
