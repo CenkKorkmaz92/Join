@@ -62,6 +62,12 @@ async function signUp() {
   } catch (error) {
     console.error("Error creating user:", error);
   }
+
+  const popupSuccess = document.getElementById("popupSuccess");
+  popupSuccess.style.display = "flex";
+  setTimeout(function() {
+      popupSuccess.style.display = "none";
+  }, 2000);  // Popup hides after 800ms (adjust as needed)
 }
 
 // Expose signUp to the global scope so it can be called from your HTML button
