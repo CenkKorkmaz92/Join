@@ -197,3 +197,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     validateForm();
 });
+
+
+// Bitte das in deine speicherfunktion ganz unten eintragen!!
+
+// const popupSuccess = document.getElementById("popupSuccess");
+// popupSuccess.style.display = "flex";
+// setTimeout(function() {
+//     popupSuccess.style.display = "none";
+// }, 2000);  // Popup hides after 2000ms (adjust as needed)
