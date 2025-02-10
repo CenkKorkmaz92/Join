@@ -570,7 +570,7 @@ html {
 
 /* Reset any default styling on the form element within the popup */
 #contactForm.popup-form {
-    display: flex;
+    display: flex !important;
     margin: 0;
     padding: 0;
     border: none;
