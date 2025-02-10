@@ -35,18 +35,22 @@ function getInitials(name) {
  * Called when the user clicks the "Sign up" button.
  */
 async function signUp() {
+  // Get the input fields from the DOM.
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
+  const confirmPasswordInput = document.getElementById('confirmPassword'); // Ensure your confirm password input has this id
 
   const name = nameInput ? nameInput.value : "Test User";
   const email = emailInput ? emailInput.value : "testuser@example.com";
   const password = passwordInput ? passwordInput.value : "password123";
+  // Optionally, you could validate that the confirm password value matches the password
 
-  // Generate a unique id and compute the initials
+  // Generate a unique id and compute the initials.
   const id = generateUUID();
   const initials = getInitials(name);
 
+  // Create the new user object.
   const newUser = {
     email,
     id,
@@ -56,21 +60,30 @@ async function signUp() {
   };
 
   try {
-    // Save the new user in Firebase under the "users" node
+    // Save the new user in Firebase under the "users" node.
     await saveData(`users/${id}`, newUser);
     console.log("User successfully created:", newUser);
+
+    // Clear all input fields after successful creation.
+    if (nameInput) nameInput.value = "";
+    if (emailInput) emailInput.value = "";
+    if (passwordInput) passwordInput.value = "";
+    if (confirmPasswordInput) confirmPasswordInput.value = "";
   } catch (error) {
     console.error("Error creating user:", error);
   }
 
+  // Show the success popup.
   const popupSuccess = document.getElementById("popupSuccess");
   popupSuccess.style.display = "flex";
-  setTimeout(function() {
-      popupSuccess.style.display = "none";
-  }, 2000);  // Popup hides after 800ms (adjust as needed)
+
+  // Hide the popup after 2 seconds.
+  setTimeout(() => {
+    popupSuccess.style.display = "none";
+  }, 2000);
 }
 
-// Expose signUp to the global scope so it can be called from your HTML button
+// Expose signUp to the global scope so it can be called from your HTML button.
 window.signUp = signUp;
 
 /**
@@ -78,10 +91,9 @@ window.signUp = signUp;
  * @param {string} page - The name of the HTML page to navigate to.
  */
 function redirectTo(page) {
-    window.location.href = page;
+  window.location.href = page;
 }
 
 function goBack() {
-    window.history.back();
+  window.history.back();
 }
-
