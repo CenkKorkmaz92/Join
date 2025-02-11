@@ -1,5 +1,5 @@
 /**
- * Redirects the user to the given URL.
+ * Redirects the user to the specified URL.
  * @param {string} url - The URL to navigate to.
  */
 function redirectTo(url) {
@@ -45,6 +45,7 @@ function redirectTo(url) {
   
   /**
    * Polls for header elements and updates them with the logged-in user's data.
+   * If no logged-in user is found, it defaults to "G" for guest.
    */
   function updateHeaderElements() {
     const userProfile = document.getElementById("user-initials");
@@ -57,6 +58,10 @@ function redirectTo(url) {
         userProfile.textContent = user.initials;
         logoutLink.classList.remove("hidden");
         console.log("Header updated with user initials:", user.initials);
+      } else {
+        // No user data found; assume guest and set initials to "G"
+        userProfile.textContent = "G";
+        console.log("No user data; defaulting header initials to 'G'");
       }
     } else {
       // Retry after 100ms if elements are not yet available.
@@ -83,6 +88,15 @@ function redirectTo(url) {
     // Start polling for header elements to update them with user data.
     updateHeaderElements();
   });
+
+  function guestLogin() {
+    const guestData = {
+      name: "Guest",
+      initials: "G"
+    };
+    localStorage.setItem("loggedInUser", JSON.stringify(guestData));
+    window.location.href = "summary.html";
+  }
   
   // Expose functions globally if needed.
   window.redirectTo = redirectTo;
