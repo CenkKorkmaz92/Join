@@ -1,3 +1,4 @@
+// signUp.js
 import { saveData } from './firebase.js';
 
 /**
@@ -19,81 +20,122 @@ function generateUUID() {
 /**
  * Extracts initials from a full name.
  *
- * @param {string} name - Full name (e.g., "Test User")
- * @returns {string} - The initials (e.g., "TU")
+ * @param {string} name - The full name.
+ * @returns {string} The initials.
  */
 function getInitials(name) {
-  const names = name.trim().split(' ');
-  if (names.length === 0) return '';
-  if (names.length === 1) {
-    return names[0].slice(0, 2).toUpperCase();
-  }
+  const names = name.trim().split(" ");
+  if (names.length === 0) return "";
+  if (names.length === 1) return names[0].slice(0, 2).toUpperCase();
   return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
 }
 
 /**
- * Called when the user clicks the "Sign up" button.
+ * Checks the validity of the form fields and enables/disables the sign-up button.
+ */
+function checkFormValidity() {
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const confirmPasswordInput = document.getElementById("confirmPassword");
+  const termsCheckbox = document.getElementById("termsCheckbox");
+  const signUpButton = document.getElementById("signUpButton");
+
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+  const confirmPassword = confirmPasswordInput.value;
+  const termsChecked = termsCheckbox.checked;
+
+  // Enable button only if all fields are filled, passwords match, and checkbox is checked
+  if (name && email && password && confirmPassword && (password === confirmPassword) && termsChecked) {
+    signUpButton.disabled = false;
+  } else {
+    signUpButton.disabled = true;
+  }
+}
+
+/**
+ * Signs up a new user.
+ * Gathers input data, saves the user to Firebase, shows a success popup,
+ * and redirects to index.html after 2 seconds.
  */
 async function signUp() {
-  // Get the input fields from the DOM.
-  const nameInput = document.getElementById('name');
-  const emailInput = document.getElementById('email');
-  const passwordInput = document.getElementById('password');
-  const confirmPasswordInput = document.getElementById('confirmPassword'); // Ensure your confirm password input has this id
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const confirmPasswordInput = document.getElementById("confirmPassword");
 
-  const name = nameInput ? nameInput.value : "Test User";
-  const email = emailInput ? emailInput.value : "testuser@example.com";
-  const password = passwordInput ? passwordInput.value : "password123";
-  // Optionally, you could validate that the confirm password value matches the password
+  const name = nameInput.value;
+  const email = emailInput.value;
+  const password = passwordInput.value;
+  const confirmPassword = confirmPasswordInput.value;
 
-  // Generate a unique id and compute the initials.
+  // Extra validation (shouldn't be necessary if the button is enabled only when valid)
+  if (password !== confirmPassword) {
+    alert("Passwords do not match!");
+    return;
+  }
+
+  // Generate unique ID and compute initials
   const id = generateUUID();
   const initials = getInitials(name);
 
-  // Create the new user object.
-  const newUser = {
-    email,
-    id,
-    initials,
-    name,
-    password,
-  };
+  const newUser = { id, name, email, password, initials };
 
   try {
-    // Save the new user in Firebase under the "users" node.
     await saveData(`users/${id}`, newUser);
     console.log("User successfully created:", newUser);
-
-    // Clear all input fields after successful creation.
-    if (nameInput) nameInput.value = "";
-    if (emailInput) emailInput.value = "";
-    if (passwordInput) passwordInput.value = "";
-    if (confirmPasswordInput) confirmPasswordInput.value = "";
+    // Optionally clear the form fields after a successful sign up
+    nameInput.value = "";
+    emailInput.value = "";
+    passwordInput.value = "";
+    confirmPasswordInput.value = "";
   } catch (error) {
     console.error("Error creating user:", error);
+    return;
   }
 
-  // Show the success popup.
+  // Show the success popup
   const popupSuccess = document.getElementById("popupSuccess");
   popupSuccess.style.display = "flex";
 
-  // Hide the popup after 2 seconds.
+  // After 2 seconds, hide the popup and redirect to index.html (login page)
   setTimeout(() => {
     popupSuccess.style.display = "none";
+    window.location.href = "index.html";
   }, 2000);
 }
 
-// Expose signUp to the global scope so it can be called from your HTML button.
+// Attach event listeners after DOM has loaded
+document.addEventListener("DOMContentLoaded", () => {
+  // Run initial validation check
+  checkFormValidity();
+
+  // Get form elements
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const confirmPasswordInput = document.getElementById("confirmPassword");
+  const termsCheckbox = document.getElementById("termsCheckbox");
+
+  // Attach listeners to update validation on every input change
+  nameInput.addEventListener("input", checkFormValidity);
+  emailInput.addEventListener("input", checkFormValidity);
+  passwordInput.addEventListener("input", checkFormValidity);
+  confirmPasswordInput.addEventListener("input", checkFormValidity);
+  termsCheckbox.addEventListener("change", checkFormValidity);
+});
+
+// Expose functions to the global scope for HTML onclick attributes
 window.signUp = signUp;
 
-/**
- * Redirects the user to the specified page.
- * @param {string} page - The name of the HTML page to navigate to.
- */
 function redirectTo(page) {
   window.location.href = page;
 }
+window.redirectTo = redirectTo;
 
 function goBack() {
   window.history.back();
 }
+window.goBack = goBack;

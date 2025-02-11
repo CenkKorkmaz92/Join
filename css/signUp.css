@@ -287,3 +287,11 @@ body {
     text-align: center;
     color: white;
 }
+
+.sign-in-btn:disabled {
+    background-color: #cccccc;
+    border-color: #aaaaaa;
+    color: #666666;
+    cursor: not-allowed;
+  }
+  

@@ -67,7 +67,11 @@
 
             <!-- Sign-Up Button -->
             <div class="sign-in-btn-container">
-                <button onclick="signUp()" class="sign-in-btn dark-btn">Sign up</button>
+                <!-- Sign-Up Button -->
+                <div class="sign-in-btn-container">
+                    <button onclick="signUp()" class="sign-in-btn dark-btn" id="signUpButton" disabled>Sign up</button>
+                </div>
+
             </div>
         </div>
 
@@ -80,7 +84,7 @@
         <!-- Legal Information -->
         <div class="legal-btn-container">
             <button onclick="redirectTo('./legalNoticeExternal.html')" class="legal-btn">Legal Notice</button>
-            <button onclick="redirectTo('./privacyPolicyExternal.html')" class="legal-btn">Privacy Policy</button>
+            <button onclick="redirectTo('./privacyPolicyExternal.html')" class="legal-btn">Privacy Policy</button>            
         </div>
     </section>
     <script type="module" src="./js/main.js"></script>
