@@ -2,65 +2,67 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join - Log in</title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon/join_logo_dark.svg">
-    <link rel="stylesheet" href="./css/login.css">
-    <link rel="stylesheet" href="./css/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join - Log in</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon/join_logo_dark.svg" />
+  <link rel="stylesheet" href="./css/login.css" />
+  <link rel="stylesheet" href="./css/main.css" />
 </head>
 
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen">
-        <img src="./assets/img/logos/join_logo_loading_screen.svg" alt="Loading Logo" class="loading-logo">
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <img src="./assets/img/logos/join_logo_loading_screen.svg" alt="Loading Logo" class="loading-logo" />
+  </div>
+
+  <!-- Login Screen -->
+  <section class="login-main">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <img class="navbar-left main-logo" src="./assets/img/logos/join_logo_dark.svg" alt="Join Logo" />
+      <div class="navbar-right">
+        <span>Not a Join user?</span>
+        <button onclick="redirectTo('./signUp.html')" class="sign-up-btn dark-btn">Sign Up</button>
+      </div>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="login-container">
+      <h1 class="headline">Log in</h1>
+
+      <div class="input-container">
+        <input type="email" placeholder="Email" id="loginEmail" />
+        <span class="icon">
+          <img src="./assets/img/icons/login/mail_icon.svg" alt="Email Icon" />
+        </span>
+      </div>
+
+      <div class="input-container">
+        <input type="password" placeholder="Password" id="loginPassword" />
+        <span class="icon">
+          <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon" />
+        </span>
+      </div>
+
+      <div class="submit-buttons-login">
+        <!-- Note: The login button is initially disabled -->
+        <button onclick="login()" class="login-btn dark-btn" id="loginButton" disabled>Log in</button>
+        <button onclick="redirectTo('./summaryGuest.html')" class="guest-login-btn light-btn">Guest Log in</button>
+      </div>
     </div>
 
-    <!-- Login Screen -->
-    <section class="login-main">
+    <!-- Legal Information -->
+    <div class="legal-btn-container">
+      <button onclick="redirectTo('./legalNoticeExternal.html')" class="legal-btn">Legal Notice</button>
+      <button onclick="redirectTo('./privacyPolicyExternal.html')" class="legal-btn">Privacy Policy</button>
+    </div>
+  </section>
 
-        <!-- Navbar -->
-        <nav class="navbar">
-            <img class="navbar-left main-logo" src="./assets/img/logos/join_logo_dark.svg" alt="Join Logo">
-            <div class="navbar-right">
-                <span>Not a Join user?</span>
-                <button onclick="redirectTo('./signUp.html')" class="sign-up-btn dark-btn">Sign Up</button>
-            </div>
-        </nav>
+  <script src="./js/main.js"></script>
+  <script src="./js/firebase.js"></script>
+  <script type="module" src="./js/login.js"></script>
 
-        <!-- Login Form -->
-        <div class="login-container">
-            <h1 class="headline">Log in</h1>
-
-            <div class="input-container">
-                <input type="email" placeholder="Email">
-                <span class="icon">
-                    <img src="./assets/img/icons/login/mail_icon.svg" alt="Email Icon">
-                </span>
-            </div>
-
-            <div class="input-container">
-                <input type="password" placeholder="Password">
-                <span class="icon">
-                    <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
-                </span>
-            </div>
-
-            <div class="submit-buttons-login">
-                <button onclick="redirectTo('./summary.html')" class="login-btn dark-btn">Log in</button>
-                <button onclick="redirectTo('./summaryGuest.html')" class="guest-login-btn light-btn">Guest Log in</button>
-            </div>
-        </div>
-
-        <!-- Legal Information -->
-        <div class="legal-btn-container">
-            <button onclick="redirectTo('./legalNoticeExternal.html')" class="legal-btn">Legal Notice</button>
-            <button onclick="redirectTo('./privacyPolicyExternal.html')" class="legal-btn">Privacy Policy</button>
-        </div>
-    </section>
-
-    <script src="./js/main.js"></script>
-    <script src="./js/firebase.js"></script>
-    <script src="./js/login.js"></script>
 </body>
+
 </html>
