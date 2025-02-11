@@ -3,6 +3,10 @@ function generateUUID() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 }
 
+const FIREBASE_BASE_URL =
+  "https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"; // Direkt auf die contacts.json zugreifen
+
+
 let contacts = [];
 let selectedContactDiv = null;
 
@@ -16,9 +20,6 @@ const phoneInput = document.getElementById("phoneInput");
 const contactList = document.getElementById("contactList");
 const contactForm = document.getElementById("contactForm");
 
-// Load any existing contacts from localStorage
-loadContactsFromLocalStorage();
-
 // Open popup when "Add new contact" is clicked
 addContactBtn.onclick = function () {
     popup.style.display = "flex";
@@ -30,30 +31,108 @@ clearBtn.onclick = function () {
     popup.style.display = "none";
 };
 
-// Attach a submit event listener to the form
-contactForm.addEventListener('submit', function (event) {
-    event.preventDefault();  // Prevent default form submission
+async function saveContactToAPI(contact) {
+    try {
+        await saveDataToFirebase(contact.id, contact);
+        console.log("Kontakt erfolgreich in die API gespeichert:", contact);
+    } catch (error) {
+        console.error("Fehler beim Speichern des Kontakts:", error);
+    }
+} 
 
-    // Check form validity (HTML5 validation)
+async function pushContactToAPI(contact) {
+    try {
+        console.log("Sende Kontakt an die API:", contact);
+
+        // Hier wird die Anfrage an den Firebase-Endpoint gesendet
+        const response = await fetch(FIREBASE_BASE_URL, {
+            method: "POST", // POST-Methode verwenden, um Daten hinzuzufügen
+            headers: {
+                "Content-Type": "application/json" // JSON-Format
+            },
+            body: JSON.stringify(contact) // Der Kontakt wird als JSON geschickt
+        });
+
+        if (!response.ok) {
+            // Fehlerbehandlung, wenn die Anfrage nicht erfolgreich war
+            const errorText = await response.text();
+            throw new Error(`API-Fehler: ${response.status} ${response.statusText} - ${errorText}`);
+        }
+
+        const responseData = await response.json(); // Die Antwort von Firebase wird als JSON verarbeitet
+        console.log("Kontakt erfolgreich gespeichert:", responseData);
+        return responseData; // Antwort zurückgeben (kann eine generierte ID sein)
+    } catch (error) {
+        console.error("Fehler beim Senden des Kontakts an die API:", error.message);
+        if (error.message.includes("Failed to fetch")) {
+            console.error("Überprüfe, ob die API-URL korrekt ist und die API erreichbar ist.");
+        }
+    }
+}
+
+async function fetchContactsFromAPI() {
+    try {
+        const response = await fetch(FIREBASE_BASE_URL);  // GET-Anfrage an Firebase
+        if (!response.ok) {
+            throw new Error("Fehler beim Abrufen der Kontakte: " + response.statusText);
+        }
+
+        const data = await response.json(); // Die Antwort von Firebase wird als JSON verarbeitet
+
+        // Überprüfe, ob Daten existieren
+        if (data) {
+            // Da Firebase die Daten als Objekt mit generierten IDs speichert, müssen wir sie in ein Array umwandeln
+            contacts = Object.keys(data).map(id => {
+                const contact = data[id];
+                contact.id = id; // Firebase gibt uns die ID automatisch
+                return contact;
+            });
+
+            // Kontakte sortieren und rendern
+            contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
+            renderContacts();
+        }
+    } catch (error) {
+        console.error("Fehler beim Abrufen der Kontakte von der API:", error.message);
+    }
+}
+
+// Rufe die Kontakte beim Laden der Seite ab
+window.onload = function() {
+    fetchContactsFromAPI();
+};
+
+// Funktion zum Speichern des Kontakts
+async function saveContact(contact) {
+    try {
+        contacts.push(contact);
+        contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
+        renderContacts();
+        await pushContactToAPI(contact);  // Schicke den Kontakt zu Firebase
+        console.log("Kontakt lokal gespeichert und an API gesendet:", contact);
+    } catch (error) {
+        console.error("Fehler beim Speichern des Kontakts:", error);
+    }
+}
+
+// Attach a submit event listener to the form
+contactForm.addEventListener("submit", async function (event) {
+    event.preventDefault(); // Verhindert das Neuladen der Seite
+
     if (!contactForm.checkValidity()) {
-        // This will show the browser's default validation messages
         contactForm.reportValidity();
         return;
     }
 
-    // Retrieve trimmed values
     let fullName = nameInput.value.trim();
     let email = emailInput.value.trim();
     let phone = phoneInput.value.trim();
 
-    // Although required and pattern attributes handle validation,
-    // you can add extra JavaScript validation if needed.
     if (fullName === "" || email === "" || phone === "") {
         alert("Bitte alle Felder ausfüllen!");
         return;
     }
 
-    // Create a new contact object
     let newContact = {
         id: generateUUID(),
         fullName,
@@ -62,29 +141,20 @@ contactForm.addEventListener('submit', function (event) {
         initials: getInitials(fullName),
         firstLetter: fullName.charAt(0).toUpperCase(),
         color: getRandomColor(),
-        profileImage: "" // No image uploaded initially
+        profileImage: ""
     };
 
-    // Add the new contact and update localStorage
-    contacts.push(newContact);
-    contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
-    saveContactsToLocalStorage();
-    renderContacts();
+    await saveContact(newContact);
 
-    // Clear the form fields and close the popup
     clearInputs();
     popup.style.display = "none";
 
-    // Show the success popup
     const popupSuccess = document.getElementById("popupSuccess");
     popupSuccess.style.display = "flex";
-    setTimeout(function() {
+    setTimeout(() => {
         popupSuccess.style.display = "none";
-    }, 800);  // Popup hides after 800ms (adjust as needed)
+    }, 800);
 });
-
-// --- Existing functions below (generateUUID, clearInputs, renderContacts, etc.) ---
-// For example:
 
 function clearInputs() {
     nameInput.value = "";
@@ -92,10 +162,8 @@ function clearInputs() {
     phoneInput.value = "";
 }
 
-// Kontakte rendern
 function renderContacts() {
     contactList.innerHTML = "";
-
     let groupedContacts = {};
 
     contacts.forEach(contact => {
@@ -143,69 +211,64 @@ function renderContacts() {
     });
 }
 
-// Kontaktdetails anzeigen
 function showContactDetails(contact) {
     const contactInfoDiv = document.getElementById("detailedContactInfo");
     if (contactInfoDiv) {
         contactInfoDiv.classList.remove("hidden");
-    } else {
-        console.error("Fehler: detailedContactInfo nicht gefunden!");
     }
 
     document.getElementById("contactName").innerText = contact.fullName;
     document.getElementById("contactEmail").innerText = contact.email;
     document.getElementById("contactPhone").innerText = contact.phone;
 
-    // Initialen und Hintergrundfarbe für den Kreis setzen
     let contactCircle = document.getElementById("contactCircle");
     contactCircle.innerText = contact.initials;
     contactCircle.style.backgroundColor = contact.color;
 
-    // selectedContactProfile div anpassen (Initialen und Farbe einfügen)
-    let profileDiv = document.getElementById("selectedContactProfile");
-    if (profileDiv) {
-        // Initialen setzen und Hintergrundfarbe festlegen
-        profileDiv.innerText = contact.initials;
-        profileDiv.style.backgroundColor = contact.color;
+    // Setze die Kontakt-ID im Delete-Button als data-Attribut
+    const deleteButton = document.getElementById("deleteContactBtn");
+    deleteButton.setAttribute("data-contact-id", contact.id); // Setze die Kontakt-ID im Button
+}
+
+document.getElementById("deleteContactBtn").addEventListener("click", function () {
+    const contactId = this.getAttribute("data-contact-id");
+    console.log("Kontakt-ID zum Löschen:", contactId);  // Debugging-Zeile
+    if (contactId) {
+        deleteContactFromAPI(contactId);
     } else {
-        console.error("Fehler: selectedContactProfile nicht gefunden!");
+        alert("Fehler: Keine gültige Kontakt-ID gefunden.");
     }
+});
 
-    // Buttons für Bearbeiten und Löschen
-    document.getElementById("editContactBtn").onclick = function () {
-        editContact(contact);
-    };
+async function deleteContactFromAPI(contactId) {
+    try {
+        const response = await fetch(`${FIREBASE_BASE_URL}/${contactId}.json`, {
+            method: 'DELETE', // DELETE-Methode verwenden
+        });
 
-    document.getElementById("deleteContactBtn").onclick = function () {
-        deleteContact(contact);
-    };
+        if (!response.ok) {
+            throw new Error(`Fehler beim Löschen des Kontakts: ${response.statusText}`);
+        }
+
+        console.log("Kontakt erfolgreich aus der API gelöscht.");
+        
+        // Optional: Kontakte lokal aktualisieren und rendern
+        contacts = contacts.filter(contact => contact.id !== contactId); // Kontakt lokal entfernen
+        renderContacts(); // Kontakte neu rendern
+        resetContactDetail(); // Kontaktdetails zurücksetzen
+
+        alert("Kontakt erfolgreich gelöscht!"); // Erfolgsmeldung anzeigen
+    } catch (error) {
+        console.error("Fehler beim Löschen des Kontakts aus der API:", error);
+        alert("Fehler beim Löschen des Kontakts. Versuche es erneut.");
+    }
 }
 
-function closeWindow() {
-    // Popup für Kontakterstellung schließen
-    const addContactPopup = document.getElementById("popup");
-    if (addContactPopup) {
-        addContactPopup.style.display = "none";
-    }
-
-    // Popup für die Kontaktbearbeitung schließen
-    const editContactPopup = document.getElementById("editPopup");
-    if (editContactPopup) {
-        editContactPopup.style.display = "none";
-    }
-}
-
-
-
-
-
-// Kontakt löschen
-function deleteContact(contact) {
-    contacts = contacts.filter(c => c.id !== contact.id);
-    saveContactsToLocalStorage();
-    renderContacts();
-    resetContactDetail();
-}
+// function deleteContact(contact) {
+//     contacts = contacts.filter(c => c.id !== contact.id);
+//     renderContacts();
+//     resetContactDetail();
+// }
 
 function resetContactDetail() {
     document.getElementById("contactName").innerText = "";
@@ -213,110 +276,13 @@ function resetContactDetail() {
     document.getElementById("contactPhone").innerText = "";
     document.getElementById("contactCircle").innerText = "";
     document.getElementById("contactCircle").style.backgroundColor = "";
-    document.getElementById("selectedContactProfile").src = "";
-    const contactInfoDiv = document.getElementById("detailedContactInfo");
-    if (contactInfoDiv) {
-        contactInfoDiv.classList.add("hidden"); // ❗ Zeigt die Details an
-    } else {
-        console.error("Fehler: detailedContactInfo nicht gefunden!");
-    }
 }
 
-// Kontakt bearbeiten
-// Kontakt bearbeiten
-function editContact(contact) {
-    const editPopup = document.getElementById("editPopup");
-    editPopup.style.display = "flex";
-
-    document.getElementById("editNameInput").value = contact.fullName;
-    document.getElementById("editEmailInput").value = contact.email;
-    document.getElementById("editPhoneInput").value = contact.phone;
-
-    const profileImage = document.getElementById("selectedContactProfile");
-    profileImage.src = contact.profileImage || "/assets/img/icons/contact/contact_profile_blanco.svg"; // Standardbild
-
-    // Bild ändern
-    document.getElementById("selectedContactProfile").onclick = function () {
-        let fileInput = document.createElement("input");
-        fileInput.type = "file";
-        fileInput.accept = "image/*";
-        fileInput.onchange = function (event) {
-            let file = event.target.files[0];
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                profileImage.src = e.target.result;
-                // Das Profilbild im Kontaktobjekt speichern
-                contact.profileImage = e.target.result; // Speichern der Bild-URL
-                console.log("Uploaded profile image set for contact:", contact.fullName);
-                // Das Kontaktobjekt aktualisieren und in localStorage speichern
-                saveContactsToLocalStorage();
-            };
-            reader.readAsDataURL(file);
-        };
-        fileInput.click();
-    };
-
-    // Änderungen speichern
-    document.getElementById("saveEditBtn").onclick = function () {
-        let updatedFullName = document.getElementById("editNameInput").value.trim();
-        let updatedEmail = document.getElementById("editEmailInput").value.trim();
-        let updatedPhone = document.getElementById("editPhoneInput").value.trim();
-
-        if (updatedFullName === "" || updatedEmail === "" || updatedPhone === "") {
-            alert("Bitte alle Felder ausfüllen!");
-            return;
-        }
-
-        // Kontakt aktualisieren
-        contacts = contacts.map(c => {
-            if (c.id === contact.id) {
-                return {
-                    ...c,
-                    fullName: updatedFullName,
-                    email: updatedEmail,
-                    phone: updatedPhone,
-                    initials: getInitials(updatedFullName),
-                    firstLetter: updatedFullName.charAt(0).toUpperCase(),
-                    profileImage: profileImage.src // Profilbild speichern
-                };
-            }
-            return c;
-        });
-
-        saveContactsToLocalStorage();
-        renderContacts();
-        showContactDetails(contacts.find(c => c.id === contact.id));
-        editPopup.style.display = "none";
-    };
-
-    document.getElementById("deleteBtn").onclick = function () {
-        clearEditInputs(); // Felder leeren
-    };
-}
-
-
-
-// Kontakte in localStorage speichern
-function saveContactsToLocalStorage() {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-}
-
-// Kontakte aus localStorage laden
-function loadContactsFromLocalStorage() {
-    let storedContacts = localStorage.getItem("contacts");
-    if (storedContacts) {
-        contacts = JSON.parse(storedContacts);
-        renderContacts();
-    }
-}
-
-// Initialen berechnen
 function getInitials(name) {
-    let nameParts = name.trim().split(/\s+/);
-    return nameParts.map(part => part.charAt(0).toUpperCase()).join("").slice(0, 2);
+    let nameParts = name.trim().split(/\s+/); // Splitte den Namen in Wörter (nach Leerzeichen)
+    return nameParts.map(part => part.charAt(0).toUpperCase()).join(""); // Nimm den ersten Buchstaben jedes Wortes und mache ihn groß
 }
 
-// Zufällige Farbe generieren
 function getRandomColor() {
     return `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
 }
@@ -329,6 +295,20 @@ function clearEditInputs() {
 
     let profileImage = document.getElementById("selectedContactProfile");
     if (profileImage) {
-        profileImage.src = "/assets/img/icons/contact/contact_profile_blanco.svg"; // Standardbild setzen
+        profileImage.src = "/assets/img/icons/contact/contact_profile_blanco.svg";
     }
 }
+
+function closeWindow() {
+    clearInputs();  // Leert alle Eingabefelder
+    popup.style.display = "none";  // Versteckt das Popup
+    const popupSuccess = document.getElementById("popupSuccess");
+    if (popupSuccess) {
+        popupSuccess.style.display = "none"; // Versteckt auch das Success-Popup
+    }
+}
+
+// Button-Event-Listener für das Schließen des Popups
+clearBtn.onclick = function () {
+    closeWindow();  // Popup schließen, wenn auf den Button geklickt wird
+};
