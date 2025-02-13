@@ -35,7 +35,8 @@ function closeDropdownOnClickOutside(event) {
 }
 
 /**
- * Logs out the user by removing their data from localStorage and redirecting to the login page.
+ * Logs out the user by removing their data from localStorage
+ * and redirecting to the login page.
  */
 function logoutUser() {
   localStorage.removeItem("loggedInUser");
@@ -44,25 +45,25 @@ function logoutUser() {
 
 /**
  * Updates header elements with the logged-in user's data.
- * If no user is found, defaults to a guest ("G").
+ * If no user is found, defaults the initials to "G" for guest.
  */
 function updateHeaderElements() {
   const userProfile = document.getElementById("user-initials");
   const logoutLink = document.getElementById("logout-link");
 
   if (userProfile && logoutLink) {
-    const loggedInUser = localStorage.getItem("loggedInUser");
-    if (loggedInUser) {
-      const user = JSON.parse(loggedInUser);
+    const storedUser = localStorage.getItem("loggedInUser");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
       userProfile.textContent = user.initials;
       logoutLink.classList.remove("hidden");
       console.log("Header updated with user initials:", user.initials);
     } else {
       userProfile.textContent = "G";
-      console.log("No user data; defaulting header initials to 'G'");
+      console.log("No user data found; defaulting header initials to 'G'");
     }
   } else {
-    // Retry after 100ms if elements are not yet available.
+    // Retry if elements are not yet available.
     setTimeout(updateHeaderElements, 100);
   }
 }
@@ -80,36 +81,36 @@ function guestLogin() {
 }
 
 /**
- * Attaches an event listener to the help icon once it is present in the DOM.
- * If a user is logged in, clicking the icon redirects to the internal help page;
- * otherwise, it redirects to the external help page.
+ * Attaches an event listener to the help icon.
+ * If the page is an external page (with class "legal-page"), clicking the help icon
+ * will always redirect to the external help page.
+ * Otherwise, it redirects to the internal help page.
  */
 function attachHelpIconListener() {
   const helpIcon = document.querySelector(".help-icon");
-  if (helpIcon) {
-    const loggedInUser = localStorage.getItem("loggedInUser");
-    if (loggedInUser) {
-      helpIcon.onclick = (event) => {
-        event.preventDefault();
-        redirectTo("../help.html");
-      };
-    } else {
-      helpIcon.onclick = (event) => {
-        event.preventDefault();
-        redirectTo("../helpExternal.html");
-      };
-    }
-    console.log("Help icon event listener attached.");
-  } else {
-    // Retry if the help icon isn't yet in the DOM.
+  if (!helpIcon) {
     console.warn("Help icon not found, retrying...");
-    setTimeout(attachHelpIconListener, 100);
+    return setTimeout(attachHelpIconListener, 100);
+  }
+  
+  if (document.body.classList.contains("legal-page")) {
+    helpIcon.onclick = function(event) {
+      event.preventDefault();
+      redirectTo("../helpExternal.html");
+    };
+    console.log("External page detected; help icon set to external help page.");
+  } else {
+    helpIcon.onclick = function(event) {
+      event.preventDefault();
+      redirectTo("../help.html");
+    };
+    console.log("Normal page detected; help icon set to internal help page.");
   }
 }
 
-// Wait for the DOM to be fully loaded before attaching event listeners.
+// Attach event listeners once the DOM is fully loaded.
 document.addEventListener("DOMContentLoaded", () => {
-  // Attach event listener for the user profile (dropdown) if it exists.
+  // Attach dropdown toggle for the user profile if available.
   const userProfile = document.getElementById("user-initials");
   if (userProfile) {
     userProfile.addEventListener("click", (event) => {
@@ -118,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Attach event listener for the logout link if it exists.
+  // Attach event listener for the logout link if available.
   const logoutLink = document.getElementById("logout-link");
   if (logoutLink) {
     logoutLink.addEventListener("click", (event) => {
@@ -127,10 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Update header elements with user data.
+  // Update header elements with the current user data.
   updateHeaderElements();
 
-  // Attach the help icon listener (polling until the element is found).
+  // Attach the help icon event listener.
   attachHelpIconListener();
 });
 
