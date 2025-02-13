@@ -92,9 +92,10 @@
 /* In legal pages, hide all navbar menu items except the login button */
 body.legal-page .navbar-menu .navbar-item:not(.login) {
     display: none;
-  }
+}
 
-  /* Ensure the login button is visible */
+/* Ensure the login button is visible */
 body.legal-page .login {
-    display: flex !important; /* or block/flex as needed */
-  }
+    display: flex !important;
+    /* or block/flex as needed */
+}
