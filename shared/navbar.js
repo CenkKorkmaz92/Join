@@ -42,3 +42,31 @@ function highlightActivePage() {
         }
     });
 }
+
+document.addEventListener("DOMContentLoaded", async function () {
+    try {
+      const response = await fetch("../shared/navbar.html");
+      if (!response.ok) {
+        throw new Error(`Failed to load navbar: ${response.statusText}`);
+      }
+      const data = await response.text();
+      document.getElementById("navbar-container").innerHTML = data;
+      
+      // If we're on a legal page, update the legal links to point to the external versions.
+      if (document.body.classList.contains('legal-page')) {
+        const privacyBtn = document.getElementById("nav-privacy-policy");
+        const legalBtn = document.getElementById("nav-legal-notice");
+        if (privacyBtn) {
+          privacyBtn.setAttribute("onclick", "redirectTo('../privacyPolicyExternal.html')");
+        }
+        if (legalBtn) {
+          legalBtn.setAttribute("onclick", "redirectTo('../legalNoticeExternal.html')");
+        }
+      }
+      
+      highlightActivePage();
+    } catch (error) {
+      console.error(error);
+    }
+  });
+  
