@@ -97,3 +97,9 @@
 .dropdown-menu a:hover {
     background-color: #29ABE2;
 }
+
+/* Hide the user initials dropdown on legal pages */
+body.legal-page .user-profile {
+    display: none;
+  }
+  
