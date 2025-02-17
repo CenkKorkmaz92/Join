@@ -96,8 +96,8 @@
     line-height: 24px;
 }
 
-.drop-down-assignt-to-container input {
-    height: 32px;
+.drop-down-assignt-to-container select {
+    height: 48px;
     padding: 8px;
     border-radius: 10px;
     border: solid 1px #D1D1D1;
