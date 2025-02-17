@@ -320,14 +320,16 @@ html {
 
 /* Kontakt-Details */
 .contact-detail {
+    position: absolute;
+    left: 625px;
     flex-grow: 1;
     padding: 40px;
     border-radius: 8px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     min-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: start;
+
 }
 
 /* Header bleibt immer sichtbar */
