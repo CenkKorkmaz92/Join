@@ -38,25 +38,23 @@
                         <div class="drop-down-assignt-to-container">
                             <span>Assigned to</span>
 
-                            <!-- Container that holds the "chips" of selected contacts + the dropdown toggle -->
-                            <div class="assigned-container">
-                                <!-- Chips for selected contacts will go here -->
-                                <div id="selectedContactsContainer" class="selected-contacts-container"></div>
-
-                                <!-- The clickable area to open/close the dropdown -->
+                            <!-- A wrapper for the toggle & dropdown (absolutely positioned) -->
+                            <div class="dropdown-wrapper">
                                 <div class="dropdown-toggle" id="dropdownToggle">
                                     <span id="dropdownPlaceholder">Select contact(s)</span>
                                     <img class="dropdown-arrow" id="dropdownArrow"
                                         src="./assets/img/icons/addTask/arrow_drop_down.svg" alt="Dropdown arrow" />
                                 </div>
+
+                                <!-- The dropdown list itself, hidden by default -->
+                                <div class="dropdown-list hidden" id="contactsDropdownList">
+                                    <!-- JavaScript inserts the .contact-list-item elements here -->
+                                </div>
                             </div>
 
-                            <!-- The dropdown list itself, hidden by default -->
-                            <div class="dropdown-list hidden" id="contactsDropdownList">
-                                <!-- JavaScript will insert contact-list-item divs here -->
-                            </div>
+                            <!-- The chips go here, below the toggle in normal flow -->
+                            <div id="selectedContactsContainer" class="selected-contacts-container"></div>
                         </div>
-
                     </div>
 
                     <div class="grey-vector"></div>
