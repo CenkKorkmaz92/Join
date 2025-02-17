@@ -1,5 +1,3 @@
-// addTask.js
-
 /**
  * @file Manages the Add Task page: fetching contacts from Firebase,
  * multi-select for "Assigned to," subtask creation, editing, deletion,
@@ -68,43 +66,38 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(FIREBASE_CONTACTS_URL)
         .then((response) => response.json())
         .then((data) => {
-            // 1) Log the raw data
             console.log("Contacts data from Firebase:", data);
-
             if (!data) {
                 console.warn("No contacts found or data is null");
                 return;
             }
 
-            // 2) Convert the object to an array, preserving push keys
-            const allContacts = Object.entries(data).map(([pushKey, contactObj]) => ({
+            // Convert the object to an array, preserving push keys
+            allContacts = Object.entries(data).map(([pushKey, contactObj]) => ({
                 firebaseId: pushKey,
                 ...contactObj,
             }));
 
-            // 3) Log the array
             console.log("allContacts array:", allContacts);
 
-            // 4) Pass it to your render function
+            // Render the dropdown list
             renderContactsDropdown(allContacts);
         })
         .catch((error) => {
             console.error("Error fetching contacts:", error);
         });
 
-
     /**
      * Renders the list of contacts (with checkboxes) inside the dropdown.
      */
     function renderContactsDropdown(contactsArray) {
         console.log("Rendering dropdown with:", contactsArray);
-        const contactsDropdownList = document.getElementById("contactsDropdownList");
-
         contactsDropdownList.innerHTML = ""; // Clear old items
 
         contactsArray.forEach((contact) => {
-            console.log("Rendering contact:", contact); // Debug line
-            // Build your <div> for the contact
+            console.log("Rendering contact:", contact);
+
+            // Build the container
             const item = document.createElement("div");
             item.className = "contact-list-item";
 
@@ -117,12 +110,25 @@ document.addEventListener("DOMContentLoaded", () => {
             // Label
             const label = document.createElement("span");
             label.className = "contact-label";
-            label.textContent = contact.fullName; // Must match your field name
+            label.textContent = contact.fullName; // Must match your field name in Firebase
 
             // Checkbox
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
 
+            // When checkbox changes, update selectedContacts
+            checkbox.addEventListener("change", () => {
+                if (checkbox.checked) {
+                    selectedContacts.push(contact);
+                } else {
+                    selectedContacts = selectedContacts.filter(
+                        (c) => c.firebaseId !== contact.firebaseId
+                    );
+                }
+                updateSelectedContactsUI();
+            });
+
+            // Append everything
             item.appendChild(avatar);
             item.appendChild(label);
             item.appendChild(checkbox);
@@ -130,7 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
             contactsDropdownList.appendChild(item);
         });
     }
-
 
     /**
      * Updates the chips shown for selected contacts.
@@ -164,11 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
         dropdownArrow.classList.toggle("rotated", dropdownOpen);
     });
 
+    // Close dropdown if clicked outside
     window.addEventListener("click", (e) => {
-        if (
-            !dropdownToggle.contains(e.target) &&
-            !contactsDropdownList.contains(e.target)
-        ) {
+        if (!dropdownToggle.contains(e.target) && !contactsDropdownList.contains(e.target)) {
             dropdownOpen = false;
             contactsDropdownList.classList.add("hidden");
             dropdownArrow.classList.remove("rotated");
@@ -178,10 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // --------------------------------------------------------------------------
     // Form Validation
     // --------------------------------------------------------------------------
-    /**
-     * Checks if required fields are all filled; enables or disables Create Task button.
-     * @function validateForm
-     */
     function validateForm() {
         const titleFilled = titleInput.value.trim() !== "";
         const dateFilled = dueDateInput.value !== "";
@@ -192,10 +191,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // --------------------------------------------------------------------------
     // Subtask Logic
     // --------------------------------------------------------------------------
-    /**
-     * Toggles visibility of the subtask confirm/clear buttons and separator.
-     * @param {boolean} show - true to show them, false to hide them.
-     */
     function toggleButtons(show) {
         if (show) {
             addButton.classList.add("hidden");
@@ -210,10 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    /**
-     * Adds a new subtask to the list, including edit/delete event listeners.
-     * @function addSubtask
-     */
     function addSubtask() {
         const subtaskText = inputField.value.trim();
         if (!subtaskText) return;
@@ -248,12 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleButtons(false);
     }
 
-    /**
-     * Inline edit mode for a subtask: replaces text + icons with an input area
-     * that has a trash icon (cancel) and check icon (save).
-     * @function handleInlineEdit
-     * @param {HTMLElement} subtaskSpan - The span element containing the subtask text.
-     */
     function handleInlineEdit(subtaskSpan) {
         const originalText = subtaskSpan.textContent.replace(/^•\s*/, "");
         const container = subtaskSpan.closest(".subtask-item-container");
@@ -273,10 +258,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         editInput.focus();
 
-        /**
-         * Restores normal mode with final text.
-         * @param {string} text - The final text to display in the subtask.
-         */
         function restoreView(text) {
             container.innerHTML = `
         <span class="subtask-text">• ${text}</span>
@@ -313,10 +294,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // --------------------------------------------------------------------------
     // Clearing Fields
     // --------------------------------------------------------------------------
-    /**
-     * Clears all form fields, resets subtasks and priority to "Medium."
-     * @function clearAllFields
-     */
     function clearAllFields() {
         titleInput.value = "";
         document.querySelector('textarea[placeholder="Enter a Description"]').value = "";
@@ -378,9 +355,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // --------------------------------------------------------------------------
     // Create Task & Push to Firebase
     // --------------------------------------------------------------------------
-    /**
-     * Gathers form data and pushes a new task to Firebase when the Create Task button is pressed.
-     */
     createTaskBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
