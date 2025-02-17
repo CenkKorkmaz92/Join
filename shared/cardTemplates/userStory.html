@@ -4,21 +4,21 @@
 <head>
     <meta charset="UTF-8" />
     <title>Card Template Popup</title>
-    <link rel="stylesheet" href="cardTemplate.css" />
+    <link rel="stylesheet" href="./cardTemplate.css" />
+    <link rel="stylesheet" href="../../css/main.css">
 </head>
 
 <body>
-
+    <div class="modal-backdrop"></div>
     <div class="modal" id="taskModal">
         <div class="modal-content">
-
-            <button class="close-button" id="closeModalBtn">×</button>
 
             <div class="card">
 
                 <div class="card-header">
                     <div class="user-story-label">
                         <span>User Story</span>
+                        <button class="close-button" id="closeModalBtn"><img src="../../assets/img/icons/board/close.svg" alt=""></button>
                     </div>
                 </div>
 
@@ -28,28 +28,21 @@
                     Info Text
                 </p>
 
-                <div class="card-meta">
-                    <p>Due date:</p>
-                    <p>Priority:</p>
+                <p class="date">Due date:</p>
 
-                    <div class="assigned-to">
-                        <p>Assigned to:</p>
-                        <ul class="assignees-list">
-                            <li>
-                                <div class="avatar">User Initials</div>
-                                <span>User Name</span>
-                            </li>
-                            <li>
-                                <div class="avatar">User Initials</div>
-                                <span>User Name</span>
-                            </li>
-                            <li>
-                                <div class="avatar">User Initials</div>
-                                <span>User Name</span>
-                            </li>
-                        </ul>
-                    </div>
+                <p class="prio">Priority:</p>
+
+                <div class="assigned-to">
+                    <p>Assigned to:</p>
+                    <ul class="assignees-list">
+                        <li>
+                            <div class="avatar">User Initials</div>
+                            <span>User Name</span>
+                        </li>
+                    </ul>
                 </div>
+
+
 
                 <div class="subtasks">
                     <h3>Subtasks</h3>
@@ -68,7 +61,8 @@
                 <div class="card-footer">
                     <button class="delete-btn"><img src="../../assets/img/icons/addTask/delete_icon.svg" alt="">
                         Delete</button>
-                    <button class="edit-icon"><img src="../../assets/img/icons/addTask/edit_icon.svg"
+                        <div class="gray-vector"></div>
+                    <button class="edit-icon"><img src="../../assets/img/icons/board/edit.svg"
                             alt="">Edit</button>
                 </div>
             </div>
