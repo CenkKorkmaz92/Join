@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Card Template Popup</title>
+    <link rel="stylesheet" href="cardTemplate.css" />
+</head>
+
+<body>
+
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+
+            <button class="close-button" id="closeModalBtn">×</button>
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div class="user-story-label">
+                        <span>User Story</span>
+                    </div>
+                </div>
+
+                <h1 class="card-title">Headline</h1>
+
+                <p class="card-description">
+                    Info Text
+                </p>
+
+                <div class="card-meta">
+                    <p>Due date:</p>
+                    <p>Priority:</p>
+
+                    <div class="assigned-to">
+                        <p>Assigned to:</p>
+                        <ul class="assignees-list">
+                            <li>
+                                <div class="avatar">User Initials</div>
+                                <span>User Name</span>
+                            </li>
+                            <li>
+                                <div class="avatar">User Initials</div>
+                                <span>User Name</span>
+                            </li>
+                            <li>
+                                <div class="avatar">User Initials</div>
+                                <span>User Name</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subtasks">
+                    <h3>Subtasks</h3>
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="task1" />
+                            <label for="task1">subtask</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="task2" />
+                            <label for="task2">subtask</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-footer">
+                    <button class="delete-btn"><img src="../../assets/img/icons/addTask/delete_icon.svg" alt="">
+                        Delete</button>
+                    <button class="edit-icon"><img src="../../assets/img/icons/addTask/edit_icon.svg"
+                            alt="">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
