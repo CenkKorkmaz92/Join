@@ -21,11 +21,12 @@ html {
     /* Damit die Kontakte die volle Breite nutzen */
     height: calc(1024px - 96px);
     overflow: auto;
-    margin-top: 10px;
+    margin-top: 85px;
 }
 
 
 .add-contact-btn {
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
