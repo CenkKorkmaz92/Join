@@ -2,15 +2,15 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Add Task</title>
 
     <!-- Link Styles -->
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./css/addTask.css">
-    <link rel="stylesheet" href="./shared/navbar.css">
-    <link rel="stylesheet" href="./shared/header.css">
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/addTask.css" />
+    <link rel="stylesheet" href="./shared/navbar.css" />
+    <link rel="stylesheet" href="./shared/header.css" />
 </head>
 
 <body>
@@ -21,7 +21,7 @@
         <!-- Header -->
         <div id="header-container" class="top-header"></div>
 
-        <!-- Main Content (Use `.content` class) -->
+        <!-- Main Content -->
         <main class="content">
             <div class="add-task-main-container">
                 <h1 class="headline-add-task">Add Task</h1>
@@ -29,7 +29,7 @@
                     <div class="left-input-fields">
                         <div class="input-title-container">
                             <span>Title<span style="color: red;">*</span></span>
-                            <input type="text" required placeholder="Enter a title">
+                            <input type="text" required placeholder="Enter a title" />
                         </div>
                         <div class="input-description-container">
                             <span>Description</span>
@@ -37,33 +37,49 @@
                         </div>
                         <div class="drop-down-assignt-to-container">
                             <span>Assigned to</span>
-                            <select id="assigneesSelect">
-                                <option value="" hidden>Select a person</option>
-                            </select>
+
+                            <!-- Container that holds the "chips" of selected contacts + the dropdown toggle -->
+                            <div class="assigned-container">
+                                <!-- Chips for selected contacts will go here -->
+                                <div id="selectedContactsContainer" class="selected-contacts-container"></div>
+
+                                <!-- The clickable area to open/close the dropdown -->
+                                <div class="dropdown-toggle" id="dropdownToggle">
+                                    <span id="dropdownPlaceholder">Select contact(s)</span>
+                                    <img class="dropdown-arrow" id="dropdownArrow"
+                                        src="./assets/img/icons/addTask/arrow_drop_down.svg" alt="Dropdown arrow" />
+                                </div>
+                            </div>
+
+                            <!-- The dropdown list itself, hidden by default -->
+                            <div class="dropdown-list hidden" id="contactsDropdownList">
+                                <!-- JavaScript will insert contact-list-item divs here -->
+                            </div>
                         </div>
 
-
                     </div>
+
                     <div class="grey-vector"></div>
+
                     <div class="right-input-fields">
                         <div class="input-due-date-container">
                             <span>Due date<span style="color: red;">*</span></span>
-                            <input type="date" required>
+                            <input type="date" required />
                         </div>
                         <div class="prio-selection-container">
                             <span>Prio</span>
                             <div class="prio-selector-container">
                                 <div class="prio-option" data-prio="urgent">
                                     <span>Urgent</span>
-                                    <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority">
+                                    <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority" />
                                 </div>
                                 <div class="prio-option selected" data-prio="medium">
                                     <span>Medium</span>
-                                    <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority">
+                                    <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority" />
                                 </div>
                                 <div class="prio-option" data-prio="low">
                                     <span>Low</span>
-                                    <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority">
+                                    <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority" />
                                 </div>
                             </div>
                         </div>
@@ -81,7 +97,7 @@
                             <label for="subtask">Subtasks</label>
 
                             <div class="input-subtask-wrapper">
-                                <input type="text" id="subtask-input" placeholder="Add new subtask">
+                                <input type="text" id="subtask-input" placeholder="Add new subtask" />
                                 <div class="subtask-buttons">
                                     <button id="clear-subtask" class="hidden">✖</button>
                                     <div id="vector" class="hidden">|</div>
@@ -97,13 +113,18 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="add-task-bottom-container">
                     <span><span style="color: red;">*</span>This field is required</span>
                     <div class="add-task-create-btn-container">
-                        <button id="clear-all-fields-btn" class="clear-btn">Clear<img
-                                src="./assets/img/icons/addTask/add_task_x_icon.svg" alt=""></button>
-                        <button class="create-btn">Create Task<img
-                                src="./assets/img/icons/addTask/add_task_check_icon.svg" alt=""></button>
+                        <button id="clear-all-fields-btn" class="clear-btn">
+                            Clear
+                            <img src="./assets/img/icons/addTask/add_task_x_icon.svg" alt="" />
+                        </button>
+                        <button class="create-btn">
+                            Create Task
+                            <img src="./assets/img/icons/addTask/add_task_check_icon.svg" alt="" />
+                        </button>
                     </div>
                 </div>
 
@@ -112,8 +133,10 @@
                         <p>Your task was created successfully!</p>
                     </div>
                 </div>
+            </div>
         </main>
     </div>
+
     <!-- Link Scripts -->
     <script src="./shared/includeHTML.js"></script>
     <script src="./js/addTask.js"></script>

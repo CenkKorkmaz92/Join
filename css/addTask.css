@@ -25,6 +25,7 @@
     justify-content: space-between;
     width: 440px;
     height: 376px;
+    gap: 12px;
 }
 
 .input-title-container {
@@ -54,7 +55,6 @@
     display: flex;
     flex-direction: column;
     height: auto;
-    /* Adjust height dynamically */
     gap: 8px;
 }
 
@@ -66,7 +66,6 @@
 
 .input-description-container textarea {
     min-height: 104px;
-    /* Ensures starting height */
     border-radius: 10px;
     border: solid 1px #D1D1D1;
     font-size: 20px;
@@ -74,10 +73,8 @@
     line-height: 24px;
     padding: 8px;
     resize: vertical;
-    /* Allows user to resize only vertically */
 }
 
-/* Ensures placeholder text starts at the top-left */
 .input-description-container textarea::placeholder {
     vertical-align: top;
     text-align: left;
@@ -86,7 +83,7 @@
 .drop-down-assignt-to-container {
     display: flex;
     flex-direction: column;
-    height: 80px;
+    height: 260px;
     gap: 8px;
 }
 
@@ -96,14 +93,105 @@
     line-height: 24px;
 }
 
-.drop-down-assignt-to-container select {
-    height: 48px;
-    padding: 8px;
+.assigned-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.selected-contacts-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.contact-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #999;
+    color: white;
+    font-weight: 600;
+    cursor: default;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 4px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #d1d1d1;
     border-radius: 10px;
-    border: solid 1px #D1D1D1;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
+    padding: 8px 12px;
+    font-size: 16px;
+}
+
+.dropdown-arrow {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s ease;
+}
+
+.dropdown-arrow.rotated {
+    transform: rotate(180deg);
+}
+
+.dropdown-list {
+    z-index: 9999;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    margin-top: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+}
+
+.contact-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.contact-list-item:hover {
+    background-color: #f0f0f0;
+}
+
+.contact-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #999;
+    color: #fff;
+    margin-right: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.contact-label {
+    flex: 1;
+    font-size: 16px;
+}
+
+.contact-list-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
 }
 
 .grey-vector {
@@ -125,7 +213,6 @@
     gap: 8px;
 }
 
-/* Black color when a valid date is selected */
 .input-due-date-container input:valid {
     color: black;
 }
@@ -176,7 +263,6 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Default text color */
 .prio-option span {
     font-size: 20px;
     font-weight: 400;
@@ -184,17 +270,14 @@
     color: black;
 }
 
-/* Selected effect - Ensures text turns white */
 .prio-option.selected span {
     color: white !important;
 }
 
 .prio-option.selected img {
     filter: brightness(0) invert(1);
-    /* Makes the image white */
 }
 
-/* Background colors for different selections */
 .prio-option[data-prio="urgent"].selected {
     background-color: #FF3D00;
 }
@@ -232,34 +315,26 @@
     line-height: 24px;
     cursor: pointer;
     color: black;
-    /* Default text color */
 }
 
-/* Placeholder (hidden option) style */
 .input-category-container select:invalid {
     color: gray;
-    /* Placeholder color */
 }
 
-/* Hide the empty placeholder option */
 .input-category-container select option[value=""] {
     display: none;
 }
 
-/* Change font color to black when a valid option is selected */
 .input-category-container select:focus,
 .input-category-container select:valid {
     color: black;
 }
 
 .subtask-container {
-    /* Force it to a fixed height so it won't keep growing */
     height: 260px;
-    /* ~3 items worth of space */
     display: flex;
     flex-direction: column;
     gap: 8px;
-    /* If you want a small gap between label, input & list */
 }
 
 .subtask-container label,
@@ -336,11 +411,6 @@ select {
     border-bottom: 2px solid #29ABE2;
 }
 
-
-
-/* ───────────────────────────────────────────────────
-   Updated subtask-item styling for hover & icons
-   ─────────────────────────────────────────────────── */
 .subtask-item {
     display: flex;
     align-items: center;
@@ -375,7 +445,6 @@ select {
     border: solid 1px gray;
 }
 
-/* By default, hide the edit/delete icons */
 .subtask-actions {
     display: none;
     gap: 8px;
@@ -383,19 +452,16 @@ select {
     margin-left: 16px;
 }
 
-/* Show icons on hover */
 .subtask-item:hover .subtask-actions {
     display: flex;
 }
 
-/* Optional separator (vertical line) between the pencil & trash icons */
 .subtask-separator {
     width: 1px;
     height: 18px;
     background-color: #999;
 }
 
-/* Icon styling */
 .subtask-actions img {
     width: 18px;
     height: 18px;
@@ -407,12 +473,10 @@ select {
     transform: scale(1.1);
 }
 
-/* Subtask text styling */
 .subtask-item span {
     font-size: 16px;
 }
 
-/* Bottom buttons / container */
 .add-task-bottom-container {
     display: flex;
     align-items: center;
@@ -488,7 +552,6 @@ select {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* halbtransparenter Hintergrund */
     display: flex;
     justify-content: center;
     align-items: center;

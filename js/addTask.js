@@ -2,8 +2,8 @@
 
 /**
  * @file Manages the Add Task page: fetching contacts from Firebase,
- * subtask creation, editing, deletion, form clearing, priority/date logic,
- * and enabling/disabling the Create Task button.
+ * multi-select for "Assigned to," subtask creation, editing, deletion,
+ * form clearing, priority/date logic, and enabling/disabling the Create Task button.
  */
 
 /** Firebase endpoints */
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /** @type {HTMLButtonElement} */
     const createTaskBtn = document.querySelector(".create-btn");
 
-    // Subtasks
+    // Subtask references
     /** @type {HTMLInputElement} */
     const inputField = document.getElementById("subtask-input");
     /** @type {HTMLButtonElement} */
@@ -41,32 +41,139 @@ document.addEventListener("DOMContentLoaded", () => {
     /** @type {HTMLButtonElement} */
     const bottomClearButton = document.getElementById("clear-all-fields-btn");
 
-    // The new <select> for Assigned To
-    /** @type {HTMLSelectElement} */
-    const assigneesSelect = document.getElementById("assigneesSelect");
+    // --------------------------------------------------------------------------
+    // MULTI-SELECT CONTACTS: DOM Elements
+    // --------------------------------------------------------------------------
+    /** @type {HTMLDivElement} */
+    const dropdownToggle = document.getElementById("dropdownToggle");
+    /** @type {HTMLSpanElement} */
+    const dropdownArrow = document.getElementById("dropdownArrow");
+    /** @type {HTMLDivElement} */
+    const contactsDropdownList = document.getElementById("contactsDropdownList");
+    /** @type {HTMLDivElement} */
+    const selectedContactsContainer = document.getElementById("selectedContactsContainer");
+    /** @type {HTMLSpanElement} */
+    const dropdownPlaceholder = document.getElementById("dropdownPlaceholder");
+
+    // Keep track of all contacts fetched from Firebase
+    let allContacts = [];
+    // Keep track of which contacts are selected
+    let selectedContacts = [];
+    // Track whether the dropdown is open or closed
+    let dropdownOpen = false;
 
     // --------------------------------------------------------------------------
-    // Fetch Contacts from Firebase and Populate <select>
+    // Fetch Contacts from Firebase (with fullName, initials, color, etc.)
     // --------------------------------------------------------------------------
     fetch(FIREBASE_CONTACTS_URL)
         .then((response) => response.json())
         .then((data) => {
-            // Data might be an object of objects, so we convert it to an array
-            // if it isn't already an array.
-            const contactsArray = data ? Object.values(data) : [];
+            // 1) Log the raw data
+            console.log("Contacts data from Firebase:", data);
 
-            contactsArray.forEach((contact) => {
-                if (contact.fullName) {
-                    const option = document.createElement("option");
-                    option.value = contact.fullName;
-                    option.textContent = contact.fullName;
-                    assigneesSelect.appendChild(option);
-                }
-            });
+            if (!data) {
+                console.warn("No contacts found or data is null");
+                return;
+            }
+
+            // 2) Convert the object to an array, preserving push keys
+            const allContacts = Object.entries(data).map(([pushKey, contactObj]) => ({
+                firebaseId: pushKey,
+                ...contactObj,
+            }));
+
+            // 3) Log the array
+            console.log("allContacts array:", allContacts);
+
+            // 4) Pass it to your render function
+            renderContactsDropdown(allContacts);
         })
         .catch((error) => {
             console.error("Error fetching contacts:", error);
         });
+
+
+    /**
+     * Renders the list of contacts (with checkboxes) inside the dropdown.
+     */
+    function renderContactsDropdown(contactsArray) {
+        console.log("Rendering dropdown with:", contactsArray);
+        const contactsDropdownList = document.getElementById("contactsDropdownList");
+
+        contactsDropdownList.innerHTML = ""; // Clear old items
+
+        contactsArray.forEach((contact) => {
+            console.log("Rendering contact:", contact); // Debug line
+            // Build your <div> for the contact
+            const item = document.createElement("div");
+            item.className = "contact-list-item";
+
+            // Avatar
+            const avatar = document.createElement("div");
+            avatar.className = "contact-avatar";
+            avatar.style.backgroundColor = contact.color || "#999";
+            avatar.textContent = contact.initials || "?";
+
+            // Label
+            const label = document.createElement("span");
+            label.className = "contact-label";
+            label.textContent = contact.fullName; // Must match your field name
+
+            // Checkbox
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+
+            item.appendChild(avatar);
+            item.appendChild(label);
+            item.appendChild(checkbox);
+
+            contactsDropdownList.appendChild(item);
+        });
+    }
+
+
+    /**
+     * Updates the chips shown for selected contacts.
+     */
+    function updateSelectedContactsUI() {
+        // Clear existing chips
+        selectedContactsContainer.innerHTML = "";
+
+        selectedContacts.forEach((contact) => {
+            const chip = document.createElement("div");
+            chip.className = "contact-chip";
+            chip.style.backgroundColor = contact.color || "#999";
+            chip.textContent = contact.initials || "?";
+            selectedContactsContainer.appendChild(chip);
+        });
+
+        // If you want to show how many are selected, update the placeholder text:
+        if (selectedContacts.length > 0) {
+            dropdownPlaceholder.textContent = `${selectedContacts.length} contact(s) selected`;
+        } else {
+            dropdownPlaceholder.textContent = "Select contact(s)";
+        }
+    }
+
+    // --------------------------------------------------------------------------
+    // Toggle the dropdown open/closed
+    // --------------------------------------------------------------------------
+    dropdownToggle.addEventListener("click", () => {
+        dropdownOpen = !dropdownOpen;
+        contactsDropdownList.classList.toggle("hidden", !dropdownOpen);
+        dropdownArrow.classList.toggle("rotated", dropdownOpen);
+    });
+
+    window.addEventListener("click", (e) => {
+        if (
+            !dropdownToggle.contains(e.target) &&
+            !contactsDropdownList.contains(e.target)
+        ) {
+            dropdownOpen = false;
+            contactsDropdownList.classList.add("hidden");
+            dropdownArrow.classList.remove("rotated");
+        }
+    });
 
     // --------------------------------------------------------------------------
     // Form Validation
@@ -132,6 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Edit subtask event
         editIcon.addEventListener("click", () => handleInlineEdit(subtaskSpan));
         subtaskSpan.addEventListener("dblclick", () => handleInlineEdit(subtaskSpan));
+
         // Delete subtask event
         deleteIcon.addEventListener("click", () => listItem.remove());
 
@@ -212,7 +320,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function clearAllFields() {
         titleInput.value = "";
         document.querySelector('textarea[placeholder="Enter a Description"]').value = "";
-        assigneesSelect.value = "";
         dueDateInput.value = "";
         categorySelect.value = "";
         subtaskList.innerHTML = "";
@@ -221,21 +328,24 @@ document.addEventListener("DOMContentLoaded", () => {
         clearButton.classList.add("hidden");
         vector.classList.add("hidden");
         addButton.classList.remove("hidden");
+
+        // Clear priority selection
         document
             .querySelectorAll(".prio-option")
             .forEach((opt) => opt.classList.remove("selected"));
-
         const mediumPrio = document.querySelector('.prio-option[data-prio="medium"]');
         if (mediumPrio) mediumPrio.classList.add("selected");
+
+        // Clear selected contacts
+        selectedContacts = [];
+        updateSelectedContactsUI();
 
         validateForm();
     }
 
     // --------------------------------------------------------------------------
-    // Event Listeners
+    // Event Listeners for Subtasks, Priority, Clearing
     // --------------------------------------------------------------------------
-
-    // Subtask input logic
     inputField.addEventListener("input", () => toggleButtons(Boolean(inputField.value.trim())));
     confirmButton.addEventListener("click", addSubtask);
     inputField.addEventListener("keypress", (e) => {
@@ -246,13 +356,11 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleButtons(false);
     });
 
-    // Bottom "Clear All Fields" button
     bottomClearButton.addEventListener("click", (e) => {
         e.preventDefault();
         clearAllFields();
     });
 
-    // Priority selection
     const prioOptions = document.querySelectorAll(".prio-option");
     prioOptions.forEach((option) => {
         option.addEventListener("click", () => {
@@ -261,13 +369,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Validate form fields on input/change
     [titleInput, dueDateInput, categorySelect].forEach((el) => {
         el.addEventListener("input", validateForm);
         el.addEventListener("change", validateForm);
     });
-
-    // Initial validation
     validateForm();
 
     // --------------------------------------------------------------------------
@@ -294,18 +399,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const description = document
             .querySelector('textarea[placeholder="Enter a Description"]')
             .value.trim();
-        const assignedTo = assigneesSelect.value; // from <select>
         const dueDate = dueDateInput.value;
         const selectedPrio =
             document.querySelector(".prio-option.selected")?.dataset.prio || "medium";
         const category = categorySelect.value;
 
-        // Get all subtasks from the list (remove the bullet "• " from each)
+        // Gather subtasks
         const subtaskElements = document.querySelectorAll("#subtask-list li .subtask-text");
         const subtasks = [];
         subtaskElements.forEach((el) => {
             subtasks.push(el.textContent.replace(/^•\s*/, "").trim());
         });
+
+        // selectedContacts is an array of contact objects
+        const assignedTo = selectedContacts.map((c) => ({
+            firebaseId: c.firebaseId,
+            fullName: c.fullName,
+            initials: c.initials,
+        }));
 
         // Create a task object to send to Firebase
         const newTask = {
