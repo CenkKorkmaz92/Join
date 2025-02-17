@@ -60,13 +60,23 @@
                                 </div>
                                 <div class="popup-sub-section">
                                     <div class="popup-input">
-                                        <!-- Added required and pattern attributes for validation -->
-                                        <input type="text" id="nameInput" placeholder="Name" class="popup-input-field"
-                                            required pattern="^[A-Za-z\s]{1,}$">
-                                        <input type="email" id="emailInput" placeholder="E-Mail"
-                                            class="popup-input-field" required>
-                                        <input type="tel" id="phoneInput" placeholder="Telefonnummer"
-                                            class="popup-input-field" required pattern="^\+?\d{10,15}$">
+                                        <!-- Name: nur Buchstaben (auch Umlaute) und Leerzeichen, maximal 3 Wörter -->
+                                        <input type="text" id="nameInput" placeholder="Name" class="popup-input-field" required
+                                            pattern="^[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$"
+                                            oninvalid="this.setCustomValidity('Bitte geben Sie einen Namen ein (maximal drei Wörter, nur Buchstaben und Leerzeichen).')"
+                                            oninput="this.setCustomValidity('')">
+
+                                        <!-- E-Mail: Vor dem @ mindestens ein Wort, nach dem @ mindestens ein Wort, ein Punkt folgt, nach dem Punkt mindestens 2 Zeichen -->
+                                        <input type="email" id="emailInput" placeholder="E-Mail" class="popup-input-field" required
+                                            pattern="^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A-Za-z]{2,}$"
+                                            oninvalid="this.setCustomValidity('Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).')"
+                                            oninput="this.setCustomValidity('')">
+
+                                        <!-- Telefonnummer: nur Zahlen, Leerzeichen und das +-Symbol; mindestens 6 Zeichen -->
+                                        <input type="tel" id="phoneInput" placeholder="Telefonnummer" class="popup-input-field" required
+                                            pattern="^[0-9+\s]{6,}$"
+                                            oninvalid="this.setCustomValidity('Bitte geben Sie eine gültige Telefonnummer ein (mindestens 6 Zeichen, nur Zahlen, Leerzeichen und + erlaubt).')"
+                                            oninput="this.setCustomValidity('')">
                                     </div>
                                     <div class="popup-buttons">
                                         <!-- Cancel button is type="button" so it won’t trigger form submission -->
