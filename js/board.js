@@ -103,6 +103,15 @@ function createTaskCard(task) {
         event.dataTransfer.setData("text/plain", cardClone.id);
         // Store which column we came from
         originColumnId = cardClone.parentNode.id;
+
+        // Add a "dragging" class to tilt the card visually
+        cardClone.classList.add("dragging");
+    });
+
+    cardClone.addEventListener("dragend", (event) => {
+        // Remove the "dragging" class when dropping or canceling drag
+        cardClone.classList.remove("dragging");
+
     });
 
     // Fill in the card with task data
