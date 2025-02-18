@@ -426,7 +426,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 popupSuccess.style.display = "flex";
                 setTimeout(() => {
                     popupSuccess.style.display = "none";
+                    window.location.href = "board.html";
                 }, 2000);
+                
 
                 // Optionally clear the form fields after success
                 clearAllFields();
@@ -435,5 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Error adding task:", error);
                 alert("There was an error adding your task. Please try again.");
             });
+
+
     });
 });
