@@ -1,4 +1,13 @@
-let originColumnId = null; // track the ID of the column from which we're dragging a card
+/**
+ * board.js
+ *
+ * Fetches tasks from Firebase, displays them on the board,
+ * and implements drag-and-drop (with column highlighting and placeholders).
+ * Also sets up a simple progress bar for subtasks (0% fill by default),
+ * and tilts the original card on drag using a `.dragging` class.
+ */
+
+let originColumnId = null; // Track the ID of the column from which we're dragging a card
 
 document.addEventListener("DOMContentLoaded", () => {
     const FIREBASE_TASKS_URL =
@@ -51,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // On drop, append the dragged card, update status, etc.
         column.addEventListener("drop", (event) => {
             event.preventDefault();
-            // Remove highlight in case it stays
+            // Remove highlight in case it remains
             column.classList.remove("hovered");
 
             const cardId = event.dataTransfer.getData("text/plain");
@@ -92,9 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /**
  * Creates a board card for a task by cloning the template,
- * filling in the task data, and appending it to the correct column.
+ * filling in the task data, setting up a subtask progress bar,
+ * and appending it to the correct column.
  */
 function createTaskCard(task) {
+    // Get the template and clone its content
     const template = document.getElementById("cardTemplate");
     const cardClone = template.content.firstElementChild.cloneNode(true);
 
@@ -102,10 +113,16 @@ function createTaskCard(task) {
     cardClone.id = "card-" + task.firebaseId;
     cardClone.draggable = true;
 
-    // On dragstart, store the card's ID and remember which column it came from
+    // On dragstart, store the card's ID, tilt it, remember which column it came from
     cardClone.addEventListener("dragstart", (event) => {
         event.dataTransfer.setData("text/plain", cardClone.id);
         originColumnId = cardClone.parentNode.id;
+        cardClone.classList.add("dragging"); // Add tilt class
+    });
+
+    // On dragend, remove the tilt class
+    cardClone.addEventListener("dragend", (event) => {
+        cardClone.classList.remove("dragging");
     });
 
     // Fill in the card with task data
@@ -113,9 +130,24 @@ function createTaskCard(task) {
     cardClone.querySelector(".headline").textContent = task.title || "No title";
     cardClone.querySelector(".info").textContent = task.description || "";
 
-    // Subtask placeholder
-    const subtaskCount = task.subtasks ? task.subtasks.length : 0;
-    cardClone.querySelector(".subtask-counter").textContent = `${subtaskCount} subtasks`;
+    // Subtask logic
+    const totalSubtasks = task.subtasks ? task.subtasks.length : 0;
+    const completedSubtasks = 0; // future logic
+    const fillPercent = totalSubtasks === 0
+        ? 100
+        : (completedSubtasks / totalSubtasks) * 100;
+
+    // Subtask counter
+    const subtaskCounterEl = cardClone.querySelector(".subtask-counter");
+    if (subtaskCounterEl) {
+        subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
+    }
+
+    // Progress bar fill
+    const progressFillEl = cardClone.querySelector(".progressbar-fill");
+    if (progressFillEl) {
+        progressFillEl.style.width = fillPercent + "%";
+    }
 
     // Priority
     cardClone.querySelector(".prio").textContent = task.priority || "none";
