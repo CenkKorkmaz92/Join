@@ -112,15 +112,18 @@
 
 .board-list {
     display: flex;
-    height: 100%;
+    height: 688px;
     gap: 44px;
     padding-top: 8px;
-    
+    overflow-y: auto;
 }
 
 .board-list-column {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .board-task-element {
@@ -131,4 +134,6 @@
     border-radius: 10px;
     color: #A8A8A8;
     border: 2px dotted #A8A8A8;
+    flex-direction: column;
+    gap: 12px;
 }

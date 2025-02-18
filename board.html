@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Board</title>
 
     <!-- Link Styles -->
@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./shared/navbar.css">
     <link rel="stylesheet" href="./shared/header.css">
     <link rel="stylesheet" href="./shared/modal.css">
+    <link rel="stylesheet" href="./shared/cardTemplates/boardCardTemplate.css">
 </head>
 
 <body>
@@ -23,7 +24,7 @@
         <!-- Header -->
         <div id="header-container" class="top-header"></div>
 
-        <!-- Main Content (Use `.content` class) -->
+        <!-- Main Content -->
         <main class="content">
             <div class="board-main-content">
                 <div class="board-header">
@@ -31,16 +32,19 @@
                         <h1 class="headline-board">Board</h1>
                         <div class="input-and-btn">
                             <div class="input-container">
-                                <input type="text" placeholder="Name">
+                                <input type="text" placeholder="Name" />
                                 <span class="icon">
                                     <img src="./assets/img/icons/board/search_icon.svg" alt="search Icon">
                                 </span>
                             </div>
-                            <button class="add-task-btn-summary">Add task <img src="./assets/img/icons/board/+_icon.svg"
-                                    alt=""></button>
+                            <button class="add-task-btn-summary">
+                                Add task
+                                <img src="./assets/img/icons/board/+_icon.svg" alt="">
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <div class="board-subline-and-add-btn">
                     <div class="subline-container">
                         <span>To do</span>
@@ -59,24 +63,27 @@
                         <img src="./assets/img/icons/board/add_btn_subline_icon.svg" style="visibility: hidden;" alt="">
                     </div>
                 </div>
+
+                <!-- Board columns (each column now has its own ID for drag/drop) -->
                 <div class="board-list">
-                    <div class="board-list-column">
-                        <div id="toDo" class="board-task-element">No tasks To do</div>
+                    <div id="toDo" class="board-list-column">
+                        <div class="board-task-element">No tasks To do</div>
                     </div>
-                    <div class="board-list-column">
-                        <div id="inProgress" class="board-task-element">No tasks To do</div>
+                    <div id="inProgress" class="board-list-column">
+                        <div class="board-task-element">No tasks To do</div>
                     </div>
-                    <div class="board-list-column">
-                        <div id="awaitFeedback" class="board-task-element">No tasks To do</div>
+                    <div id="awaitFeedback" class="board-list-column">
+                        <div class="board-task-element">No tasks To do</div>
                     </div>
-                    <div class="board-list-column">
-                        <div id="done" class="board-task-element">No tasks To do</div>
+                    <div id="done" class="board-list-column">
+                        <div class="board-task-element">No tasks To do</div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
-    <!-- Modal popup-->
+
+    <!-- Modal popup -->
     <div id="addTaskModal" class="modal hidden">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -95,26 +102,16 @@
                             </div>
                             <div class="drop-down-assignt-to-container">
                                 <span>Assigned to</span>
-
-                                <!-- Container that holds the "chips" of selected contacts + the dropdown toggle -->
                                 <div class="assigned-container">
-                                    <!-- Chips for selected contacts will go here -->
                                     <div id="selectedContactsContainer" class="selected-contacts-container"></div>
-
-                                    <!-- The clickable area to open/close the dropdown -->
                                     <div class="dropdown-toggle" id="dropdownToggle">
                                         <span id="dropdownPlaceholder">Select contact(s)</span>
                                         <img class="dropdown-arrow" id="dropdownArrow"
                                             src="./assets/img/icons/addTask/arrow_drop_down.svg" alt="Dropdown arrow" />
                                     </div>
                                 </div>
-
-                                <!-- The dropdown list itself, hidden by default -->
-                                <div class="dropdown-list hidden" id="contactsDropdownList">
-                                    <!-- JavaScript will insert contact-list-item divs here -->
-                                </div>
+                                <div class="dropdown-list hidden" id="contactsDropdownList"></div>
                             </div>
-
                         </div>
 
                         <div class="grey-vector"></div>
@@ -153,7 +150,6 @@
 
                             <div class="subtask-container">
                                 <label for="subtask">Subtasks</label>
-
                                 <div class="input-subtask-wrapper">
                                     <input type="text" id="subtask-input" placeholder="Add new subtask" />
                                     <div class="subtask-buttons">
@@ -163,8 +159,6 @@
                                         <button id="add-subtask-btn">+</button>
                                     </div>
                                 </div>
-
-                                <!-- Wrap just the subtasks list in its own scrollable div -->
                                 <div class="subtask-list-wrapper">
                                     <ul id="subtask-list"></ul>
                                 </div>
@@ -195,13 +189,34 @@
             </main>
         </div>
     </div>
-    <!-- Link Scripts -->
+
+    <!-- Card Template (for tasks) -->
+    <template id="cardTemplate">
+        <div class="card-body">
+            <div class="category">category test</div>
+            <div>
+                <h1 class="headline">headline test</h1>
+                <span class="info">info test</span>
+            </div>
+            <div class="progress-and-subtask">
+                <div class="progressbar">progressbar test</div>
+                <div class="subtask-counter">subtask count</div>
+            </div>
+            <div class="chips-and-prio">
+                <div class="chips">chip test</div>
+                <div class="prio">prio test</div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Scripts -->
     <script src="./shared/includeHTML.js"></script>
     <script src="./js/addTask.js"></script>
     <script src="./js/firebase.js"></script>
     <script src="./shared/navbar.js"></script>
     <script src="./shared/header.js"></script>
     <script src="./shared/modal.js"></script>
+    <script src="./js/board.js"></script>
 </body>
 
 </html>
