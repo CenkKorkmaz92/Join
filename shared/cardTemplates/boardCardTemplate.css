@@ -1,0 +1,78 @@
+.card-body {
+    display: flex;
+    flex-direction: column;
+    width: 236px;
+    height: 263px;
+    background-color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
+    padding: 16px;
+    gap: 24px;
+}
+
+.category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 113px;
+    height: 27px;
+    border-radius: 8px;
+    padding: 4px 16px 4px 16px;
+    gap: 10px;
+    background-color: #0038FF;
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19.2px;
+}
+
+.headline {
+    width: 220px;
+    height: 38px;
+    color: #2A3647;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19.2px;
+}
+
+.info {
+    width: 220px;
+    height: 38px;
+    color: #A8A8A8;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19.2px;
+}
+
+.progress-and-subtask {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 220px;
+    height: 16px;
+}
+
+.progressbar {
+    display: flex;
+    align-items: center;
+    width: 128px;
+    height: 8px;
+    border-radius: 8px;
+    background-color: #F4F4F4;
+}
+
+.subtask-counter {
+    width: 73px;
+    height: 14px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14.4px;
+}
+
+.chips-and-prio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 220px;
+    height: 32px;
+}
