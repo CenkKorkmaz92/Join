@@ -126,6 +126,13 @@
     gap: 12px;
 }
 
+.board-list-column.hovered {
+    
+    outline: 1px dashed #A8A8A8;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, outline 0.2s ease;
+  } 
+  
 .board-task-element {
     display: flex;
     justify-content: center;

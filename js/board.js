@@ -1,12 +1,4 @@
-/**
- * board.js
- *
- * Fetches tasks from Firebase, displays them on the board, and
- * implements drag-and-drop to move cards between columns.
- * Removes/Restores the placeholder as columns become empty or filled.
- */
-
-let originColumnId = null; // Track the ID of the column from which we're dragging a card
+let originColumnId = null; // track the ID of the column from which we're dragging a card
 
 document.addEventListener("DOMContentLoaded", () => {
     const FIREBASE_TASKS_URL =
@@ -44,9 +36,24 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
         });
 
+        // Highlight the column on dragenter
+        column.addEventListener("dragenter", (event) => {
+            event.preventDefault();
+            column.classList.add("hovered");
+        });
+
+        // Remove highlight on dragleave
+        column.addEventListener("dragleave", (event) => {
+            event.preventDefault();
+            column.classList.remove("hovered");
+        });
+
         // On drop, append the dragged card, update status, etc.
         column.addEventListener("drop", (event) => {
             event.preventDefault();
+            // Remove highlight in case it stays
+            column.classList.remove("hovered");
+
             const cardId = event.dataTransfer.getData("text/plain");
             const card = document.getElementById(cardId);
 
@@ -86,11 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
 /**
  * Creates a board card for a task by cloning the template,
  * filling in the task data, and appending it to the correct column.
- *
- * @param {Object} task - The task data from Firebase.
  */
 function createTaskCard(task) {
-    // Get the template and clone its content
     const template = document.getElementById("cardTemplate");
     const cardClone = template.content.firstElementChild.cloneNode(true);
 
@@ -98,20 +102,10 @@ function createTaskCard(task) {
     cardClone.id = "card-" + task.firebaseId;
     cardClone.draggable = true;
 
-    // On dragstart, store the card's ID and remember the origin column
+    // On dragstart, store the card's ID and remember which column it came from
     cardClone.addEventListener("dragstart", (event) => {
         event.dataTransfer.setData("text/plain", cardClone.id);
-        // Store which column we came from
         originColumnId = cardClone.parentNode.id;
-
-        // Add a "dragging" class to tilt the card visually
-        cardClone.classList.add("dragging");
-    });
-
-    cardClone.addEventListener("dragend", (event) => {
-        // Remove the "dragging" class when dropping or canceling drag
-        cardClone.classList.remove("dragging");
-
     });
 
     // Fill in the card with task data
