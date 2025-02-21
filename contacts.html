@@ -62,24 +62,22 @@
                                 </div>
                                 <div class="popup-sub-section">
                                     <div class="popup-input">
-                                        <!-- Name: nur Buchstaben (auch Umlaute) und Leerzeichen, maximal 3 Wörter -->
-                                        <input type="text" id="nameInput" placeholder="Name" class="popup-input-field" required
-                                            pattern="^[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$"
-                                            oninvalid="this.setCustomValidity('Bitte geben Sie einen Namen ein (maximal drei Wörter, nur Buchstaben und Leerzeichen).')"
-                                            oninput="this.setCustomValidity('')">
-
-                                        <!-- E-Mail: Vor dem @ mindestens ein Wort, nach dem @ mindestens ein Wort, ein Punkt folgt, nach dem Punkt mindestens 2 Zeichen -->
-                                        <input type="email" id="emailInput" placeholder="E-Mail" class="popup-input-field" required
-                                            pattern="^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A-Za-z]{2,}$"
-                                            oninvalid="this.setCustomValidity('Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).')"
-                                            oninput="this.setCustomValidity('')">
-
-                                        <!-- Telefonnummer: nur Zahlen, Leerzeichen und das +-Symbol; mindestens 6 Zeichen -->
-                                        <input type="tel" id="phoneInput" placeholder="Telefonnummer" class="popup-input-field" required
-                                            pattern="^[0-9+\s]{6,}$"
-                                            oninvalid="this.setCustomValidity('Bitte geben Sie eine gültige Telefonnummer ein (mindestens 6 Zeichen, nur Zahlen, Leerzeichen und + erlaubt).')"
-                                            oninput="this.setCustomValidity('')">
-                                    </div>
+                                        <div class="input-group">
+                                          <input type="text" id="nameInput" placeholder="Name" class="popup-input-field" required
+                                                 pattern="^[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$">
+                                          <span class="error-message" id="nameError"></span>
+                                        </div>
+                                        <div class="input-group">
+                                          <input type="email" id="emailInput" placeholder="E-Mail" class="popup-input-field" required
+                                                 pattern="^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A-Za-z]{2,}$">
+                                          <span class="error-message" id="emailError"></span>
+                                        </div>
+                                        <div class="input-group">
+                                          <input type="tel" id="phoneInput" placeholder="Telefonnummer" class="popup-input-field" required
+                                                 pattern="^[0-9+\s]{6,}$">
+                                          <span class="error-message" id="phoneError"></span>
+                                        </div>
+                                      </div>
                                     <div class="popup-buttons">
                                         <!-- Cancel button is type="button" so it won’t trigger form submission -->
                                         <button type="button" id="clearBtn" class="popup-button-cancel">
@@ -158,31 +156,44 @@
                     </div>
                 </div>
                 <div class="popup-content">
-                    <div class="pop-up-close-button">
+                    <div class="pop-up-close-button-edit-contact">
                         <img src="/assets/img/icons/contact/contact_close.svg" alt="" onclick="closeWindow()"
-                            class="pop-up-close-button-img">
+                            class="pop-up-close-button-img-edit-contact">
                     </div>
                     <div class="popup-overclass">
                         <div class="popup-main-section">
                             <div id="selectedContactProfile" class="contact-circle-detail-edit"></div>
                         </div>
                         <div class="popup-sub-section">
-                            <div class="popup-input">
-                                <input type="text" id="editNameInput" placeholder="Name" class="popup-input-field">
-                                <input type="email" id="editEmailInput" placeholder="E-Mail" class="popup-input-field">
-                                <input type="tel" id="editPhoneInput" placeholder="Telefonnummer"
-                                    class="popup-input-field">
-                            </div>
-                            <div class="popup-buttons">
-                                <button id="deleteBtn" class="popup-button-cancel">
+                            <form id="editContactForm" class="popup-form" novalidate>
+                                <div class="popup-input">
+                                  <div class="input-group">
+                                    <input type="text" id="editNameInput" placeholder="Name" class="popup-input-field" required
+                                           pattern="^[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$">
+                                    <span class="error-message" id="editNameError"></span>
+                                  </div>
+                                  <div class="input-group">
+                                    <input type="email" id="editEmailInput" placeholder="E-Mail" class="popup-input-field" required
+                                           pattern="^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A-Za-z]{2,}$">
+                                    <span class="error-message" id="editEmailError"></span>
+                                  </div>
+                                  <div class="input-group">
+                                    <input type="tel" id="editPhoneInput" placeholder="Telefonnummer" class="popup-input-field" required
+                                           pattern="^[0-9+\s]{6,}$">
+                                    <span class="error-message" id="editPhoneError"></span>
+                                  </div>
+                                </div>
+                                <div class="popup-buttons">
+                                  <button type="button" id="deleteBtn" class="popup-button-cancel">
                                     Delete
                                     <img src="/assets/img/icons/contact/contact_cancel.svg" alt="">
-                                </button>
-                                <button id="saveEditBtn" class="popup-button-check">
+                                  </button>
+                                  <button type="submit" id="saveEditBtn" class="popup-button-check">
                                     Save
                                     <img src="/assets/img/icons/contact/contact_check.svg" alt="">
-                                </button>
-                            </div>
+                                  </button>
+                                </div>
+                              </form>
                         </div>
                     </div>
                 </div>
@@ -195,19 +206,11 @@
                 </div>
             </div>
 
-            <!-- Bestätigungs-Popup zum Löschen -->
-            <!-- <div id="deleteConfirmationPopup" class="popup" style="display:none;">
-                <div class="popup-content">
-                    <h3>Kontakt wirklich löschen?</h3>
-                    <p>Sind Sie sicher, dass Sie diesen Kontakt löschen möchten?</p>
-                    <div class="popup-buttons">
-                        <button id="confirmDeleteBtn" class="popup-button-confirm">Löschen</button>
-                        <button id="cancelDeleteBtn" class="popup-button-cancel">Abbrechen</button>
-                    </div>
+            <div id="popupDelete" class="popup-success" style="display: none;">
+                <div class="popup-content-success">
+                    <p>Your contact was deleted</p>
                 </div>
-            </div> -->
-
-
+            </div>
 
 
     </div>
