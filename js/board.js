@@ -4,6 +4,7 @@
  *  - fetching tasks from Firebase,
  *  - converting string subtasks to { text, done } objects,
  *  - rendering them on a Kanban board with drag-and-drop,
+ *  - contact chips & priority icons,
  *  - subtask progress bars,
  *  - opening a "detail view" modal with checkbox toggles,
  *  - updating tasks in Firebase.
@@ -102,6 +103,7 @@ function patchSubtasks(firebaseId, newSubtasks) {
 
 /**
  * Creates a task card element and appends it to the correct board column.
+ * Shows colored chips for assigned contacts and an icon for priority.
  * @param {Object} task - The task data from Firebase (including .firebaseId).
  */
 function createTaskCard(task) {
@@ -145,7 +147,6 @@ function createTaskCard(task) {
   // SUBTASKS + PROGRESS
   const progressAndSubtaskEl = cardClone.querySelector(".progress-and-subtask");
   const totalSubtasks = Array.isArray(task.subtasks) ? task.subtasks.length : 0;
-
   if (totalSubtasks === 0) {
     // If no subtasks, hide the progress bar + counter entirely
     progressAndSubtaskEl.style.display = "none";
@@ -164,19 +165,34 @@ function createTaskCard(task) {
     progressFillEl.style.width = fillPercent + "%";
   }
 
-  // PRIORITY
-  cardClone.querySelector(".prio").textContent = task.priority || "none";
-
-  // ASSIGNED TO
-  if (task.assignedTo && task.assignedTo.length > 0) {
-    cardClone.querySelector(".chips").textContent = task.assignedTo
-      .map((c) => c.initials || c.fullName || "??")
-      .join(", ");
+  // PRIORITY ICON
+  const prioEl = cardClone.querySelector(".prio");
+  prioEl.innerHTML = ""; // Clear any text
+  if (task.priority === "urgent") {
+    prioEl.innerHTML = `<img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="Urgent" />`;
+  } else if (task.priority === "medium") {
+    prioEl.innerHTML = `<img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium" />`;
+  } else if (task.priority === "low") {
+    prioEl.innerHTML = `<img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low" />`;
   } else {
-    cardClone.querySelector(".chips").textContent = "";
+    prioEl.textContent = task.priority || "none";
   }
 
-  // Place card into correct column
+  // ASSIGNED TO (colored chips)
+  const chipsContainer = cardClone.querySelector(".chips");
+  chipsContainer.innerHTML = "";
+  if (task.assignedTo && task.assignedTo.length > 0) {
+    task.assignedTo.forEach((contact) => {
+      // Create a "chip" div with background color + initials
+      const chip = document.createElement("div");
+      chip.classList.add("contact-chip");
+      chip.style.backgroundColor = contact.color || "#999";
+      chip.textContent = contact.initials || "?";
+      chipsContainer.appendChild(chip);
+    });
+  }
+
+  // Place card into the correct column
   const columnId = task.status || "toDo";
   const column = document.getElementById(columnId);
   if (column) {
@@ -192,16 +208,13 @@ function createTaskCard(task) {
 
 /**
  * Opens the larger "detail view" modal with data from the given task.
- * Renders subtask checkboxes. Toggling a checkbox updates Firebase + progress.
+ * Renders contact avatars in color, plus a priority icon.
  */
 function openTaskModal(task) {
-  // Grab the badge element
+  // CATEGORY BADGE
   const categoryBadge = document.getElementById("taskCategoryBadge");
-
-  // Remove any old category classes in case they've changed
   categoryBadge.classList.remove("category-user", "category-technical");
 
-  // Now apply the correct class + text
   if (task.category === "user-story") {
     categoryBadge.classList.add("category-user");
     categoryBadge.textContent = "User Story";
@@ -221,8 +234,24 @@ function openTaskModal(task) {
   document.getElementById("taskDueDate").textContent =
     task.dueDate || "No date set";
 
-  // PRIORITY
-  document.getElementById("taskPriority").textContent = task.priority || "none";
+  // PRIORITY ICON
+  const taskPrioritySpan = document.getElementById("taskPriority");
+  taskPrioritySpan.innerHTML = ""; // Clear old content
+  if (task.priority === "urgent") {
+    taskPrioritySpan.innerHTML = `
+      Urgent <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="Urgent" />
+    `;
+  } else if (task.priority === "medium") {
+    taskPrioritySpan.innerHTML = `
+      Medium <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium" />
+    `;
+  } else if (task.priority === "low") {
+    taskPrioritySpan.innerHTML = `
+      Low <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low" />
+    `;
+  } else {
+    taskPrioritySpan.textContent = task.priority || "none";
+  }
 
   // ASSIGNED TO
   const assignedEl = document.getElementById("taskAssignedTo");
@@ -230,15 +259,17 @@ function openTaskModal(task) {
   if (task.assignedTo && task.assignedTo.length > 0) {
     task.assignedTo.forEach((person) => {
       const li = document.createElement("li");
-      // Could add an avatar or initials
-      const initialsDiv = document.createElement("div");
-      initialsDiv.classList.add("avatar");
-      initialsDiv.textContent = person.initials || "??";
+
+      // Create a colored avatar
+      const avatar = document.createElement("div");
+      avatar.classList.add("avatar");
+      avatar.style.backgroundColor = person.color || "#999";
+      avatar.textContent = person.initials || "??";
 
       const nameSpan = document.createElement("span");
       nameSpan.textContent = person.fullName || "No Name";
 
-      li.appendChild(initialsDiv);
+      li.appendChild(avatar);
       li.appendChild(nameSpan);
       assignedEl.appendChild(li);
     });
@@ -278,7 +309,7 @@ function openTaskModal(task) {
     subtasksList.appendChild(li);
   }
 
-  // Open the modal (this function is in modal.js)
+  // Show the modal
   openModal("viewTaskModal");
 }
 
@@ -290,16 +321,16 @@ function openTaskModal(task) {
  * @param {boolean} isDone - The new 'done' state (true/false).
  */
 function toggleSubtaskDone(task, subtaskIndex, isDone) {
-  // 1) Update the local task object
+  // Update local object
   task.subtasks[subtaskIndex].done = isDone;
 
-  // 2) Build the updated subtasks array to patch in Firebase
+  // Build the updated subtasks array
   const updatedSubtasks = task.subtasks.map((s) => ({
     text: s.text,
     done: s.done,
   }));
 
-  // 3) Patch the subtasks array in Firebase
+  // PATCH to Firebase
   const firebaseId = task.firebaseId;
   const updateUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
 
@@ -310,7 +341,7 @@ function toggleSubtaskDone(task, subtaskIndex, isDone) {
   })
     .then((res) => res.json())
     .then(() => {
-      // 4) Update the small card's progress bar without a full reload
+      // Update small card's progress
       updateCardProgress(firebaseId, updatedSubtasks);
     })
     .catch((error) =>
@@ -319,40 +350,31 @@ function toggleSubtaskDone(task, subtaskIndex, isDone) {
 }
 
 /**
- * Updates the small card's progress bar & counter based on a new subtasks array.
- * If there are zero subtasks, hides the progress bar entirely.
- *
- * @param {string} firebaseId - The task's Firebase ID.
- * @param {Array} newSubtasks - Updated array of subtask objects [{ text, done }, ...].
+ * Updates the small card's progress bar & counter based on updated subtasks.
+ * Hides the bar if there are zero subtasks.
  */
 function updateCardProgress(firebaseId, newSubtasks) {
-  // Find the small card on the board
   const cardId = "card-" + firebaseId;
   const card = document.getElementById(cardId);
-  if (!card) return; // If not on board, do nothing
+  if (!card) return;
 
   const progressAndSubtaskEl = card.querySelector(".progress-and-subtask");
   const totalSubtasks = newSubtasks.length;
   if (totalSubtasks === 0) {
-    // Hide everything if no subtasks
     progressAndSubtaskEl.style.display = "none";
     return;
   }
 
-  // Show the container in case it was hidden
   progressAndSubtaskEl.style.display = "flex";
 
-  // Count completed
   const completedSubtasks = newSubtasks.filter((s) => s.done).length;
   const fillPercent = (completedSubtasks / totalSubtasks) * 100;
 
-  // Update the text
   const subtaskCounterEl = card.querySelector(".subtask-counter");
   if (subtaskCounterEl) {
     subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
   }
 
-  // Update the bar fill
   const progressFillEl = card.querySelector(".progressbar-fill");
   if (progressFillEl) {
     progressFillEl.style.width = fillPercent + "%";
@@ -361,8 +383,6 @@ function updateCardProgress(firebaseId, newSubtasks) {
 
 /**
  * Updates the task's status in Firebase (for drag-and-drop column changes).
- * @param {string} cardId - e.g. "card-<firebaseId>"
- * @param {string} newStatus - The new status ("toDo", "inProgress", "awaitFeedback", "done")
  */
 function updateTaskStatusInFirebase(cardId, newStatus) {
   const firebaseId = cardId.replace("card-", "");

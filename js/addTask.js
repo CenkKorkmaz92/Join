@@ -393,7 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".prio-option.selected")?.dataset.prio || "medium";
     const category = categorySelect.value;
 
-    // Gather subtasks
+    // Gather subtasks as an array of strings
     const subtaskElements = document.querySelectorAll(
       "#subtask-list li .subtask-text"
     );
@@ -402,11 +402,12 @@ document.addEventListener("DOMContentLoaded", () => {
       subtasks.push(el.textContent.replace(/^•\s*/, "").trim());
     });
 
-    // selectedContacts is an array of contact objects
+    // selectedContacts is an array of contact objects; include their color now!
     const assignedTo = selectedContacts.map((c) => ({
       firebaseId: c.firebaseId,
       fullName: c.fullName,
       initials: c.initials,
+      color: c.color, // <- Make sure we store the color
     }));
 
     // Create a task object to send to Firebase
@@ -417,7 +418,7 @@ document.addEventListener("DOMContentLoaded", () => {
       dueDate,
       priority: selectedPrio,
       category,
-      subtasks,
+      subtasks, // plain strings; board.js will convert to {text, done} if needed
       createdAt: new Date().toISOString(),
     };
 

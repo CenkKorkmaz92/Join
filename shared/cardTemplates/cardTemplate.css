@@ -180,3 +180,16 @@ body {
   height: 24px;
   border: solid 1px #d1d1d1;
 }
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
