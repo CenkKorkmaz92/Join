@@ -22,8 +22,17 @@ html {
     height: calc(1024px - 96px);
     overflow: auto;
     margin-top: 85px;
+
 }
 
+.contact-list-hidden{
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+    height: 100px;
+    width: 362px;
+    margin-top: -30px
+}
 
 .add-contact-btn {
     position: absolute;
@@ -42,6 +51,7 @@ html {
     font-size: 21px;
     font-weight: 700;
     line-height: 25.2px;
+    margin-top: 20px;
 }
 
 .add-contact-btn:hover {
@@ -573,6 +583,7 @@ html {
 
 /* Reset any default styling on the form element within the popup */
 #contactForm.popup-form {
+    z-index: 1000;
     display: flex !important;
     margin: 0;
     padding: 0;
