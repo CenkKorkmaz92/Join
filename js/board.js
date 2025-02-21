@@ -1,15 +1,20 @@
 /**
  * @file board.js
- * @description Manages fetching tasks from Firebase, rendering them on a Kanban board,
- * implementing drag-and-drop functionality, updating task statuses in Firebase,
- * and showing a larger "detail view" modal when a card is clicked.
+ * @description Manages:
+ *  - fetching tasks from Firebase,
+ *  - converting string subtasks to { text, done } objects,
+ *  - rendering them on a Kanban board with drag-and-drop,
+ *  - subtask progress bars,
+ *  - opening a "detail view" modal with checkbox toggles,
+ *  - updating tasks in Firebase.
  */
 
 let originColumnId = null;
 
 /**
  * Loads tasks from Firebase and renders them on the board.
- * Adds a placeholder to any column that remains empty.
+ * Also auto-converts subtask arrays of strings into objects.
+ * Adds a placeholder if columns are empty.
  */
 function loadTasks() {
   const FIREBASE_TASKS_URL =
@@ -35,8 +40,9 @@ function loadTasks() {
         ...task,
       }));
 
-      // Create a card for each task
+      // For each task, convert string subtasks -> { text, done } objects if needed
       tasks.forEach((task) => {
+        fixSubtaskFormat(task); // auto-convert if needed
         task.status = task.status || "toDo";
         createTaskCard(task);
       });
@@ -47,8 +53,56 @@ function loadTasks() {
 }
 
 /**
+ * If the task's subtasks are an array of strings, convert them to
+ * an array of { text, done } objects, then PATCH back to Firebase.
+ *
+ * @param {Object} task - The task object from Firebase (with .firebaseId).
+ */
+function fixSubtaskFormat(task) {
+  const subs = task.subtasks;
+  if (!subs || !Array.isArray(subs)) return; // No subtasks or not an array
+
+  // Check if the first element is a string => assume all are strings
+  if (typeof subs[0] === "string") {
+    console.log(`Converting string subtasks for task ${task.firebaseId}`);
+
+    // Convert each string -> { text, done: false }
+    const newSubtasks = subs.map((s) => ({
+      text: s,
+      done: false,
+    }));
+
+    // Update the local task object
+    task.subtasks = newSubtasks;
+
+    // Patch back to Firebase so subsequent loads are already objects
+    patchSubtasks(task.firebaseId, newSubtasks);
+  }
+}
+
+/**
+ * Sends a PATCH request to update a task's 'subtasks' array in Firebase.
+ * @param {string} firebaseId - The unique ID of the task in Firebase.
+ * @param {Array} newSubtasks - The updated array of { text, done } objects.
+ */
+function patchSubtasks(firebaseId, newSubtasks) {
+  const updateUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
+
+  fetch(updateUrl, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ subtasks: newSubtasks }),
+  })
+    .then((res) => res.json())
+    .then(() => {
+      console.log(`Subtasks patched for task: ${firebaseId}`);
+    })
+    .catch((error) => console.error("Error patching subtasks:", error));
+}
+
+/**
  * Creates a task card element and appends it to the correct board column.
- * @param {Object} task - The task data from Firebase.
+ * @param {Object} task - The task data from Firebase (including .firebaseId).
  */
 function createTaskCard(task) {
   const template = document.getElementById("cardTemplate");
@@ -88,17 +142,27 @@ function createTaskCard(task) {
   cardClone.querySelector(".headline").textContent = task.title || "No title";
   cardClone.querySelector(".info").textContent = task.description || "";
 
-  // SUBTASKS (progress bar logic placeholder)
-  const totalSubtasks = task.subtasks ? task.subtasks.length : 0;
-  const completedSubtasks = 0;
-  const fillPercent =
-    totalSubtasks === 0 ? 100 : (completedSubtasks / totalSubtasks) * 100;
+  // SUBTASKS + PROGRESS
+  const progressAndSubtaskEl = cardClone.querySelector(".progress-and-subtask");
+  const totalSubtasks = Array.isArray(task.subtasks) ? task.subtasks.length : 0;
 
-  const subtaskCounterEl = cardClone.querySelector(".subtask-counter");
-  subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
+  if (totalSubtasks === 0) {
+    // If no subtasks, hide the progress bar + counter entirely
+    progressAndSubtaskEl.style.display = "none";
+  } else {
+    // Show the progress bar + counter if there are subtasks
+    progressAndSubtaskEl.style.display = "flex";
 
-  const progressFillEl = cardClone.querySelector(".progressbar-fill");
-  progressFillEl.style.width = fillPercent + "%";
+    // Count how many subtasks are done
+    const completedSubtasks = task.subtasks.filter((s) => s.done).length;
+    const fillPercent = (completedSubtasks / totalSubtasks) * 100;
+
+    const subtaskCounterEl = cardClone.querySelector(".subtask-counter");
+    subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
+
+    const progressFillEl = cardClone.querySelector(".progressbar-fill");
+    progressFillEl.style.width = fillPercent + "%";
+  }
 
   // PRIORITY
   cardClone.querySelector(".prio").textContent = task.priority || "none";
@@ -128,7 +192,7 @@ function createTaskCard(task) {
 
 /**
  * Opens the larger "detail view" modal with data from the given task.
- * Applies the same category classes only to the <span id="taskCategoryBadge">.
+ * Renders subtask checkboxes. Toggling a checkbox updates Firebase + progress.
  */
 function openTaskModal(task) {
   // Grab the badge element
@@ -184,13 +248,28 @@ function openTaskModal(task) {
     assignedEl.appendChild(li);
   }
 
-  // SUBTASKS
+  // SUBTASKS with checkboxes
   const subtasksList = document.getElementById("taskSubtasks");
   subtasksList.innerHTML = "";
   if (task.subtasks && task.subtasks.length > 0) {
-    task.subtasks.forEach((sub) => {
+    task.subtasks.forEach((sub, index) => {
       const li = document.createElement("li");
-      li.textContent = sub;
+
+      // Create a checkbox
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = !!sub.done; // true/false
+      checkbox.addEventListener("change", () => {
+        // Update this subtask's "done" status in Firebase
+        toggleSubtaskDone(task, index, checkbox.checked);
+      });
+
+      // Label for the subtask text
+      const label = document.createElement("label");
+      label.textContent = sub.text;
+
+      li.appendChild(checkbox);
+      li.appendChild(label);
       subtasksList.appendChild(li);
     });
   } else {
@@ -204,9 +283,86 @@ function openTaskModal(task) {
 }
 
 /**
+ * Toggles a single subtask's 'done' status and updates in Firebase.
+ * Then it updates the progress bar on the small card in real time.
+ * @param {Object} task - The full task object (including firebaseId).
+ * @param {number} subtaskIndex - Index of the subtask in task.subtasks.
+ * @param {boolean} isDone - The new 'done' state (true/false).
+ */
+function toggleSubtaskDone(task, subtaskIndex, isDone) {
+  // 1) Update the local task object
+  task.subtasks[subtaskIndex].done = isDone;
+
+  // 2) Build the updated subtasks array to patch in Firebase
+  const updatedSubtasks = task.subtasks.map((s) => ({
+    text: s.text,
+    done: s.done,
+  }));
+
+  // 3) Patch the subtasks array in Firebase
+  const firebaseId = task.firebaseId;
+  const updateUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
+
+  fetch(updateUrl, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ subtasks: updatedSubtasks }),
+  })
+    .then((res) => res.json())
+    .then(() => {
+      // 4) Update the small card's progress bar without a full reload
+      updateCardProgress(firebaseId, updatedSubtasks);
+    })
+    .catch((error) =>
+      console.error("Error updating subtask done status:", error)
+    );
+}
+
+/**
+ * Updates the small card's progress bar & counter based on a new subtasks array.
+ * If there are zero subtasks, hides the progress bar entirely.
+ *
+ * @param {string} firebaseId - The task's Firebase ID.
+ * @param {Array} newSubtasks - Updated array of subtask objects [{ text, done }, ...].
+ */
+function updateCardProgress(firebaseId, newSubtasks) {
+  // Find the small card on the board
+  const cardId = "card-" + firebaseId;
+  const card = document.getElementById(cardId);
+  if (!card) return; // If not on board, do nothing
+
+  const progressAndSubtaskEl = card.querySelector(".progress-and-subtask");
+  const totalSubtasks = newSubtasks.length;
+  if (totalSubtasks === 0) {
+    // Hide everything if no subtasks
+    progressAndSubtaskEl.style.display = "none";
+    return;
+  }
+
+  // Show the container in case it was hidden
+  progressAndSubtaskEl.style.display = "flex";
+
+  // Count completed
+  const completedSubtasks = newSubtasks.filter((s) => s.done).length;
+  const fillPercent = (completedSubtasks / totalSubtasks) * 100;
+
+  // Update the text
+  const subtaskCounterEl = card.querySelector(".subtask-counter");
+  if (subtaskCounterEl) {
+    subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
+  }
+
+  // Update the bar fill
+  const progressFillEl = card.querySelector(".progressbar-fill");
+  if (progressFillEl) {
+    progressFillEl.style.width = fillPercent + "%";
+  }
+}
+
+/**
  * Updates the task's status in Firebase (for drag-and-drop column changes).
  * @param {string} cardId - e.g. "card-<firebaseId>"
- * @param {string} newStatus - The new status ("toDo", "inProgress", etc.)
+ * @param {string} newStatus - The new status ("toDo", "inProgress", "awaitFeedback", "done")
  */
 function updateTaskStatusInFirebase(cardId, newStatus) {
   const firebaseId = cardId.replace("card-", "");
@@ -224,7 +380,7 @@ function updateTaskStatusInFirebase(cardId, newStatus) {
 
 /**
  * Adds a new task to Firebase and reloads the board.
- * @param {Object} newTaskData - The new task data to store.
+ * Make sure 'subtasks' is an array of { text, done } objects if you want checkboxes.
  */
 function addTask(newTaskData) {
   fetch(

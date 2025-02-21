@@ -76,20 +76,20 @@ body {
 }
 
 .category {
-    /* Some base styling for all categories */
-    border-radius: 8px;
-    padding: 4px 16px;
-    color: white;
-    /* etc. */
-  }
-  
-  .category-user {
-    background-color: #0038ff; /* or whatever you use */
-  }
-  
-  .category-technical {
-    background-color: #1fd7c1;
-  }
+  /* Some base styling for all categories */
+  border-radius: 8px;
+  padding: 4px 16px;
+  color: white;
+  /* etc. */
+}
+
+.category-user {
+  background-color: #0038ff; /* or whatever you use */
+}
+
+.category-technical {
+  background-color: #1fd7c1;
+}
 
 .close-button {
   width: 32px;
@@ -158,7 +158,8 @@ body {
 .subtasks li {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  height: 32px;
+  gap: 8px;
 }
 .card-footer {
   display: flex;
