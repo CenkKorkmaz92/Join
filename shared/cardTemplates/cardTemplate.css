@@ -69,27 +69,26 @@ body {
   border-radius: 8px;
   padding: 4px 24px;
   gap: 10px;
-  background-color: #0038ff;
   color: #fff;
   font-weight: 400;
   font-size: 23px;
   line-height: 27.6px;
 }
 
-/* Example for "User Story" */
-.category-user {
-  background-color: #0038ff;
-  color: white;
+.category {
+  /* Some base styling for all categories */
   border-radius: 8px;
-  /* any padding, font-size, etc. you want */
+  padding: 4px 16px;
+  color: white;
+  /* etc. */
 }
 
-/* Example for "Technical Task" */
+.category-user {
+  background-color: #0038ff; /* or whatever you use */
+}
+
 .category-technical {
   background-color: #1fd7c1;
-  color: white;
-  border-radius: 8px;
-  /* any padding, font-size, etc. you want */
 }
 
 .close-button {
@@ -118,6 +117,10 @@ body {
   margin: 16px 0;
   font-size: 20px;
   line-height: 24px;
+}
+.prio {
+  gap: 20px;
+  display: flex;
 }
 .assigned-to p {
   font-weight: 400;
@@ -159,7 +162,8 @@ body {
 .subtasks li {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  height: 32px;
+  gap: 8px;
 }
 .card-footer {
   display: flex;
@@ -179,4 +183,16 @@ body {
 .gray-vector {
   height: 24px;
   border: solid 1px #d1d1d1;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  margin-right: 8px;
 }

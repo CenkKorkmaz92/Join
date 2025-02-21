@@ -183,3 +183,15 @@
   overflow-y: auto;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
+
+.contact-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;    /* or any size you like */
+  height: 32px;
+  border-radius: 50%;  /* makes it a circle */
+  color: #fff;         /* text color */
+  font-weight: 700;
+  margin-right: 4px;   /* spacing between chips */
+}
