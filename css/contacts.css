@@ -6,7 +6,6 @@ html {
 .container {
     display: flex;
     flex-direction: column;
-    /* Stackt Elemente untereinander */
     align-items: center;
     background: white;
     padding: 20px;
@@ -18,7 +17,6 @@ html {
 
 #contactList {
     width: 100%;
-    /* Damit die Kontakte die volle Breite nutzen */
     height: calc(1024px - 96px);
     overflow: auto;
     margin-top: 85px;
@@ -86,10 +84,8 @@ html {
     margin-left: 16px;
 }
 
-/* Popup-Overlay */
 .popup {
     display: none;
-    /* Popup standardmäßig unsichtbar */
     position: fixed;
     top: 0;
     left: 0;
@@ -99,6 +95,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2000; /* Neu hinzugefügt */
 }
 
 .popup-header {
@@ -312,14 +309,12 @@ html {
     margin-bottom: 24px;
 }
 
-/* Container für die Kontaktliste und Detailansicht */
 .contact-container {
     display: flex;
     gap: 20px;
     width: 100%;
 }
 
-/* Kontaktliste */
 .contact-list {
     width: 350px;
     background: white;
@@ -329,7 +324,6 @@ html {
     overflow-y: auto;
 }
 
-/* Kontakt-Details */
 .contact-detail {
     position: absolute;
     left: 625px;
@@ -343,7 +337,6 @@ html {
 
 }
 
-/* Header bleibt immer sichtbar */
 .contact-header {
     display: flex;
     align-items: center;
@@ -363,12 +356,10 @@ html {
     font-weight: 400;
 }
 
-/* Infos anfangs verstecken */
 .hidden {
     display: none;
 }
 
-/* Kontakt-Infos */
 .contact-info-section {
     display: flex;
     flex-direction: row;
@@ -428,7 +419,6 @@ html {
     border: solid 2px white;
 }
 
-/* Buttons */
 .contact-buttons {
     display: flex;
     gap: 10px;
@@ -460,7 +450,6 @@ html {
     font-weight: 500 !important;
 }
 
-/* Standard-Icon */
 .button-edit img,
 .button-delete img {
     width: 14px;
@@ -468,13 +457,11 @@ html {
     transition: opacity 0.2s ease-in-out;
 }
 
-/* Bild beim Hover ausblenden */
 .button-edit:hover img,
 .button-delete:hover img {
     opacity: 0;
 }
 
-/* Hintergrundbild beim Hover */
 .button-edit:hover::after {
     content: "";
     position: absolute;
@@ -499,15 +486,12 @@ html {
     margin-right: 3px;
 }
 
-
 .icons-contact-detail-delete {
     width: 14px;
     height: 14px;
     margin-right: 3px;
 }
 
-
-/* Telefonnummer & Email */
 .contact-details {
     text-align: Start;
     margin-top: 20px;
@@ -545,14 +529,12 @@ html {
 
 .contact:hover {
     background-color: #2A3647;
-    /* Leichter Hover-Effekt */
     color: white;
     cursor: pointer;
 }
 
 .contact.selected {
     background-color: #2A3647;
-    /* Farbe für den ausgewählten Kontakt */
     color: white
 }
 
@@ -564,7 +546,6 @@ html {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* halbtransparenter Hintergrund */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -581,21 +562,19 @@ html {
     color: white;
 }
 
-/* Reset any default styling on the form element within the popup */
 #contactForm.popup-form {
+    position: absolute;
+    top: 20%;
     z-index: 1000;
     display: flex !important;
     margin: 0;
     padding: 0;
     border: none;
     background: none;
-    /* Ensure it behaves like a block-level container if needed */
     display: block;
 }
 
-/* If necessary, force the form to inherit the popup’s layout rules */
 .popup .popup-content {
-    /* This rule is here in case any extra spacing was added by the form element */
     box-sizing: border-box;
 }
 
