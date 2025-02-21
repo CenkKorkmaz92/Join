@@ -39,7 +39,6 @@ let currentContact = null;
 // API-Funktionen
 async function pushContactToAPI(contact) {
   try {
-    // Hier wird ".json" an die URL gehängt
     const response = await fetch(`${FIREBASE_BASE_URL}.json`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -51,6 +50,10 @@ async function pushContactToAPI(contact) {
     }
     const responseData = await response.json();
     console.log("Kontakt erfolgreich gespeichert:", responseData);
+    
+    // Hier die ID im Kontaktobjekt aktualisieren:
+    contact.id = responseData.name; // Firebase gibt den neuen Key unter "name" zurück.
+    
     return responseData;
   } catch (error) {
     console.error("Fehler beim Senden des Kontakts an die API:", error.message);
