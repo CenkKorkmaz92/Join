@@ -69,28 +69,27 @@ body {
   border-radius: 8px;
   padding: 4px 24px;
   gap: 10px;
-  background-color: #0038ff;
   color: #fff;
   font-weight: 400;
   font-size: 23px;
   line-height: 27.6px;
 }
 
-/* Example for "User Story" */
-.category-user {
-  background-color: #0038ff;
-  color: white;
-  border-radius: 8px;
-  /* any padding, font-size, etc. you want */
-}
-
-/* Example for "Technical Task" */
-.category-technical {
-  background-color: #1fd7c1;
-  color: white;
-  border-radius: 8px;
-  /* any padding, font-size, etc. you want */
-}
+.category {
+    /* Some base styling for all categories */
+    border-radius: 8px;
+    padding: 4px 16px;
+    color: white;
+    /* etc. */
+  }
+  
+  .category-user {
+    background-color: #0038ff; /* or whatever you use */
+  }
+  
+  .category-technical {
+    background-color: #1fd7c1;
+  }
 
 .close-button {
   width: 32px;

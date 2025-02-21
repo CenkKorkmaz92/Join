@@ -5,7 +5,6 @@
  * and showing a larger "detail view" modal when a card is clicked.
  */
 
-// Keep track of the column from which a card is dragged
 let originColumnId = null;
 
 /**
@@ -16,7 +15,7 @@ function loadTasks() {
   const FIREBASE_TASKS_URL =
     "https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
 
-  // Clear all columns
+  // Clear all columns first
   document.querySelectorAll(".board-list-column").forEach((column) => {
     column.innerHTML = "";
   });
@@ -30,13 +29,13 @@ function loadTasks() {
         return;
       }
 
-      // Convert the object from Firebase into an array of task objects
+      // Convert Firebase object to an array of tasks
       const tasks = Object.entries(data).map(([firebaseId, task]) => ({
         firebaseId,
         ...task,
       }));
 
-      // Create each task card
+      // Create a card for each task
       tasks.forEach((task) => {
         task.status = task.status || "toDo";
         createTaskCard(task);
@@ -48,16 +47,13 @@ function loadTasks() {
 }
 
 /**
- * Creates a task card element and appends it to the appropriate board column.
- * Applies a CSS class based on the task's category.
- * Adds a click event to open a detail view modal.
- * @param {Object} task - The task data.
+ * Creates a task card element and appends it to the correct board column.
+ * @param {Object} task - The task data from Firebase.
  */
 function createTaskCard(task) {
   const template = document.getElementById("cardTemplate");
   const cardClone = template.content.firstElementChild.cloneNode(true);
 
-  // Give the clone a unique ID and make it draggable
   cardClone.id = "card-" + task.firebaseId;
   cardClone.draggable = true;
 
@@ -71,12 +67,12 @@ function createTaskCard(task) {
     cardClone.classList.remove("dragging");
   });
 
-  // CLICK EVENT: Open the big card modal
+  // CLICK EVENT -> Show big card modal
   cardClone.addEventListener("click", () => {
     openTaskModal(task);
   });
 
-  // CATEGORY
+  // CATEGORY (small badge on the card)
   const categoryEl = cardClone.querySelector(".category");
   if (task.category === "user-story") {
     categoryEl.classList.add("category-user");
@@ -92,21 +88,17 @@ function createTaskCard(task) {
   cardClone.querySelector(".headline").textContent = task.title || "No title";
   cardClone.querySelector(".info").textContent = task.description || "";
 
-  // SUBTASKS & PROGRESS (placeholder logic for completed subtasks)
+  // SUBTASKS (progress bar logic placeholder)
   const totalSubtasks = task.subtasks ? task.subtasks.length : 0;
-  const completedSubtasks = 0; // update this if/when you add tracking
+  const completedSubtasks = 0;
   const fillPercent =
     totalSubtasks === 0 ? 100 : (completedSubtasks / totalSubtasks) * 100;
 
   const subtaskCounterEl = cardClone.querySelector(".subtask-counter");
-  if (subtaskCounterEl) {
-    subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
-  }
+  subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
 
   const progressFillEl = cardClone.querySelector(".progressbar-fill");
-  if (progressFillEl) {
-    progressFillEl.style.width = fillPercent + "%";
-  }
+  progressFillEl.style.width = fillPercent + "%";
 
   // PRIORITY
   cardClone.querySelector(".prio").textContent = task.priority || "none";
@@ -120,7 +112,7 @@ function createTaskCard(task) {
     cardClone.querySelector(".chips").textContent = "";
   }
 
-  // Append to the correct column
+  // Place card into correct column
   const columnId = task.status || "toDo";
   const column = document.getElementById(columnId);
   if (column) {
@@ -136,13 +128,16 @@ function createTaskCard(task) {
 
 /**
  * Opens the larger "detail view" modal with data from the given task.
- * @param {Object} task - The task data.
+ * Applies the same category classes only to the <span id="taskCategoryBadge">.
  */
 function openTaskModal(task) {
-  // CATEGORY BADGE
+  // Grab the badge element
   const categoryBadge = document.getElementById("taskCategoryBadge");
+
+  // Remove any old category classes in case they've changed
   categoryBadge.classList.remove("category-user", "category-technical");
 
+  // Now apply the correct class + text
   if (task.category === "user-story") {
     categoryBadge.classList.add("category-user");
     categoryBadge.textContent = "User Story";
@@ -171,8 +166,7 @@ function openTaskModal(task) {
   if (task.assignedTo && task.assignedTo.length > 0) {
     task.assignedTo.forEach((person) => {
       const li = document.createElement("li");
-
-      // Example: Add avatar or initials
+      // Could add an avatar or initials
       const initialsDiv = document.createElement("div");
       initialsDiv.classList.add("avatar");
       initialsDiv.textContent = person.initials || "??";
@@ -205,21 +199,14 @@ function openTaskModal(task) {
     subtasksList.appendChild(li);
   }
 
-  // Now actually open the modal (provided by modal.js)
+  // Open the modal (this function is in modal.js)
   openModal("viewTaskModal");
 }
 
 /**
- * Closes the task detail modal (if you ever need to call this from board.js).
- */
-function closeTaskModal() {
-  closeModal("viewTaskModal");
-}
-
-/**
- * Updates the task's status in Firebase.
- * @param {string} cardId - The card element's ID ("card-<firebaseId>").
- * @param {string} newStatus - The new status (column id).
+ * Updates the task's status in Firebase (for drag-and-drop column changes).
+ * @param {string} cardId - e.g. "card-<firebaseId>"
+ * @param {string} newStatus - The new status ("toDo", "inProgress", etc.)
  */
 function updateTaskStatusInFirebase(cardId, newStatus) {
   const firebaseId = cardId.replace("card-", "");
@@ -236,8 +223,8 @@ function updateTaskStatusInFirebase(cardId, newStatus) {
 }
 
 /**
- * Adds a new task to Firebase and refreshes the board.
- * @param {Object} newTaskData - The new task data.
+ * Adds a new task to Firebase and reloads the board.
+ * @param {Object} newTaskData - The new task data to store.
  */
 function addTask(newTaskData) {
   fetch(
@@ -258,7 +245,6 @@ function addTask(newTaskData) {
 
 /**
  * Creates and appends a placeholder element to the specified column.
- * @param {HTMLElement} column - The column element.
  */
 function addPlaceholderIfEmpty(column) {
   const placeholderDiv = document.createElement("div");
@@ -282,7 +268,7 @@ function addPlaceholderIfEmpty(column) {
 }
 
 /**
- * Iterates through all board columns and adds a placeholder if the column is empty.
+ * Checks each board column and adds placeholder if it's empty.
  */
 function addPlaceholdersToEmptyColumns() {
   document.querySelectorAll(".board-list-column").forEach((column) => {
@@ -292,13 +278,11 @@ function addPlaceholdersToEmptyColumns() {
   });
 }
 
-/**
- * Initializes the board once the DOM is ready.
- */
+/** Initialize board on DOM load */
 document.addEventListener("DOMContentLoaded", () => {
   loadTasks();
 
-  // DRAG & DROP LISTENERS
+  // Drag & Drop listeners for each column
   const columns = document.querySelectorAll(".board-list-column");
   columns.forEach((column) => {
     column.addEventListener("dragover", (event) => event.preventDefault());
@@ -324,10 +308,10 @@ document.addEventListener("DOMContentLoaded", () => {
           placeholder.remove();
         }
 
-        // Append the dragged card to the new column
+        // Move card to new column
         column.appendChild(card);
 
-        // If the old column is now empty, restore placeholder
+        // If old column is now empty, restore placeholder
         if (originColumnId && originColumnId !== column.id) {
           const oldColumn = document.getElementById(originColumnId);
           if (oldColumn) {
