@@ -118,6 +118,10 @@ body {
   font-size: 20px;
   line-height: 24px;
 }
+.prio {
+  gap: 20px;
+  display: flex;
+}
 .assigned-to p {
   font-weight: 400;
   font-size: 20px;
@@ -192,4 +196,3 @@ body {
   font-weight: 700;
   margin-right: 8px;
 }
-
