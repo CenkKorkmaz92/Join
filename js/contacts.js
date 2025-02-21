@@ -1,21 +1,36 @@
 const FIREBASE_BASE_URL = "https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/contacts";
 
-// Hilfsfunktionen
+/**
+ * Generates a unique identifier (UUID) using the current timestamp and a random number.
+ * @returns {string} - A UUID string.
+ */
 function generateUUID() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 }
 
+/**
+ * Extracts the initials from a given name.
+ * @param {string} name - The name from which to extract initials.
+ * @returns {string} - A string of initials.
+ */
 function getInitials(name) {
   let nameParts = name.trim().split(/\s+/);
   return nameParts.map(part => part.charAt(0).toUpperCase()).join("");
 }
 
+/**
+ * Generates a random RGB color.
+ * @returns {string} - A string representing an RGB color.
+ */
 function getRandomColor() {
   return `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(
     Math.random() * 255
   )}, ${Math.floor(Math.random() * 255)})`;
 }
 
+/**
+ * Clears the input fields for name, email, and phone, and resets error messages.
+ */
 function clearInputs() {
   document.getElementById("nameInput").value = "";
   document.getElementById("emailInput").value = "";
@@ -23,76 +38,34 @@ function clearInputs() {
   clearErrorMessages();
 }
 
-function clearErrorMessages() {
-  // Fehlermeldungen im Add-Formular zurücksetzen
-  document.getElementById("nameError").textContent = "";
-  document.getElementById("emailError").textContent = "";
-  document.getElementById("phoneError").textContent = "";
-  // Fehlermeldungen im Edit-Formular zurücksetzen (falls vorhanden)
-  const editNameErr = document.getElementById("editNameError");
-  const editEmailErr = document.getElementById("editEmailError");
-  const editPhoneErr = document.getElementById("editPhoneError");
-  if (editNameErr) editNameErr.textContent = "";
-  if (editEmailErr) editEmailErr.textContent = "";
-  if (editPhoneErr) editPhoneErr.textContent = "";
-}
-
+/**
+ * Closes the current popup window, clears inputs, and hides success popups.
+ */
 function closeWindow() {
   clearInputs();
-  
   const popup = document.getElementById("popup");
   const editPopup = document.getElementById("editPopup");
-  const popupSuccess = document.getElementById("popupSuccess");
-
-  // Überprüfen, welches Popup geöffnet ist
   const activePopup = popup.style.display === "flex" ? popup : editPopup.style.display === "flex" ? editPopup : null;
-  
   if (activePopup) {
-    // Entferne die 'fly-in'-Klasse und füge die 'fly-out'-Klasse hinzu
-    activePopup.classList.remove("fly-in");
-    activePopup.classList.add("fly-out");
-
-    // Event-Listener für das Ende der Animation hinzufügen
-    activePopup.addEventListener("animationend", function handleAnimationEnd() {
-      // Popup ausblenden
-      activePopup.style.display = "none";
-      
-      // 'fly-out'-Klasse entfernen
-      activePopup.classList.remove("fly-out");
-      
-      // Event-Listener entfernen, um Speicherlecks zu vermeiden
-      activePopup.removeEventListener("animationend", handleAnimationEnd);
-    });
+    resetPopup(activePopup);
   }
-
-  // PopupSuccess ausblenden, falls es sichtbar ist
-  if (popupSuccess && popupSuccess.style.display === "flex") {
-    popupSuccess.style.display = "none";
-  }
+  hideSuccessPopup();
 }
 
-// Globale Variablen
 let contacts = [];
 let selectedContactDiv = null;
 let currentContact = null;
 
-// API-Funktionen
+/**
+ * Sends a new contact to the Firebase API and updates the contact's ID with the response.
+ * @param {Object} contact - The contact object to be added.
+ * @returns {Promise<Object>} - The response data from the API.
+ */
 async function pushContactToAPI(contact) {
   try {
-    const response = await fetch(`${FIREBASE_BASE_URL}.json`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(contact)
-    });
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `API-Fehler: ${response.status} ${response.statusText} - ${errorText}`
-      );
-    }
+    const response = await sendPostRequest(`${FIREBASE_BASE_URL}.json`, contact);
+    await handleResponseErrors(response);
     const responseData = await response.json();
-    console.log("Kontakt erfolgreich gespeichert:", responseData);
-    // Firebase liefert den neuen Key in responseData.name
     contact.id = responseData.name;
     return responseData;
   } catch (error) {
@@ -100,6 +73,9 @@ async function pushContactToAPI(contact) {
   }
 }
 
+/**
+ * Fetches all contacts from the Firebase API and processes the data.
+ */
 async function fetchContactsFromAPI() {
   try {
     const response = await fetch(`${FIREBASE_BASE_URL}.json`);
@@ -107,123 +83,66 @@ async function fetchContactsFromAPI() {
       throw new Error("Fehler beim Abrufen der Kontakte: " + response.statusText);
     }
     const data = await response.json();
-    if (data) {
-      contacts = Object.keys(data).map(id => {
-        const contact = data[id];
-        contact.id = id;
-        return contact;
-      });
-      contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
-      renderContacts();
-    }
+    contacts = processApiResponse(data);
+    renderContacts();
   } catch (error) {
-    console.error("Fehler beim Abrufen der Kontakte von der API:", error.message);
+    handleFetchError(error);
   }
 }
 
+/**
+ * Deletes a contact from the Firebase API and updates the local contact list.
+ * @param {string} contactId - The ID of the contact to delete.
+ */
 async function deleteContactFromAPI(contactId) {
   try {
-    const response = await fetch(`${FIREBASE_BASE_URL}/${contactId}.json`, {
-      method: "DELETE"
-    });
-    if (!response.ok) {
-      throw new Error(`Fehler beim Löschen des Kontakts: ${response.statusText}`);
-    }
-    console.log("Kontakt erfolgreich aus der API gelöscht.");
-    contacts = contacts.filter(contact => contact.id !== contactId);
-    renderContacts();
-    resetContactDetail();
-    const popupDelete = document.getElementById("popupDelete");
-    if (popupDelete) {
-      popupDelete.style.display = "flex";
-      setTimeout(() => {
-        popupDelete.style.display = "none";
-        location.reload();
-      }, 800);
-    }
+    const response = await sendDeleteRequest(contactId);
+    await handleDeleteErrors(response);
+    removeContactFromList(contactId);
+    showDeleteSuccessPopup();
   } catch (error) {
-    console.error("Fehler beim Löschen des Kontakts aus der API:", error);
+    console.error("Fehler beim Löschen des Kontakts aus der API:", error.message);
   }
 }
 
-// Rendering der Kontaktliste
+/**
+ * Renders the list of contacts in the DOM, grouping them by the first letter of their names.
+ */
 function renderContacts() {
   const contactList = document.getElementById("contactList");
   contactList.innerHTML = "";
-  let groupedContacts = {};
-  contacts.forEach(contact => {
-    let firstLetter = contact.fullName ? contact.fullName.charAt(0).toUpperCase() : "#";
-    if (!groupedContacts[firstLetter]) {
-      groupedContacts[firstLetter] = [];
-    }
-    groupedContacts[firstLetter].push(contact);
-  });
+  const groupedContacts = groupContactsByLetter(contacts);
   Object.keys(groupedContacts)
     .sort()
     .forEach(letter => {
-      const letterHeader = document.createElement("div");
-      letterHeader.classList.add("letter-header");
-      letterHeader.innerText = letter;
-      contactList.appendChild(letterHeader);
-      const divider = document.createElement("hr");
-      divider.classList.add("letter-divider");
-      contactList.appendChild(divider);
+      contactList.appendChild(createLetterSection(letter));
       groupedContacts[letter].forEach(contact => {
-        const contactDiv = document.createElement("div");
-        contactDiv.classList.add("contact");
-        contactDiv.innerHTML = `
-          <div class="contact-circle" style="background: ${contact.color};">
-            ${contact.initials}
-          </div>
-          <div class="contact-info">
-            <div class="contact-name">${contact.fullName}</div>
-            <div class="contact-email">${contact.email}</div>
-          </div>
-        `;
-        contactDiv.onclick = function () {
-          if (selectedContactDiv) {
-            selectedContactDiv.classList.remove("selected");
-          }
-          contactDiv.classList.add("selected");
-          selectedContactDiv = contactDiv;
-          showContactDetails(contact);
-        };
-        contactList.appendChild(contactDiv);
+        contactList.appendChild(createContactElement(contact));
       });
     });
 }
 
+/**
+ * Displays the detailed information of a selected contact.
+ * @param {Object} contact - The contact whose details are to be displayed.
+ */
 function showContactDetails(contact) {
   currentContact = contact;
   document.getElementById("detailedContactInfo")?.classList.remove("hidden");
-  document.getElementById("contactName").innerText = contact.fullName;
-
-  // E-Mail-Link erstellen
-  const emailLink = document.createElement('a');
-  emailLink.href = `mailto:${contact.email}`;
-  emailLink.innerText = contact.email;
-  emailLink.classList.add('email-link'); // Klasse hinzufügen
+  updateTextContent("contactName", contact.fullName);
   const contactEmailElement = document.getElementById("contactEmail");
-  contactEmailElement.innerHTML = ''; // Vorherigen Inhalt löschen
-  contactEmailElement.appendChild(emailLink);
-
-  // Telefon-Link erstellen
-  const phoneLink = document.createElement('a');
-  phoneLink.href = `tel:${contact.phone}`;
-  phoneLink.innerText = contact.phone;
-  phoneLink.classList.add('phone-link'); // Klasse hinzufügen
+  contactEmailElement.innerHTML = "";
+  contactEmailElement.appendChild(createLinkElement(`mailto:${contact.email}`, contact.email, "email-link"));
   const contactPhoneElement = document.getElementById("contactPhone");
-  contactPhoneElement.innerHTML = ''; // Vorherigen Inhalt löschen
-  contactPhoneElement.appendChild(phoneLink);
-
-  const contactCircle = document.getElementById("contactCircle");
-  contactCircle.innerText = contact.initials;
-  contactCircle.style.backgroundColor = contact.color;
-  const deleteButton = document.getElementById("deleteContactBtn");
-  deleteButton.setAttribute("data-contact-id", contact.id);
+  contactPhoneElement.innerHTML = "";
+  contactPhoneElement.appendChild(createLinkElement(`tel:${contact.phone}`, contact.phone, "phone-link"));
+  updateContactCircle(contact.initials, contact.color);
+  document.getElementById("deleteContactBtn")?.setAttribute("data-contact-id", contact.id);
 }
 
-
+/**
+ * Resets the detailed contact view by clearing all displayed information.
+ */
 function resetContactDetail() {
   document.getElementById("contactName").innerText = "";
   document.getElementById("contactEmail").innerText = "";
@@ -232,113 +151,12 @@ function resetContactDetail() {
   document.getElementById("contactCircle").style.backgroundColor = "";
 }
 
-// Inline-Validierung für das Add-Formular
-const nameInput = document.getElementById("nameInput");
-const emailInput = document.getElementById("emailInput");
-const phoneInput = document.getElementById("phoneInput");
-
-nameInput.addEventListener("input", function () {
-  const nameError = document.getElementById("nameError");
-  if (nameInput.validity.valid) {
-    nameError.textContent = "";
-  } else {
-    if (nameInput.validity.valueMissing) {
-      nameError.textContent = "Bitte geben Sie einen Namen ein.";
-    } else if (nameInput.validity.patternMismatch) {
-      nameError.textContent =
-        "Der Name darf maximal drei Wörter enthalten und nur Buchstaben sowie Leerzeichen beinhalten.";
-    }
-  }
-});
-
-emailInput.addEventListener("input", function () {
-  const emailError = document.getElementById("emailError");
-  if (emailInput.validity.valid) {
-    emailError.textContent = "";
-  } else {
-    if (emailInput.validity.valueMissing) {
-      emailError.textContent = "Bitte geben Sie eine E-Mail-Adresse ein.";
-    } else if (emailInput.validity.typeMismatch || emailInput.validity.patternMismatch) {
-      emailError.textContent =
-        "Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).";
-    }
-  }
-});
-
-phoneInput.addEventListener("input", function () {
-  const phoneError = document.getElementById("phoneError");
-  if (phoneInput.validity.valid) {
-    phoneError.textContent = "";
-  } else {
-    if (phoneInput.validity.valueMissing) {
-      phoneError.textContent = "Bitte geben Sie eine Telefonnummer ein.";
-    } else if (phoneInput.validity.patternMismatch) {
-      phoneError.textContent =
-        "Bitte geben Sie eine gültige Telefonnummer ein (mindestens 6 Zeichen, nur Zahlen, Leerzeichen und + erlaubt).";
-    }
-  }
-});
-
-// Inline-Validierung für das Edit-Formular
-const editNameInput = document.getElementById("editNameInput");
-const editEmailInput = document.getElementById("editEmailInput");
-const editPhoneInput = document.getElementById("editPhoneInput");
-
-if (editNameInput) {
-  editNameInput.addEventListener("input", function () {
-    const editNameError = document.getElementById("editNameError");
-    if (editNameInput.validity.valid) {
-      editNameError.textContent = "";
-    } else {
-      if (editNameInput.validity.valueMissing) {
-        editNameError.textContent = "Bitte geben Sie einen Namen ein.";
-      } else if (editNameInput.validity.patternMismatch) {
-        editNameError.textContent =
-          "Der Name darf maximal drei Wörter enthalten und nur Buchstaben sowie Leerzeichen beinhalten.";
-      }
-    }
-  });
-}
-
-if (editEmailInput) {
-  editEmailInput.addEventListener("input", function () {
-    const editEmailError = document.getElementById("editEmailError");
-    if (editEmailInput.validity.valid) {
-      editEmailError.textContent = "";
-    } else {
-      if (editEmailInput.validity.valueMissing) {
-        editEmailError.textContent = "Bitte geben Sie eine E-Mail-Adresse ein.";
-      } else if (editEmailInput.validity.typeMismatch || editEmailInput.validity.patternMismatch) {
-        editEmailError.textContent =
-          "Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).";
-      }
-    }
-  });
-}
-
-if (editPhoneInput) {
-  editPhoneInput.addEventListener("input", function () {
-    const editPhoneError = document.getElementById("editPhoneError");
-    if (editPhoneInput.validity.valid) {
-      editPhoneError.textContent = "";
-    } else {
-      if (editPhoneInput.validity.valueMissing) {
-        editPhoneError.textContent = "Bitte geben Sie eine Telefonnummer ein.";
-      } else if (editPhoneInput.validity.patternMismatch) {
-        editPhoneError.textContent =
-          "Bitte geben Sie eine gültige Telefonnummer ein (mindestens 6 Zeichen, nur Zahlen, Leerzeichen und + erlaubt).";
-      }
-    }
-  });
-}
-
-// Event-Listener für die Anzeige der Popups
+// Event listeners for buttons
 document.getElementById("addContactBtn").onclick = function () {
   const popup = document.getElementById("popup");
   popup.style.display = "flex";
-  // Entferne ggf. vorhandene Animationsklasse, erzwinge Reflow und füge die Klasse neu hinzu:
   popup.classList.remove("fly-in");
-  void popup.offsetWidth; // Erzwingt Reflow
+  void popup.offsetWidth;
   popup.classList.add("fly-in");
 };
 
@@ -346,120 +164,38 @@ document.getElementById("clearBtn").onclick = function () {
   closeWindow();
 };
 
-// Formular-Submit für "Add New Contact"
+// Handling form submission to add a new contact
 document.getElementById("contactForm").addEventListener("submit", async function (event) {
   event.preventDefault();
-  // Falls ein Feld ungültig ist, wird der jeweilige Input-Listener die Fehlermeldung anzeigen.
-  if (!nameInput.validity.valid || !emailInput.validity.valid || !phoneInput.validity.valid) {
-    return;
-  }
-  let fullName = nameInput.value.trim();
-  let email = emailInput.value.trim();
-  let phone = phoneInput.value.trim();
-  if (!fullName || !email || !phone) {
-    return;
-  }
-  let newContact = {
-    id: generateUUID(),
-    fullName,
-    email,
-    phone,
-    initials: getInitials(fullName),
-    firstLetter: fullName.charAt(0).toUpperCase(),
-    color: getRandomColor(),
-    profileImage: ""
-  };
+  if (!isFormValid()) return;
+  const newContact = createContact();
   contacts.push(newContact);
   contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
   renderContacts();
   await pushContactToAPI(newContact);
   clearInputs();
-  document.getElementById("popup").style.display = "none";
-  const popupSuccess = document.getElementById("popupSuccess");
-  if (popupSuccess) {
-    popupSuccess.style.display = "flex";
-    setTimeout(() => { popupSuccess.style.display = "none"; }, 800);
-  }
+  hidePopup("popup");
+  showSuccessPopup("popupSuccess", 800);
 });
 
-// Event-Listener für das Löschen eines Kontakts
-document.getElementById("deleteContactBtn")?.addEventListener("click", async function () {
-  const contactId = this.getAttribute("data-contact-id");
-  if (contactId) {
-    await deleteContactFromAPI(contactId);
-  }
-});
-
-// Event-Listener für das Öffnen des Edit-Popups
-document.getElementById("editContactBtn").addEventListener("click", function () {
-  if (currentContact) {
-    const editPopup = document.getElementById("editPopup");
-    editPopup.style.display = "flex";
-    editPopup.classList.remove("fly-in");
-    void editPopup.offsetWidth;
-    editPopup.classList.add("fly-in");
-    editNameInput.value = currentContact.fullName;
-    editEmailInput.value = currentContact.email;
-    editPhoneInput.value = currentContact.phone;
-    let profileCircle = document.getElementById("selectedContactProfile");
-    profileCircle.innerText = currentContact.initials;
-    profileCircle.style.backgroundColor = currentContact.color;
-  } else {
-    alert("Kein Kontakt ausgewählt!");
-  }
-});
-
-// Event-Listener für den "Save"-Button im Edit-Popup
+// Handling edit button click to save changes to a contact
 document.getElementById("saveEditBtn").addEventListener("click", async function (event) {
   event.preventDefault();
-  // Validierung für das Edit-Formular
-  if (!editNameInput.validity.valid || !editEmailInput.validity.valid || !editPhoneInput.validity.valid) {
-    return;
-  }
+  if (!isEditFormValid()) return;
   if (currentContact) {
-    let updatedName = editNameInput.value.trim();
-    let updatedEmail = editEmailInput.value.trim();
-    let updatedPhone = editPhoneInput.value.trim();
-    if (!updatedName || !updatedEmail || !updatedPhone) {
-      return;
-    }
-    currentContact.fullName = updatedName;
-    currentContact.email = updatedEmail;
-    currentContact.phone = updatedPhone;
-    currentContact.initials = getInitials(updatedName);
-    currentContact.firstLetter = updatedName.charAt(0).toUpperCase();
+    updateCurrentContact();
     try {
-      const response = await fetch(`${FIREBASE_BASE_URL}/${currentContact.id}.json`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(currentContact)
-      });
-      if (!response.ok) {
-        throw new Error("Fehler beim Aktualisieren: " + response.statusText);
-      }
-      contacts = contacts.map(contact =>
-        contact.id === currentContact.id ? currentContact : contact
-      );
-      renderContacts();
-      document.getElementById("editPopup").style.display = "none";
+      await updateContactInAPI();
+      updateContactList();
+      closeEditPopup();
       location.reload();
     } catch (error) {
-      console.error("Update-Fehler:", error);
+      console.error("Update error:", error);
     }
-  } else {
-    alert("Kein Kontakt ausgewählt!");
   }
 });
 
-// Event-Listener für den "Delete"-Button im Edit-Popup (zum Leeren der Felder)
-document.getElementById("deleteBtn").addEventListener("click", function (event) {
-  event.preventDefault();
-  editNameInput.value = "";
-  editEmailInput.value = "";
-  editPhoneInput.value = "";
-});
-
-// Kontakte beim Laden der Seite abrufen
+// Fetching contacts from the API when the window loads
 window.onload = function () {
   fetchContactsFromAPI();
 };
