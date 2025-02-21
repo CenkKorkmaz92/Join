@@ -1,145 +1,185 @@
 .board-main-content {
-    padding-top: 110px;
-    padding-left: 96px;
-    padding-right: 96px;
+  padding-top: 110px;
+  padding-left: 96px;
+  padding-right: 96px;
 }
 
 .board-header {
-    display: flex;
+  display: flex;
 }
 
 .headline-and-input-with-btn {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .headline-board {
-    font-size: 61px;
-    font-weight: 700;
-    line-height: 73.2px;
-    margin: 0;
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 73.2px;
+  margin: 0;
 }
 
 .input-and-btn {
-    display: flex;
-    align-items: center;
-    gap: 32px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 
 .input-container {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 0px 15px;
-    width: 100%;
-    max-width: 422px;
-    height: 48px;
-    background-color: #fff;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0px 15px;
+  width: 100%;
+  max-width: 422px;
+  height: 48px;
+  background-color: #fff;
 }
 
 .input-container input {
-    border: none;
-    outline: none;
-    flex: 1;
-    font-size: 16px;
-    padding: 8px;
-    background: transparent;
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 16px;
+  padding: 8px;
+  background: transparent;
 }
 
 .input-container .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-left: 10px;
-    border-left: solid 1px #A8A8A8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+  border-left: solid 1px #a8a8a8;
 }
 
 .input-container .icon img {
-    width: 32px;
-    height: 32px;
+  width: 32px;
+  height: 32px;
 }
 
 .input-container .icon img:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .add-task-btn-summary {
-    display: flex;
-    align-items: center;
-    width: 244px;
-    height: 48px;
-    font-size: 21px;
-    font-weight: 700;
-    line-height: 25.2px;
-    border-radius: 10px;
-    border: solid 1px #2A3647;
-    color: white;
-    background-color: #2A3647;
-    transition: all 0.3s ease;
-    gap: 4px;
-    padding: 8px 16px 8px 16px;
+  display: flex;
+  align-items: center;
+  width: 244px;
+  height: 48px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 25.2px;
+  border-radius: 10px;
+  border: solid 1px #2a3647;
+  color: white;
+  background-color: #2a3647;
+  transition: all 0.3s ease;
+  gap: 4px;
+  padding: 8px 16px 8px 16px;
 }
 
 .add-task-btn-summary:hover {
-    background-color: #29ABE2;
-    border-color: #29ABE2;
+  background-color: #29abe2;
+  border-color: #29abe2;
 }
 
 .board-subline-and-add-btn {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    gap: 44px;
-    padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 44px;
+  padding-top: 32px;
 }
 
 .subline-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .subline-container img {
-    transition: filter 0.3s ease-in-out;
+  transition: filter 0.3s ease-in-out;
 }
 
 .subline-container img:hover {
-    cursor: pointer;
-    filter: brightness(0) saturate(100%) invert(56%) sepia(57%) saturate(415%) hue-rotate(173deg) brightness(97%) contrast(91%);
+  cursor: pointer;
+  filter: brightness(0) saturate(100%) invert(56%) sepia(57%) saturate(415%)
+    hue-rotate(173deg) brightness(97%) contrast(91%);
 }
 
 .board-list {
-    display: flex;
-    height: 688px;
-    gap: 44px;
-    padding-top: 8px;
+  display: flex;
+  height: 688px;
+  gap: 44px;
+  padding-top: 8px;
 }
 
 .board-list-column {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .board-list-column.hovered {
-    
-    outline: 1px dashed #A8A8A8;
-    border-radius: 8px;
-    transition: background-color 0.2s ease, outline 0.2s ease;
-  } 
-  
+  outline: 1px dashed #a8a8a8;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, outline 0.2s ease;
+}
+
 .board-task-element {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 48px;
-    border-radius: 10px;
-    color: #A8A8A8;
-    border: 2px dotted #A8A8A8;
-    flex-direction: column;
-    gap: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  border-radius: 10px;
+  color: #a8a8a8;
+  border: 2px dotted #a8a8a8;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Hide the Add Task modal by default */
+.add-task-modal.hidden {
+  display: none;
+}
+
+/* Fullscreen container for Add Task modal */
+.add-task-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+/* Semi-transparent overlay */
+.add-task-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* The form container (centered) */
+.add-task-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f4f4f4;
+  border-radius: 24px;
+  padding: 32px;
+  width: 1116px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }

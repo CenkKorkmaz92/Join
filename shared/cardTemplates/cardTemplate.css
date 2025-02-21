@@ -1,161 +1,182 @@
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+/* Ensure the html/body are 100% and no default margin */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
+/* The main modal container takes up the full screen */
 .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 525px;
-    border-radius: 30px;
-    padding: 48px 40px;
-    gap: 24px;
-    box-shadow: 0px 0px 4px 0px #00000029;
-    background-color: #fff;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  /* Hidden by default, typically toggled with .hidden class in JS */
 }
 
+/* The semi-transparent backdrop */
+.modal-backdrop {
+  position: absolute; /* so it stays within the .modal container */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* z-index is inherited from .modal or you can explicitly set one */
+}
+
+/* The dialog container that centers the content */
+.modal-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Optionally, use flex or grid if you prefer */
+}
+
+/* The modal content (your card) */
+.modal-content {
+  width: 525px;
+  border-radius: 30px;
+  padding: 48px 40px;
+  gap: 24px;
+  box-shadow: 0px 0px 4px 0px #00000029;
+  background-color: #fff;
+  max-height: 90vh; /* prevent the card from overflowing the screen */
+  overflow-y: auto; /* add scroll if content is too tall */
+}
+
+/* The rest of your card styles */
 .card-header {
-    width: 100%;
-    height: 36px;
+  width: 100%;
+  height: 36px;
 }
-
 .user-story-label {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-story-label span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 164px;
+  height: 36px;
+  border-radius: 8px;
+  padding: 4px 24px;
+  gap: 10px;
+  background-color: #0038ff;
+  color: #fff;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: 27.6px;
 }
 
-.user-story-label span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 164px;
-    height: 36px;
-    border-radius: 8px;
-    padding-top: 4px;
-    padding-right: 24px;
-    padding-bottom: 4px;
-    padding-left: 24px;
-    gap: 10px;
-    background-color: #0038FF;
-    color: white;
-    font-weight: 400;
-    font-size: 23px;
-    line-height: 27.6px;
+/* Example for "User Story" */
+.category-user {
+  background-color: #0038ff;
+  color: white;
+  border-radius: 8px;
+  /* any padding, font-size, etc. you want */
+}
+
+/* Example for "Technical Task" */
+.category-technical {
+  background-color: #1fd7c1;
+  color: white;
+  border-radius: 8px;
+  /* any padding, font-size, etc. you want */
 }
 
 .close-button {
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    border: none;
-    font-size: 24px;
-    line-height: 24px;
-    cursor: pointer;
-    transition: transform 0.1s;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s;
 }
-
 .close-button:hover {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
-
 .card-title {
-    font-weight: 700;
-    font-size: 61px;
-    line-height: 73.2px;
+  font-weight: 700;
+  font-size: 61px;
+  line-height: 73.2px;
 }
-
 .card-description {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: 0%;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
 }
-
-.date {
-    width: 100%;
-    height: 24px;
-    gap: 25px;
+.date,
+.prio {
+  margin: 16px 0;
+  font-size: 20px;
+  line-height: 24px;
 }
-
-.date {
-    width: 100%;
-    height: 32px;
-    gap: 25px;
-}
-
-.assigned-to {
-    width: 100%;
-    gap: 8px;
-}
-
 .assigned-to p {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
 }
-
 .assignees-list {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 4px;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
 }
-
 .assignees-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 216px;
-    height: 42px;
-    gap: 16px;
-    border-radius: 10px;
-    padding-top: 7px;
-    padding-bottom: 7px;
+  display: flex;
+  align-items: center;
+  width: 216px;
+  height: 42px;
+  gap: 16px;
+  border-radius: 10px;
+  padding: 7px 0;
 }
-
 .subtasks {
-    gap: 8px;
+  gap: 8px;
+  margin-bottom: 24px;
 }
-
 .subtasks h3 {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0 0 8px 0;
 }
-
 .subtasks ul {
-    gap: 4px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 4px;
 }
-
+.subtasks li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
 .card-footer {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    height: 24px;
-    gap: 8px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 24px;
+  gap: 8px;
 }
-
 .card-footer button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
-
 .gray-vector {
-    height: 24px;
-    border: solid 1px #D1D1D1;
+  height: 24px;
+  border: solid 1px #d1d1d1;
 }
