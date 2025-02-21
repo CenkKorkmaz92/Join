@@ -197,14 +197,32 @@ function showContactDetails(contact) {
   currentContact = contact;
   document.getElementById("detailedContactInfo")?.classList.remove("hidden");
   document.getElementById("contactName").innerText = contact.fullName;
-  document.getElementById("contactEmail").innerText = contact.email;
-  document.getElementById("contactPhone").innerText = contact.phone;
+
+  // E-Mail-Link erstellen
+  const emailLink = document.createElement('a');
+  emailLink.href = `mailto:${contact.email}`;
+  emailLink.innerText = contact.email;
+  emailLink.classList.add('email-link'); // Klasse hinzufügen
+  const contactEmailElement = document.getElementById("contactEmail");
+  contactEmailElement.innerHTML = ''; // Vorherigen Inhalt löschen
+  contactEmailElement.appendChild(emailLink);
+
+  // Telefon-Link erstellen
+  const phoneLink = document.createElement('a');
+  phoneLink.href = `tel:${contact.phone}`;
+  phoneLink.innerText = contact.phone;
+  phoneLink.classList.add('phone-link'); // Klasse hinzufügen
+  const contactPhoneElement = document.getElementById("contactPhone");
+  contactPhoneElement.innerHTML = ''; // Vorherigen Inhalt löschen
+  contactPhoneElement.appendChild(phoneLink);
+
   const contactCircle = document.getElementById("contactCircle");
   contactCircle.innerText = contact.initials;
   contactCircle.style.backgroundColor = contact.color;
   const deleteButton = document.getElementById("deleteContactBtn");
   deleteButton.setAttribute("data-contact-id", contact.id);
 }
+
 
 function resetContactDetail() {
   document.getElementById("contactName").innerText = "";

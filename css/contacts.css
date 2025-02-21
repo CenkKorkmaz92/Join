@@ -619,6 +619,27 @@ html {
     box-sizing: border-box;
 }
 
+.email-link {
+    color: #007cee;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.email-link:hover {
+    text-decoration: underline;
+}
+
+.phone-link {
+    color: #007cee;
+    text-decoration: none;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.phone-link:hover {
+    text-decoration: underline;
+}
+
 @keyframes flyInFromRight {
     from {
       transform: translateX(100%);
