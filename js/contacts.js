@@ -39,10 +39,34 @@ function clearErrorMessages() {
 
 function closeWindow() {
   clearInputs();
-  document.getElementById("popup").style.display = "none";
-  document.getElementById("editPopup").style.display = "none";
+  
+  const popup = document.getElementById("popup");
+  const editPopup = document.getElementById("editPopup");
   const popupSuccess = document.getElementById("popupSuccess");
-  if (popupSuccess) {
+
+  // Überprüfen, welches Popup geöffnet ist
+  const activePopup = popup.style.display === "flex" ? popup : editPopup.style.display === "flex" ? editPopup : null;
+  
+  if (activePopup) {
+    // Entferne die 'fly-in'-Klasse und füge die 'fly-out'-Klasse hinzu
+    activePopup.classList.remove("fly-in");
+    activePopup.classList.add("fly-out");
+
+    // Event-Listener für das Ende der Animation hinzufügen
+    activePopup.addEventListener("animationend", function handleAnimationEnd() {
+      // Popup ausblenden
+      activePopup.style.display = "none";
+      
+      // 'fly-out'-Klasse entfernen
+      activePopup.classList.remove("fly-out");
+      
+      // Event-Listener entfernen, um Speicherlecks zu vermeiden
+      activePopup.removeEventListener("animationend", handleAnimationEnd);
+    });
+  }
+
+  // PopupSuccess ausblenden, falls es sichtbar ist
+  if (popupSuccess && popupSuccess.style.display === "flex") {
     popupSuccess.style.display = "none";
   }
 }
@@ -292,7 +316,12 @@ if (editPhoneInput) {
 
 // Event-Listener für die Anzeige der Popups
 document.getElementById("addContactBtn").onclick = function () {
-  document.getElementById("popup").style.display = "flex";
+  const popup = document.getElementById("popup");
+  popup.style.display = "flex";
+  // Entferne ggf. vorhandene Animationsklasse, erzwinge Reflow und füge die Klasse neu hinzu:
+  popup.classList.remove("fly-in");
+  void popup.offsetWidth; // Erzwingt Reflow
+  popup.classList.add("fly-in");
 };
 
 document.getElementById("clearBtn").onclick = function () {
@@ -346,7 +375,11 @@ document.getElementById("deleteContactBtn")?.addEventListener("click", async fun
 // Event-Listener für das Öffnen des Edit-Popups
 document.getElementById("editContactBtn").addEventListener("click", function () {
   if (currentContact) {
-    document.getElementById("editPopup").style.display = "flex";
+    const editPopup = document.getElementById("editPopup");
+    editPopup.style.display = "flex";
+    editPopup.classList.remove("fly-in");
+    void editPopup.offsetWidth;
+    editPopup.classList.add("fly-in");
     editNameInput.value = currentContact.fullName;
     editEmailInput.value = currentContact.email;
     editPhoneInput.value = currentContact.phone;

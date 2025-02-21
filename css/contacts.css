@@ -619,3 +619,33 @@ html {
     box-sizing: border-box;
 }
 
+@keyframes flyInFromRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .popup.fly-in {
+    animation: flyInFromRight 0.25s ease-out forwards;
+  }
+
+  @keyframes flyOutToRight {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+  
+  .popup.fly-out {
+    animation: flyOutToRight 0.25s ease-out forwards;
+  }
+  
