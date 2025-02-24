@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Summary</title>
 
     <!-- Link Styles -->
@@ -30,58 +30,61 @@
             </div>
             <div class="task-summary-and-greeting-container">
                 <div class="task-summary">
+                    <!-- Top summary: To-do & Done counts -->
                     <div class="to-do-task">
                         <div class="to-do">
                             <img class="icon-summary" src="./assets/img/icons/summary/pencil_icon.svg" alt="pencil">
                             <div class="to-do-number-span">
-                                <div class="to-do-number">1</div>
+                                <div id="summaryTodoCount" class="to-do-number"></div>
                                 <span>To-do</span>
                             </div>
                         </div>
                         <div class="to-do">
-                            <img class="icon-summary" src="./assets/img/icons/summary/check_icon.svg" alt="pencil">
+                            <img class="icon-summary" src="./assets/img/icons/summary/check_icon.svg" alt="check">
                             <div class="to-do-number-span">
-                                <div class="to-do-number">1</div>
+                                <div id="summaryDoneCount" class="to-do-number"></div>
                                 <span>Done</span>
                             </div>
                         </div>
                     </div>
+                    <!-- Upcoming deadline display -->
                     <div class="summary-task-status">
                         <div class="icon-and-span-task-status">
                             <img class="icon-summary-status" src="./assets/img/icons/summary/urgent_icon.svg"
-                                alt="pencil">
+                                alt="urgent">
+                            <!-- You can reuse this element if needed or remove it if redundant -->
                             <div class="to-do-number-span">
-                                <div class="to-do-number">1</div>
-                                <span>To-do</span>
+                                <!-- For example, if you want to show another metric here, give it an ID -->
+                                <div id="summaryExtraMetric" class="to-do-number"></div>
+                                <span>Extra</span>
                             </div>
                         </div>
                         <div class="gray-vector"></div>
                         <div class="info-date">
-                            <span class="date">October 16, 2022</span>
+                            <span id="summaryUpcomingDeadline" class="date">October 16, 2022</span>
                             <span class="info">Upcoming Deadline</span>
                         </div>
                     </div>
+                    <!-- Bottom summary: Detailed board column counts -->
                     <div class="summary-task-count-containers">
                         <div class="count-number-span">
-                            <div class="count-number">1</div>
+                            <div id="summaryBoardTasks" class="count-number"></div>
                             <span>Tasks in <br> Board</span>
                         </div>
                         <div class="count-number-span">
-                            <div class="count-number">1</div>
+                            <div id="summaryProgressTasks" class="count-number"></div>
                             <span>Tasks in <br> Progress</span>
                         </div>
                         <div class="count-number-span">
-                            <div class="count-number">1</div>
+                            <div id="summaryAwaitFeedbackTasks" class="count-number"></div>
                             <span>Awaiting Feedback</span>
                         </div>
                     </div>
-
                 </div>
                 <div class="greeting-container">
                     <span class="day-time">Good morning,</span><br>
                     <span class="user-name"></span>
                 </div>
-
             </div>
         </main>
     </div>
