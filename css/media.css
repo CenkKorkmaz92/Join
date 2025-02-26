@@ -1,0 +1,270 @@
+@media (max-width: 1275px) {
+
+    /* summary */
+    .greeting-container{
+        display: none;
+    }
+
+    /* contacts */
+    .contact-header{
+        display: none;
+    }
+
+    .contact-list-hidden{
+        display: none;
+    }
+
+    .container{
+        width: 100%;
+        align-items: end;
+    } 
+
+    #contactList{
+        margin-top: 0px !important;
+    }
+
+    .add-new-contact-responsive{
+        display: flex !important;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background-color: #2A3647;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        bottom: 106px;
+        right: 34px;
+        border: none;
+    }
+
+    .add-new-contact-responsive:hover{
+        cursor: pointer;
+        box-shadow: 2.5px 2.5px 2.5px rgba(0,0,0,0.4);
+    }
+
+}
+
+@media (max-width: 950px) {
+
+    /* summary */
+    .headline-container{
+        flex-direction: column;
+        align-items: start;
+        gap: 0;
+    }
+
+    .blue-vector{
+        display: none;
+        transform: rotate(90deg);
+    }
+
+    .blue-vector-responsive{
+        display: block !important;
+        border: solid 1.5px #29ABE2;
+        width: 90px;
+        margin-top: 16px;
+    }
+
+    /* contacts */
+}
+
+@media (max-width: 920px) {
+
+    /* summary */
+    .headline-container{
+        padding-left: 26px;
+    }
+
+    .task-summary{
+        padding-left: 26px;
+    }
+
+    /* contacts */
+}
+
+@media (max-width: 850px) {
+
+    /* summary */
+    .layout{
+        justify-content: end;
+    }
+
+    .content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .headline-container{
+        padding-left: 0;
+        padding-top: 48px;
+        margin-left: -210px;
+    }
+
+    .task-summary{
+        width: 500px;
+        height: 500px;
+        padding-left: 0;
+    }
+
+    .to-do-task{
+        width: 500px;
+        height: 128px;
+    }
+
+    .to-do{
+        width: 224px;
+        height: 128px;
+    }
+
+    .icon-summary{
+        width: 40px;
+        height: 40px;
+    }
+
+    .icon-summary-status{
+        width: 40px;
+        height: 40px;
+    }
+
+    .to-do-number{
+        font-size: 48px;
+    }
+
+    .summary-task-status{
+        width: 500px;
+    }
+
+    .count-number-span{
+        width: 140px;
+    }
+
+    .count-number{
+        font-size: 48px;
+    }
+
+    /* contacts */
+    .contact-body{
+        width: 100%;
+    }
+}
+
+@media (max-width: 525px) {
+
+    /* summary */
+    .headline-container{
+        margin-left: -140px;
+    }
+
+    .headline-summary{
+        font-size: 52px;
+    }
+
+    .headline-text{
+        font-size: 18px;
+    }
+
+    .task-summary{
+        width: 360px;
+    }
+
+    .to-do-task{
+        width: 320px;
+        height: auto;
+    }
+
+    .to-do{
+        width: 140px;
+        height: auto;
+    }
+
+    .icon-summary{
+        width: 26px;
+        height: 26px;
+    }
+
+    .to-do-number{
+        font-size: 32px;
+    }
+
+    span{
+        font-size: 14px !important;
+    }
+
+    .summary-task-status{
+        width: 320px;
+        height: auto;
+        gap: 15px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .icon-summary-status{
+        width: 26px;
+        height: 26px;
+    }
+
+    .icon-and-span-task-status{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .gray-vector{
+        height: 65px;
+    }
+
+    .summary-task-count-containers{
+        width: 320px;
+    }
+
+    .count-number-span{
+        width: 90px;
+        height: auto;
+        gap: 0;
+    }
+
+    .count-number{
+        font-size: 32px;
+    }
+
+    /* contacts */
+}
+
+@media (max-width: 380px) {
+
+    /* summary */
+    .task-summary{
+        width: 290px;
+    }
+
+    .headline-container{
+        margin-left: -60px !important;
+    }
+
+    .to-do-task{
+        width: 290px;
+    }
+
+    .summary-task-status{
+        width: 290px;
+        gap: 5;
+    }
+
+    .summary-task-count-containers{
+        width: 290px;
+    }
+
+    /* contacts */
+    .contact{
+        width: 300px !important;
+        gap: 10px !important;
+    }
+
+    .contact-name{
+        font-size: 14px;
+    }
+
+    .contact-email{
+        font-size: 12px;
+    }
+}

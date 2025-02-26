@@ -99,3 +99,69 @@ body.legal-page .login {
     display: flex !important;
     /* or block/flex as needed */
 }
+
+@media (max-width: 850px) {
+    .navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 80px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0;
+        max-width: 100%;
+        background-color: #2A3647;
+        z-index: 1000;
+        overflow: visible;
+    }
+
+    .navbar-header {
+        flex-direction: row;
+
+    }
+
+    .navbar-menu {
+        display: flex !important;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0;
+        gap: 0;
+        z-index: 1100;
+    }
+
+    .navbar-item {
+        width: auto;
+        height: 100%;
+        padding: 0 15px;
+        justify-content: center;
+        flex-grow: 1;
+        display: flex !important;
+        align-items: center;
+        flex-direction: column;
+        color: white;
+    }
+
+    .navbar-logo {
+        display: none;
+    }
+
+    .navbar-item img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .navbar-item span {
+        font-size: 12px;
+        margin-top: 2px;
+    }
+
+    .navbar-footer,
+    .navbar-header {
+        display: none;
+    }
+}
+

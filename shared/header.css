@@ -105,3 +105,29 @@
 body.legal-page .user-profile {
     display: none;
 }
+
+@media (max-width: 850px) {
+    .top-header {
+        width: 100vw; /* Setzt die Breite des Headers auf 100% der Viewport-Breite */
+        max-width: none; /* Entfernt die maximale Breitenbeschränkung */
+        margin: 0; /* Entfernt jeglichen Außenabstand */
+        padding: 0; /* Entfernt jeglichen Innenabstand */
+    }
+
+    .help-icon{
+        display: none;
+    }
+
+    .help-button-responsive{
+        display: block !important;
+    }
+
+    .header-title{
+        display: none;
+    }
+
+    .logo-header-responsive{
+        display: block !important;
+        margin-left: 16px;
+    }
+}
