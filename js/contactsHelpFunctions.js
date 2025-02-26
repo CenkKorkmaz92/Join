@@ -302,3 +302,14 @@ function updateContactList() {
 function closeEditPopup() {
     document.getElementById("editPopup").style.display = "none";
 }
+
+/**
+ * Removes specified classes from an element and forces a reflow.
+ *
+ * @param {Element} element - The DOM element to modify.
+ * @param {...string} classes - The classes to remove from the element.
+ */
+function removeClassesAndReflow(element, ...classes) {
+    element.classList.remove(...classes);
+    void element.offsetWidth; // Force reflow to restart CSS animations
+  }

@@ -195,6 +195,54 @@ document.getElementById("saveEditBtn").addEventListener("click", async function 
   }
 });
 
+/**
+ * Opens a popup element with a fade-in and fly-in animation.
+ *
+ * This function retrieves the popup element using the provided popupId and determines
+ * the element to animate based on the provided animatedSelector. For the edit popup,
+ * it automatically uses the ".edit-popup-content" class instead of the passed selector.
+ * It then resets any existing animation classes, forces a reflow to restart the animations,
+ * and finally applies the fade-in animation to the background and the fly-in animation to the animated element.
+ *
+ * @param {string} popupId - The ID of the popup element to be displayed.
+ * @param {string} animatedSelector - The CSS selector of the element inside the popup to animate.
+ */
+function openPopupGeneric(popupId, animatedSelector) {
+  const popup = document.getElementById(popupId);
+  const background = popup.querySelector(".background-popup");
+  const effectiveSelector = popupId === "editPopup" ? ".edit-popup-content" : animatedSelector;
+  const animatedElem = popup.querySelector(effectiveSelector);
+  popup.style.display = "flex";
+  background.classList.remove("fade-out", "fade-in");
+  animatedElem.classList.remove("fly-out", "fly-in");
+  void background.offsetWidth;
+  void animatedElem.offsetWidth;
+  background.classList.add("fade-in");
+  animatedElem.classList.add("fly-in");
+}
+
+/**
+ * Closes a popup with a fade-out animation.
+ *
+ * @param {string} popupId - The ID of the popup element to close.
+ * @param {string} animatedSelector - The selector for the element to animate within the popup.
+ */
+function closePopupGeneric(popupId, animatedSelector) {
+  const popup = document.getElementById(popupId);
+  const background = popup.querySelector('.background-popup');
+  const effectiveSelector = popupId === 'editPopup' ? '.edit-popup-content' : animatedSelector;
+  const animatedElem = popup.querySelector(effectiveSelector);
+  removeClassesAndReflow(background, 'fade-in');
+  background.classList.add('fade-out');
+  removeClassesAndReflow(animatedElem, 'fly-in');
+  animatedElem.classList.add('fly-out');
+  setTimeout(() => {
+    popup.style.display = 'none';
+    animatedElem.classList.remove('fly-out');
+    background.classList.remove('fade-out');
+  }, 250);
+}
+
 // Fetching contacts from the API when the window loads
 window.onload = function () {
   fetchContactsFromAPI();

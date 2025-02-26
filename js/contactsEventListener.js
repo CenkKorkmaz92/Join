@@ -149,4 +149,23 @@ document.getElementById("deleteBtn").addEventListener("click", function (event) 
     editEmailInput.value = "";
     editPhoneInput.value = "";
 });
-  
+
+/**
+ * Adds a click event listener to the "Add Contact" button.
+ * When clicked, it opens the "Add Contact" popup with a fly-in animation.
+ *
+ * @listens click
+ */
+document.getElementById("addContactBtn").addEventListener("click", function () {
+  openPopupGeneric("popup", ".popup-form");
+});
+
+/**
+ * Adds a click event listener to the "Edit Contact" button.
+ * When clicked, it opens the "Edit Contact" popup with a fly-in animation.
+ *
+ * @listens click
+ */
+document.getElementById("editContactBtn").addEventListener("click", function () {
+  openPopupGeneric("editPopup", ".popup-content");
+});
