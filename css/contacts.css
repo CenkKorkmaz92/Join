@@ -23,7 +23,7 @@ html {
 
 }
 
-.contact-list-hidden{
+.contact-list-hidden {
     position: absolute;
     z-index: 2;
     background-color: white;
@@ -91,11 +91,20 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2000; /* Neu hinzugefügt */
+    z-index: 2000;
+}
+
+.background-popup{
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1999;
 }
 
 .popup-header {
@@ -193,7 +202,7 @@ html {
 
 .pop-up-close-button-edit-contact {
     position: absolute;
-    top: 280px;
+    top: 120px;
     display: flex;
     justify-content: end;
     align-items: start;
@@ -240,14 +249,14 @@ html {
     padding: 21px 13px 21px 13px;
 }
 
-.input-group{
+.input-group {
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: flex-start;
 }
 
-.error-message{
+.error-message {
     display: flex;
     justify-content: flex-start;
     align-items: start;
@@ -375,7 +384,6 @@ html {
     display: flex;
     flex-direction: column;
     align-items: start;
-
 }
 
 .contact-header {
@@ -579,7 +587,6 @@ html {
     color: white
 }
 
-
 .popup-success {
     position: fixed;
     top: 0;
@@ -604,6 +611,18 @@ html {
 }
 
 #contactForm.popup-form {
+    position: absolute;
+    top: 20%;
+    z-index: 1000;
+    display: flex !important;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    display: block;
+}
+
+.edit-popup-content{
     position: absolute;
     top: 20%;
     z-index: 1000;
@@ -640,33 +659,42 @@ html {
     text-decoration: underline;
 }
 
-@keyframes flyInFromRight {
-    from {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  
-  .popup.fly-in {
-    animation: flyInFromRight 0.25s ease-out forwards;
-  }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-  @keyframes flyOutToRight {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-  }
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.background-popup.fade-in {
+    animation: fadeIn 0.25s ease-out forwards;
+}
+
+.background-popup.fade-out {
+    animation: fadeOut 0.25s ease-out forwards;
+}
   
-  .popup.fly-out {
-    animation: flyOutToRight 0.25s ease-out forwards;
-  }
+@keyframes flyInFromRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes flyOutToRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
   
+.popup-form.fly-in,
+.popup-content.fly-in,
+.edit-popup-content.fly-in {
+    animation: flyInFromRight 0.45s ease-out forwards;
+}
+
+.popup-form.fly-out,
+.popup-content.fly-out,
+.edit-popup-content.fly-out {
+    animation: flyOutToRight 0.65s ease-out forwards;
+}
