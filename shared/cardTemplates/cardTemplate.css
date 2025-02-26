@@ -157,7 +157,7 @@ body {
   height: 42px;
   gap: 16px;
   border-radius: 10px;
-  padding: 7px 0;
+  padding-bottom: 8px;
 }
 
 .subtasks {

@@ -236,12 +236,16 @@
 /* Label + Input Layout */
 #editFormContainer label {
   font-weight: 600;
-  margin-top: 16px;
-  margin-bottom: 4px;
+  padding: 4px;
   display: block;
   /* Force each label on its own line */
   color: #2a3647;
   /* Example color */
+}
+
+.dropdown-list label:hover {
+  background-color: lightgray;
+  border-radius: 10px;
 }
 
 #editFormContainer input[type="text"],
@@ -420,6 +424,12 @@
   background-color: #fff;
   border-radius: 8px;
   padding: 6px 10px;
+}
+
+.drop-down-assignt-to-container-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .edit-subtask-item .subtask-text {
