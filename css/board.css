@@ -225,31 +225,33 @@
 #editFormContainer {
   /* Hidden by default, shown via JS */
   display: none;
-  padding: 24px;
   /* Provide some spacing around the form */
   gap: 16px;
   /* A simple vertical layout */
   display: flex;
   flex-direction: column;
   max-height: 80vh;
-  overflow-y: auto;
 }
 
 /* Label + Input Layout */
 #editFormContainer label {
   font-weight: 600;
-  margin-top: 16px;
-  margin-bottom: 4px;
+  padding: 4px;
   display: block;
   /* Force each label on its own line */
   color: #2a3647;
   /* Example color */
 }
 
+.dropdown-list label:hover {
+  background-color: lightgray;
+  border-radius: 10px;
+}
+
 #editFormContainer input[type="text"],
 #editFormContainer textarea,
 #editFormContainer input[type="date"] {
-  width: 100%;
+  width: 507px;
   padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -339,8 +341,8 @@
 ---------------------------------- */
 .edit-form-footer {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
-  gap: 12px;
   margin-top: 16px;
 }
 
@@ -375,7 +377,79 @@
   opacity: 0.9;
 }
 
-/* ----------------------------------
-   NOTE: We do NOT override your Delete/Edit button styling below.
-   So your original styling for them remains intact.
----------------------------------- */
+/* Assigned to (in edit mode) */
+#editAssignedSelect {
+  width: 507px;
+  /* match your input widths */
+  min-height: 40px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  margin-bottom: 16px;
+}
+
+#editAssignedSelect:focus {
+  border-color: #29abe2;
+}
+
+/* Subtask editing container (similar to Add Task) */
+.edit-subtask-container {
+  margin-bottom: 16px;
+}
+
+.edit-subtask-container .input-subtask-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edit-subtask-container .subtask-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.edit-subtask-container .subtask-list-wrapper {
+  margin-top: 8px;
+}
+
+/* Each subtask line item in edit mode */
+.edit-subtask-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.drop-down-assignt-to-container-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-subtask-item .subtask-text {
+  flex: 1;
+  font-size: 16px;
+  color: #333;
+}
+
+.subtask-item-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.subtask-item-icons img {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.subtask-item-icons img:hover {
+  opacity: 0.8;
+}

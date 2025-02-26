@@ -268,20 +268,21 @@
         <div id="editFormContainer" style="display: none">
           <h2>Edit Task</h2>
 
+          <!-- Title -->
           <label for="editTitleInput">Title</label>
           <input type="text" id="editTitleInput" />
 
+          <!-- Description -->
           <label for="editDescriptionInput">Description</label>
           <textarea id="editDescriptionInput"></textarea>
 
+          <!-- Due Date -->
           <label for="editDueDateInput">Due date</label>
           <input type="date" id="editDueDateInput" />
 
-          <!-- Priority options (simple version) -->
-          <p>Priority</p>
-
+          <!-- Priority -->
           <div class="prio-selection-container">
-            <span>Prio</span>
+            <span><strong>Priority</strong></span>
             <div class="prio-selector-container">
               <div class="prio-option" data-prio="urgent" id="prioUrgentBtn">
                 <span>Urgent</span>
@@ -297,35 +298,55 @@
               </div>
             </div>
           </div>
-
-          <!-- We will store the chosen priority in a hidden input: -->
+          <!-- We store the chosen priority in a hidden input: -->
           <input type="hidden" id="editPriorityInput" value="medium" />
 
-          <!-- Assigned to (simple version) -->
-          <label for="editAssignedSelect">Assigned to</label>
-          <select id="editAssignedSelect" multiple>
-            <!-- Optionally fill these from your contacts. -->
-          </select>
+          <!-- Assigned to -->
+          <div class="drop-down-assignt-to-container-edit">
+            <span>Assigned to</span>
+            <div class="assigned-container">
+              <div id="editSelectedContactsContainer" class="selected-contacts-container"></div>
+              <div class="dropdown-toggle" id="editDropdownToggle">
+                <span id="editDropdownPlaceholder">Select contact(s)</span>
+                <img class="dropdown-arrow" id="editDropdownArrow" src="./assets/img/icons/addTask/arrow_drop_down.svg"
+                  alt="Dropdown arrow" />
+              </div>
+            </div>
+            <div class="dropdown-list hidden" id="editContactsDropdownList"></div>
+          </div>
 
-          <!-- Subtasks (basic approach) -->
-          <label>Subtasks</label>
-          <ul id="editSubtasksList"></ul>
-          <!-- You could add an "Add subtask" button here. -->
+          <!-- Subtasks (edit style similar to "Add Task") -->
+          <label for="editSubtaskInput">Subtasks</label>
+          <div class="edit-subtask-container">
+            <div class="input-subtask-wrapper">
+              <input type="text" id="editSubtaskInput" placeholder="Add new subtask" />
+              <div class="subtask-buttons">
+                <!-- Optional confirm/cancel hidden by default, 
+             like in your "Add Task" approach -->
+                <button id="editClearSubtaskBtn" class="hidden">✖</button>
+                <div id="editVector" class="hidden">|</div>
+                <button id="editConfirmSubtaskBtn" class="hidden">✔</button>
+                <button id="editAddSubtaskBtn">+</button>
+              </div>
+            </div>
+            <div class="subtask-list-wrapper">
+              <ul id="editSubtasksList"></ul>
+            </div>
+          </div>
 
+          <!-- Footer (Dismiss + Save) -->
           <div class="edit-form-footer">
-            <!-- "Dismiss" and "Save" for the edit form -->
             <button type="button" class="delete-btn" id="dismissEditBtn">
               <img src="../../assets/img/icons/addTask/delete_icon.svg" alt="Delete" />
               Dismiss
             </button>
+            <div class="gray-vector"></div>
             <button type="button" id="saveEditBtn">
               <img src="./assets/img/icons/addTask/check_Subtasks_icon.svg" alt="" />
               Save
             </button>
           </div>
         </div>
-        <!-- END EDIT MODE -->
-
       </div>
     </div>
   </div>
