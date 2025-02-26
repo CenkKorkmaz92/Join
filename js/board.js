@@ -1,24 +1,55 @@
 /**
  * @file board.js
  * @description A Kanban board that:
+ *  - Loads contacts from Firebase
  *  - Loads tasks from Firebase
- *  - Creates drag-and-drop cards
- *  - Shows a "big card" modal in view mode
+ *  - Shows a big card modal in view mode
  *  - Lets the user delete tasks
- *  - Lets the user enter a simple "edit mode" with a hidden form
+ *  - Lets the user enter an "edit mode" with the same assigned-contacts dropdown as Add Task
  *  - Updates tasks in Firebase
- *  - Has placeholders for empty columns
+ *  - Allows subtask editing (add, edit, delete)
  */
 
-// ------------------
-// Global Variables
-// ------------------
+let allContacts = [];       // We'll fetch from your "contacts" API
 let currentTask = null;     // The task currently shown in the modal
 let originColumnId = null;  // For drag-and-drop
 let isEditing = false;      // Whether the modal is in edit mode
 
+// A local array to track which contacts are selected in edit mode (mimicking "Add Task" style)
+let editAssignedTo = [];
+
 // ------------------
-// Load & Render
+// 1) Load All Contacts
+// ------------------
+function loadAllContacts() {
+  const FIREBASE_CONTACTS_URL =
+    'https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/contacts.json';
+  // Adjust if you have a different endpoint for your contacts
+
+  return fetch(FIREBASE_CONTACTS_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      if (!data) {
+        console.log('No contacts found');
+        allContacts = [];
+        return;
+      }
+
+      // Convert the Firebase object into an array
+      allContacts = Object.entries(data).map(([id, contact]) => ({
+        // e.g. { fullName, email, color, initials } from your DB
+        ...contact
+      }));
+      console.log('Contacts loaded:', allContacts);
+    })
+    .catch((error) => {
+      console.error('Error fetching contacts:', error);
+      allContacts = [];
+    });
+}
+
+// ------------------
+// 2) Load Tasks
 // ------------------
 function loadTasks() {
   const FIREBASE_TASKS_URL =
@@ -396,7 +427,12 @@ function enterEditMode() {
   document.getElementById('editPriorityInput').value = currentPrio;
   highlightPriorityButton(currentPrio);
 
-  // (Optional) handle assignedTo, subtasks, etc. here
+  // Subtasks
+  if (!currentTask.subtasks) currentTask.subtasks = [];
+  populateEditSubtasksList(currentTask.subtasks);
+
+  // Assigned People - using the "Add Task"-style dropdown
+  initEditAssignedDropdown();
 }
 
 function dismissEditMode() {
@@ -417,7 +453,11 @@ function saveEditMode() {
   updatedTask.priority =
     document.getElementById('editPriorityInput').value || 'medium';
 
-  // If you handle assigned contacts or subtasks, gather them here as well
+  // assignedTo from the local array editAssignedTo
+  updatedTask.assignedTo = editAssignedTo;
+
+  // Subtasks are already updated in currentTask.subtasks
+  updatedTask.subtasks = currentTask.subtasks;
 
   const firebaseId = updatedTask.firebaseId;
   const updateUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
@@ -442,22 +482,164 @@ function saveEditMode() {
     .catch((error) => console.error('Error updating task:', error));
 }
 
-/**
- * Simple function to highlight the correct priority button.
- * (If you have "active" styling, etc.)
- */
 function highlightPriorityButton(priority) {
-  document.getElementById('prioUrgentBtn').classList.remove('active');
-  document.getElementById('prioMediumBtn').classList.remove('active');
-  document.getElementById('prioLowBtn').classList.remove('active');
+  document.getElementById('prioUrgentBtn').classList.remove('selected');
+  document.getElementById('prioMediumBtn').classList.remove('selected');
+  document.getElementById('prioLowBtn').classList.remove('selected');
 
   if (priority === 'urgent') {
-    document.getElementById('prioUrgentBtn').classList.add('active');
+    document.getElementById('prioUrgentBtn').classList.add('selected');
   } else if (priority === 'medium') {
-    document.getElementById('prioMediumBtn').classList.add('active');
+    document.getElementById('prioMediumBtn').classList.add('selected');
   } else if (priority === 'low') {
-    document.getElementById('prioLowBtn').classList.add('active');
+    document.getElementById('prioLowBtn').classList.add('selected');
   }
+}
+
+// ---------------------
+// Subtask Editing
+// ---------------------
+function populateEditSubtasksList(subtasks) {
+  const list = document.getElementById('editSubtasksList');
+  list.innerHTML = '';
+
+  subtasks.forEach((sub, index) => {
+    const li = document.createElement('li');
+    li.classList.add('edit-subtask-item');
+
+    const span = document.createElement('span');
+    span.classList.add('subtask-text');
+    span.textContent = sub.text;
+
+    // Icons container
+    const iconsDiv = document.createElement('div');
+    iconsDiv.classList.add('subtask-item-icons');
+
+    // Edit icon
+    const editIcon = document.createElement('img');
+    editIcon.src = './assets/img/icons/board/edit.svg';
+    editIcon.alt = 'Edit subtask';
+    editIcon.classList.add('subtask-edit-icon');
+    editIcon.addEventListener('click', () => editSubtask(index));
+
+    // Delete icon
+    const deleteIcon = document.createElement('img');
+    deleteIcon.src = './assets/img/icons/addTask/delete_icon.svg';
+    deleteIcon.alt = 'Delete subtask';
+    deleteIcon.classList.add('subtask-delete-icon');
+    deleteIcon.addEventListener('click', () => deleteSubtask(index));
+
+    iconsDiv.appendChild(editIcon);
+    iconsDiv.appendChild(deleteIcon);
+
+    li.appendChild(span);
+    li.appendChild(iconsDiv);
+    list.appendChild(li);
+  });
+}
+
+function editSubtask(index) {
+  const oldText = currentTask.subtasks[index].text;
+  const newText = prompt('Edit subtask:', oldText);
+  if (newText !== null && newText.trim() !== '') {
+    currentTask.subtasks[index].text = newText.trim();
+    populateEditSubtasksList(currentTask.subtasks);
+  }
+}
+
+function deleteSubtask(index) {
+  currentTask.subtasks.splice(index, 1);
+  populateEditSubtasksList(currentTask.subtasks);
+}
+
+function addNewSubtaskInEdit() {
+  const input = document.getElementById('editSubtaskInput');
+  const text = input.value.trim();
+  if (text) {
+    currentTask.subtasks.push({ text, done: false });
+    populateEditSubtasksList(currentTask.subtasks);
+    input.value = '';
+  }
+}
+
+// ---------------------
+// "Add Task"-Style Assigned Contacts in Edit
+// ---------------------
+function initEditAssignedDropdown() {
+  // 1) Copy currentTask.assignedTo into the local array
+  editAssignedTo = currentTask.assignedTo
+    ? JSON.parse(JSON.stringify(currentTask.assignedTo))
+    : [];
+
+  // 2) Render the dropdown checkboxes
+  renderEditContactsDropdown();
+
+  // 3) Update the chips
+  updateEditSelectedContactsContainer();
+
+  // 4) Hide the dropdown by default
+  document.getElementById('editContactsDropdownList').classList.add('hidden');
+}
+
+function renderEditContactsDropdown() {
+  const dropdownList = document.getElementById('editContactsDropdownList');
+  dropdownList.innerHTML = '';
+
+  allContacts.forEach((contact) => {
+    const contactId = `editContactCheckbox-${contact.email}`;
+
+    // Create a label+checkbox
+    const label = document.createElement('label');
+    label.setAttribute('for', contactId);
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = contactId;
+    checkbox.checked = editAssignedTo.some((c) => c.email === contact.email);
+    checkbox.addEventListener('change', () => {
+      toggleEditContact(contact);
+    });
+
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(contact.fullName));
+    dropdownList.appendChild(label);
+  });
+}
+
+function toggleEditContact(contact) {
+  const index = editAssignedTo.findIndex((c) => c.email === contact.email);
+  if (index === -1) {
+    // Add
+    editAssignedTo.push({
+      fullName: contact.fullName,
+      email: contact.email,
+      color: contact.color,
+      initials: contact.initials,
+    });
+  } else {
+    // Remove
+    editAssignedTo.splice(index, 1);
+  }
+  updateEditSelectedContactsContainer();
+}
+
+function updateEditSelectedContactsContainer() {
+  const container = document.getElementById('editSelectedContactsContainer');
+  container.innerHTML = '';
+
+  editAssignedTo.forEach((contact) => {
+    const chip = document.createElement('div');
+    chip.classList.add('contact-chip');
+    chip.style.backgroundColor = contact.color || '#999';
+    chip.textContent = contact.initials || '?';
+    container.appendChild(chip);
+  });
+}
+
+function toggleEditContactsDropdown() {
+  const dropdownList = document.getElementById('editContactsDropdownList');
+  dropdownList.classList.toggle('hidden');
+  // Optionally rotate the arrow or do any fancy animation
 }
 
 // ---------------------
@@ -497,7 +679,10 @@ function addPlaceholdersToEmptyColumns() {
 // DOM Initialization
 // ---------------------
 document.addEventListener('DOMContentLoaded', () => {
-  loadTasks();
+  // 1) Load all contacts, then 2) load tasks
+  loadAllContacts().then(() => {
+    loadTasks();
+  });
 
   // Setup drag & drop
   const columns = document.querySelectorAll('.board-list-column');
@@ -559,7 +744,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Edit form buttons: "Dismiss" and "Ok"
+  // Subtask add button in edit mode
+  const editAddSubtaskBtn = document.getElementById('editAddSubtaskBtn');
+  if (editAddSubtaskBtn) {
+    editAddSubtaskBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      addNewSubtaskInEdit();
+    });
+  }
+
+  // "Dismiss" and "Save" in the edit form
   const dismissEditBtn = document.getElementById('dismissEditBtn');
   if (dismissEditBtn) {
     dismissEditBtn.addEventListener('click', dismissEditMode);
@@ -569,7 +763,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveEditBtn.addEventListener('click', saveEditMode);
   }
 
-  // View mode buttons: "Edit" and "Delete"
+  // "Edit" and "Delete" in view mode
   const editButton = document.getElementById('editTaskBtn');
   if (editButton) {
     editButton.addEventListener('click', () => {
@@ -579,10 +773,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const deleteButton = document.getElementById('deleteTaskBtn');
   if (deleteButton) {
     deleteButton.addEventListener('click', () => {
-      // Only delete if not in edit mode; if in edit mode, user has a separate "Dismiss" button
+      // Only delete if not in edit mode
       if (currentTask && currentTask.firebaseId && !isEditing) {
         deleteTask(currentTask.firebaseId);
       }
+    });
+  }
+
+  // Toggle the assigned-contacts dropdown (like in Add Task)
+  const editDropdownToggle = document.getElementById('editDropdownToggle');
+  if (editDropdownToggle) {
+    editDropdownToggle.addEventListener('click', () => {
+      toggleEditContactsDropdown();
     });
   }
 });
