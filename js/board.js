@@ -7,9 +7,12 @@
  *  - contact chips & priority icons,
  *  - subtask progress bars,
  *  - opening a "detail view" modal with checkbox toggles,
- *  - updating tasks in Firebase.
+ *  - updating tasks in Firebase,
+ *  - deleting tasks.
  */
 
+// Global variable to hold the current task shown in the modal
+let currentTask = null;
 let originColumnId = null;
 
 /**
@@ -211,6 +214,9 @@ function createTaskCard(task) {
  * Renders contact avatars in color, plus text+icon for priority.
  */
 function openTaskModal(task) {
+  // Store current task for later use (e.g., deletion)
+  currentTask = task;
+
   // CATEGORY BADGE
   const categoryBadge = document.getElementById('taskCategoryBadge');
   categoryBadge.classList.remove('category-user', 'category-technical');
@@ -421,6 +427,27 @@ function addTask(newTaskData) {
 }
 
 /**
+ * Deletes a task from Firebase, closes the modal, and refreshes the board.
+ * @param {string} firebaseId - The Firebase ID of the task to delete.
+ */
+function deleteTask(firebaseId) {
+  const deleteUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
+
+  fetch(deleteUrl, {
+    method: 'DELETE',
+  })
+    .then((response) => response.json())
+    .then(() => {
+      console.log(`Task ${firebaseId} deleted successfully`);
+      // Close the modal (assuming closeModal is defined elsewhere)
+      closeModal('viewTaskModal');
+      // Refresh the board tasks
+      loadTasks();
+    })
+    .catch((error) => console.error('Error deleting task:', error));
+}
+
+/**
  * Creates and appends a placeholder element to the specified column.
  */
 function addPlaceholderIfEmpty(column) {
@@ -504,4 +531,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Attach event listener to the delete button in the modal (ID updated to match HTML)
+  const deleteButton = document.getElementById('deleteTaskBtn');
+  if (deleteButton) {
+    deleteButton.addEventListener('click', () => {
+      if (currentTask && currentTask.firebaseId) {
+        deleteTask(currentTask.firebaseId);
+      } else {
+        console.error('No current task found to delete.');
+      }
+    });
+  }
 });
