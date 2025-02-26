@@ -107,8 +107,7 @@
 
 .subline-container img:hover {
   cursor: pointer;
-  filter: brightness(0) saturate(100%) invert(56%) sepia(57%) saturate(415%)
-    hue-rotate(173deg) brightness(97%) contrast(91%);
+  filter: brightness(0) saturate(100%) invert(56%) sepia(57%) saturate(415%) hue-rotate(173deg) brightness(97%) contrast(91%);
 }
 
 .board-list {
@@ -188,10 +187,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;    /* or any size you like */
+  width: 32px;
+  /* or any size you like */
   height: 32px;
-  border-radius: 50%;  /* makes it a circle */
-  color: #fff;         /* text color */
+  border-radius: 50%;
+  /* makes it a circle */
+  color: #fff;
+  /* text color */
   font-weight: 700;
-  margin-right: 4px;   /* spacing between chips */
+  margin-right: 4px;
+  /* spacing between chips */
 }
