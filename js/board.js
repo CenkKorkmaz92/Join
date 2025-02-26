@@ -6,8 +6,8 @@
  *  - Shows a big card modal in view mode
  *  - Lets the user delete tasks
  *  - Lets the user enter an "edit mode" with the same assigned-contacts dropdown as Add Task
+ *  - Allows subtask editing (add, edit, delete), including "press Enter" to add
  *  - Updates tasks in Firebase
- *  - Allows subtask editing (add, edit, delete)
  */
 
 let allContacts = [];       // We'll fetch from your "contacts" API
@@ -37,7 +37,6 @@ function loadAllContacts() {
 
       // Convert the Firebase object into an array
       allContacts = Object.entries(data).map(([id, contact]) => ({
-        // e.g. { fullName, email, color, initials } from your DB
         ...contact
       }));
       console.log('Contacts loaded:', allContacts);
@@ -128,23 +127,22 @@ function createTaskCard(task) {
   cardClone.id = 'card-' + task.firebaseId;
   cardClone.draggable = true;
 
-  // Drag start
+  // DRAG EVENTS
   cardClone.addEventListener('dragstart', (event) => {
     event.dataTransfer.setData('text/plain', cardClone.id);
     originColumnId = cardClone.parentNode.id;
     cardClone.classList.add('dragging');
   });
-  // Drag end
   cardClone.addEventListener('dragend', () => {
     cardClone.classList.remove('dragging');
   });
 
-  // Clicking the card -> open the big card modal
+  // CLICK EVENT -> Show big card modal
   cardClone.addEventListener('click', () => {
     openTaskModal(task);
   });
 
-  // Category
+  // CATEGORY (small badge on the card)
   const categoryEl = cardClone.querySelector('.category');
   if (task.category === 'user-story') {
     categoryEl.classList.add('category-user');
@@ -156,26 +154,28 @@ function createTaskCard(task) {
     categoryEl.textContent = task.category || 'No category';
   }
 
-  // Title & Description
+  // TITLE & DESCRIPTION
   cardClone.querySelector('.headline').textContent = task.title || 'No title';
   cardClone.querySelector('.info').textContent = task.description || '';
 
-  // Subtasks & progress
-  const progressEl = cardClone.querySelector('.progress-and-subtask');
-  const total = Array.isArray(task.subtasks) ? task.subtasks.length : 0;
-  if (total === 0) {
-    progressEl.style.display = 'none';
+  // SUBTASKS + PROGRESS
+  const progressAndSubtaskEl = cardClone.querySelector('.progress-and-subtask');
+  const totalSubtasks = Array.isArray(task.subtasks) ? task.subtasks.length : 0;
+  if (totalSubtasks === 0) {
+    progressAndSubtaskEl.style.display = 'none';
   } else {
-    progressEl.style.display = 'flex';
-    const completed = task.subtasks.filter((s) => s.done).length;
-    const fillPercent = (completed / total) * 100;
-    cardClone.querySelector('.subtask-counter').textContent =
-      `${completed}/${total} subtasks`;
-    cardClone.querySelector('.progressbar-fill').style.width =
-      fillPercent + '%';
+    progressAndSubtaskEl.style.display = 'flex';
+    const completedSubtasks = task.subtasks.filter((s) => s.done).length;
+    const fillPercent = (completedSubtasks / totalSubtasks) * 100;
+
+    const subtaskCounterEl = cardClone.querySelector('.subtask-counter');
+    subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
+
+    const progressFillEl = cardClone.querySelector('.progressbar-fill');
+    progressFillEl.style.width = fillPercent + '%';
   }
 
-  // Priority icon
+  // PRIORITY ICON
   const prioEl = cardClone.querySelector('.prio');
   prioEl.innerHTML = '';
   if (task.priority === 'urgent') {
@@ -188,7 +188,7 @@ function createTaskCard(task) {
     prioEl.textContent = task.priority || 'none';
   }
 
-  // Assigned contacts (chips)
+  // ASSIGNED TO (colored chips)
   const chipsContainer = cardClone.querySelector('.chips');
   chipsContainer.innerHTML = '';
   if (task.assignedTo && task.assignedTo.length > 0) {
@@ -201,7 +201,7 @@ function createTaskCard(task) {
     });
   }
 
-  // Append to correct column
+  // Place card into the correct column
   const columnId = task.status || 'toDo';
   const column = document.getElementById(columnId);
   if (column) {
@@ -216,7 +216,7 @@ function createTaskCard(task) {
 }
 
 /**
- * Opens the big card modal in "view mode."
+ * Opens the larger "detail view" modal with data from the given task.
  */
 function openTaskModal(task) {
   // Exit any edit mode if needed
@@ -227,9 +227,10 @@ function openTaskModal(task) {
   document.getElementById('viewModeContainer').style.display = 'block';
   document.getElementById('editFormContainer').style.display = 'none';
 
-  // Populate the view-mode fields
+  // CATEGORY BADGE
   const categoryBadge = document.getElementById('taskCategoryBadge');
   categoryBadge.classList.remove('category-user', 'category-technical');
+
   if (task.category === 'user-story') {
     categoryBadge.classList.add('category-user');
     categoryBadge.textContent = 'User Story';
@@ -240,36 +241,50 @@ function openTaskModal(task) {
     categoryBadge.textContent = task.category || 'No category';
   }
 
+  // TITLE & DESCRIPTION
   document.getElementById('taskTitle').textContent = task.title || 'No title';
   document.getElementById('taskDescription').textContent =
     task.description || 'No description';
+
+  // DUE DATE
   document.getElementById('taskDueDate').textContent =
     task.dueDate || 'No date set';
 
+  // PRIORITY TEXT + ICON
   const taskPrioritySpan = document.getElementById('taskPriority');
   taskPrioritySpan.innerHTML = '';
   if (task.priority === 'urgent') {
-    taskPrioritySpan.innerHTML = `Urgent <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="Urgent" />`;
+    taskPrioritySpan.innerHTML = `
+      Urgent <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="Urgent" />
+    `;
   } else if (task.priority === 'medium') {
-    taskPrioritySpan.innerHTML = `Medium <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium" />`;
+    taskPrioritySpan.innerHTML = `
+      Medium <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium" />
+    `;
   } else if (task.priority === 'low') {
-    taskPrioritySpan.innerHTML = `Low <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low" />`;
+    taskPrioritySpan.innerHTML = `
+      Low <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low" />
+    `;
   } else {
     taskPrioritySpan.textContent = task.priority || 'none';
   }
 
-  // Assigned
+  // ASSIGNED TO
   const assignedEl = document.getElementById('taskAssignedTo');
   assignedEl.innerHTML = '';
   if (task.assignedTo && task.assignedTo.length > 0) {
     task.assignedTo.forEach((person) => {
       const li = document.createElement('li');
+
+      // Colored avatar
       const avatar = document.createElement('div');
       avatar.classList.add('avatar');
       avatar.style.backgroundColor = person.color || '#999';
       avatar.textContent = person.initials || '??';
+
       const nameSpan = document.createElement('span');
       nameSpan.textContent = person.fullName || 'No Name';
+
       li.appendChild(avatar);
       li.appendChild(nameSpan);
       assignedEl.appendChild(li);
@@ -280,20 +295,25 @@ function openTaskModal(task) {
     assignedEl.appendChild(li);
   }
 
-  // Subtasks
+  // SUBTASKS
   const subtasksList = document.getElementById('taskSubtasks');
   subtasksList.innerHTML = '';
   if (task.subtasks && task.subtasks.length > 0) {
     task.subtasks.forEach((sub, index) => {
       const li = document.createElement('li');
+
+      // Create a checkbox
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.checked = !!sub.done;
       checkbox.addEventListener('change', () => {
         toggleSubtaskDone(task, index, checkbox.checked);
       });
+
+      // Label for the subtask text
       const label = document.createElement('label');
       label.textContent = sub.text;
+
       li.appendChild(checkbox);
       li.appendChild(label);
       subtasksList.appendChild(li);
@@ -309,16 +329,22 @@ function openTaskModal(task) {
 }
 
 /**
- * Toggles a subtask's 'done' status and updates Firebase.
+ * Toggles a single subtask's 'done' status and updates in Firebase.
  */
 function toggleSubtaskDone(task, subtaskIndex, isDone) {
+  // Update local object
   task.subtasks[subtaskIndex].done = isDone;
+
+  // Build the updated subtasks array
   const updatedSubtasks = task.subtasks.map((s) => ({
     text: s.text,
     done: s.done,
   }));
+
+  // PATCH to Firebase
   const firebaseId = task.firebaseId;
   const updateUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
+
   fetch(updateUrl, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
@@ -326,39 +352,52 @@ function toggleSubtaskDone(task, subtaskIndex, isDone) {
   })
     .then((res) => res.json())
     .then(() => {
+      // Update small card's progress
       updateCardProgress(firebaseId, updatedSubtasks);
     })
-    .catch((error) => console.error('Error updating subtask done status:', error));
+    .catch((error) =>
+      console.error('Error updating subtask done status:', error)
+    );
 }
 
 /**
- * Updates the small card's progress bar & counter.
+ * Updates the small card's progress bar & counter based on updated subtasks.
  */
 function updateCardProgress(firebaseId, newSubtasks) {
   const cardId = 'card-' + firebaseId;
   const card = document.getElementById(cardId);
   if (!card) return;
 
-  const progressEl = card.querySelector('.progress-and-subtask');
-  const total = newSubtasks.length;
-  if (total === 0) {
-    progressEl.style.display = 'none';
+  const progressAndSubtaskEl = card.querySelector('.progress-and-subtask');
+  const totalSubtasks = newSubtasks.length;
+  if (totalSubtasks === 0) {
+    progressAndSubtaskEl.style.display = 'none';
     return;
   }
-  progressEl.style.display = 'flex';
-  const completed = newSubtasks.filter((s) => s.done).length;
-  const fillPercent = (completed / total) * 100;
-  card.querySelector('.subtask-counter').textContent =
-    `${completed}/${total} subtasks`;
-  card.querySelector('.progressbar-fill').style.width = fillPercent + '%';
+
+  progressAndSubtaskEl.style.display = 'flex';
+
+  const completedSubtasks = newSubtasks.filter((s) => s.done).length;
+  const fillPercent = (completedSubtasks / totalSubtasks) * 100;
+
+  const subtaskCounterEl = card.querySelector('.subtask-counter');
+  if (subtaskCounterEl) {
+    subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
+  }
+
+  const progressFillEl = card.querySelector('.progressbar-fill');
+  if (progressFillEl) {
+    progressFillEl.style.width = fillPercent + '%';
+  }
 }
 
 /**
- * Updates a task's status (column) in Firebase.
+ * Updates the task's status in Firebase (for drag-and-drop column changes).
  */
 function updateTaskStatusInFirebase(cardId, newStatus) {
   const firebaseId = cardId.replace('card-', '');
   const updateUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
+
   fetch(updateUrl, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
@@ -390,11 +429,15 @@ function addTask(newTaskData) {
 }
 
 /**
- * Deletes a task from Firebase, closes the modal, and refreshes.
+ * Deletes a task from Firebase, closes the modal, and refreshes the board.
+ * @param {string} firebaseId - The Firebase ID of the task to delete.
  */
 function deleteTask(firebaseId) {
   const deleteUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
-  fetch(deleteUrl, { method: 'DELETE' })
+
+  fetch(deleteUrl, {
+    method: 'DELETE',
+  })
     .then((response) => response.json())
     .then(() => {
       console.log(`Task ${firebaseId} deleted successfully`);
@@ -639,7 +682,6 @@ function updateEditSelectedContactsContainer() {
 function toggleEditContactsDropdown() {
   const dropdownList = document.getElementById('editContactsDropdownList');
   dropdownList.classList.toggle('hidden');
-  // Optionally rotate the arrow or do any fancy animation
 }
 
 // ---------------------
@@ -753,7 +795,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // "Dismiss" and "Save" in the edit form
+  // PRESS ENTER to add subtask in edit mode
+  const editSubtaskInput = document.getElementById('editSubtaskInput');
+  if (editSubtaskInput) {
+    editSubtaskInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        addNewSubtaskInEdit();
+      }
+    });
+  }
+
+  // Edit form buttons: "Dismiss" and "Save"
   const dismissEditBtn = document.getElementById('dismissEditBtn');
   if (dismissEditBtn) {
     dismissEditBtn.addEventListener('click', dismissEditMode);
@@ -763,7 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveEditBtn.addEventListener('click', saveEditMode);
   }
 
-  // "Edit" and "Delete" in view mode
+  // View mode buttons: "Edit" and "Delete"
   const editButton = document.getElementById('editTaskBtn');
   if (editButton) {
     editButton.addEventListener('click', () => {
