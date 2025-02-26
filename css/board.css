@@ -168,6 +168,11 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+#taskPriority {
+  display: flex;
+  gap: 8px;
+}
+
 /* The form container (centered) */
 .add-task-modal-content {
   position: absolute;
@@ -198,3 +203,179 @@
   margin-right: 4px;
   /* spacing between chips */
 }
+
+/* ----------------------------------
+   Big Card (Modal) Shared Styles
+---------------------------------- */
+
+/* The modal container and backdrop might already be styled in your existing CSS.
+   We'll focus on #viewModeContainer and #editFormContainer. */
+
+/* View Mode Container */
+#viewModeContainer {
+  padding: 24px;
+  /* Add spacing inside the card */
+}
+
+/* Headline, description, etc. can reuse your existing card styling. */
+
+/* ----------------------------------
+   Edit Mode Container
+---------------------------------- */
+#editFormContainer {
+  /* Hidden by default, shown via JS */
+  display: none;
+  padding: 24px;
+  /* Provide some spacing around the form */
+  gap: 16px;
+  /* A simple vertical layout */
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Label + Input Layout */
+#editFormContainer label {
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 4px;
+  display: block;
+  /* Force each label on its own line */
+  color: #2a3647;
+  /* Example color */
+}
+
+#editFormContainer input[type="text"],
+#editFormContainer textarea,
+#editFormContainer input[type="date"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#editFormContainer input[type="text"]:focus,
+#editFormContainer textarea:focus,
+#editFormContainer input[type="date"]:focus {
+  border-color: #29abe2;
+}
+
+/* Textarea styling to match input */
+#editFormContainer textarea {
+  resize: vertical;
+  /* allow vertical resize only */
+  min-height: 80px;
+  /* a bit bigger by default */
+}
+
+/* Priority Container */
+.priority-container {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.priority-container button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.priority-container button:hover {
+  background-color: #e0e0e0;
+}
+
+.priority-container button.active {
+  background-color: #29abe2;
+  color: #fff;
+  border-color: #29abe2;
+}
+
+/* Assigned to (simple example) */
+#editAssignedSelect {
+  width: 100%;
+  min-height: 40px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#editAssignedSelect:focus {
+  border-color: #29abe2;
+}
+
+/* Subtasks list in edit form */
+#editSubtasksList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+#editSubtasksList li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* If you have an "Add subtask" button, style it similarly. */
+
+/* ----------------------------------
+   Edit Form Footer
+---------------------------------- */
+.edit-form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* Dismiss and Save Buttons (inside the edit form) */
+.edit-form-footer #dismissEditBtn,
+.edit-form-footer #saveEditBtn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.edit-form-footer #dismissEditBtn {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: #333;
+}
+
+.edit-form-footer #saveEditBtn {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: #333;
+}
+
+.edit-form-footer #dismissEditBtn:hover,
+.edit-form-footer #saveEditBtn:hover {
+  opacity: 0.9;
+}
+
+/* ----------------------------------
+   NOTE: We do NOT override your Delete/Edit button styling below.
+   So your original styling for them remains intact.
+---------------------------------- */

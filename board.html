@@ -278,11 +278,25 @@
 
           <!-- Priority options (simple version) -->
           <p>Priority</p>
-          <div class="priority-container">
-            <button type="button" id="prioUrgentBtn">Urgent</button>
-            <button type="button" id="prioMediumBtn">Medium</button>
-            <button type="button" id="prioLowBtn">Low</button>
+
+          <div class="prio-selection-container">
+            <span>Prio</span>
+            <div class="prio-selector-container">
+              <div class="prio-option" data-prio="urgent" id="prioUrgentBtn">
+                <span>Urgent</span>
+                <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority" />
+              </div>
+              <div class="prio-option selected" data-prio="medium" id="prioMediumBtn">
+                <span>Medium</span>
+                <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority" />
+              </div>
+              <div class="prio-option" data-prio="low" id="prioLowBtn">
+                <span>Low</span>
+                <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority" />
+              </div>
+            </div>
           </div>
+
           <!-- We will store the chosen priority in a hidden input: -->
           <input type="hidden" id="editPriorityInput" value="medium" />
 
@@ -299,8 +313,14 @@
 
           <div class="edit-form-footer">
             <!-- "Dismiss" and "Save" for the edit form -->
-            <button type="button" id="dismissEditBtn">Dismiss</button>
-            <button type="button" id="saveEditBtn">Ok</button>
+            <button type="button" class="delete-btn" id="dismissEditBtn">
+              <img src="../../assets/img/icons/addTask/delete_icon.svg" alt="Delete" />
+              Dismiss
+            </button>
+            <button type="button" id="saveEditBtn">
+              <img src="./assets/img/icons/addTask/check_Subtasks_icon.svg" alt="" />
+              Save
+            </button>
           </div>
         </div>
         <!-- END EDIT MODE -->
