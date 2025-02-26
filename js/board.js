@@ -11,7 +11,6 @@
  *  - deleting tasks.
  */
 
-// Global variable to hold the current task shown in the modal
 let currentTask = null;
 let originColumnId = null;
 
@@ -64,22 +63,16 @@ function loadTasks() {
  */
 function fixSubtaskFormat(task) {
   const subs = task.subtasks;
-  if (!subs || !Array.isArray(subs)) return; // No subtasks or not an array
+  if (!subs || !Array.isArray(subs)) return;
 
-  // Check if the first element is a string => assume all are strings
+  // If first element is a string, assume all subtasks are strings.
   if (typeof subs[0] === 'string') {
     console.log(`Converting string subtasks for task ${task.firebaseId}`);
-
-    // Convert each string -> { text, done: false }
     const newSubtasks = subs.map((s) => ({
       text: s,
       done: false,
     }));
-
-    // Update the local task object
     task.subtasks = newSubtasks;
-
-    // Patch back to Firebase so subsequent loads are already objects
     patchSubtasks(task.firebaseId, newSubtasks);
   }
 }
@@ -91,7 +84,6 @@ function fixSubtaskFormat(task) {
  */
 function patchSubtasks(firebaseId, newSubtasks) {
   const updateUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
-
   fetch(updateUrl, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
@@ -126,7 +118,7 @@ function createTaskCard(task) {
     cardClone.classList.remove('dragging');
   });
 
-  // CLICK EVENT -> Show big card modal
+  // CLICK EVENT -> Open the task modal
   cardClone.addEventListener('click', () => {
     openTaskModal(task);
   });
@@ -151,26 +143,20 @@ function createTaskCard(task) {
   const progressAndSubtaskEl = cardClone.querySelector('.progress-and-subtask');
   const totalSubtasks = Array.isArray(task.subtasks) ? task.subtasks.length : 0;
   if (totalSubtasks === 0) {
-    // If no subtasks, hide the progress bar + counter entirely
     progressAndSubtaskEl.style.display = 'none';
   } else {
-    // Show the progress bar + counter
     progressAndSubtaskEl.style.display = 'flex';
-
-    // Count how many subtasks are done
     const completedSubtasks = task.subtasks.filter((s) => s.done).length;
     const fillPercent = (completedSubtasks / totalSubtasks) * 100;
-
     const subtaskCounterEl = cardClone.querySelector('.subtask-counter');
     subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
-
     const progressFillEl = cardClone.querySelector('.progressbar-fill');
     progressFillEl.style.width = fillPercent + '%';
   }
 
-  // PRIORITY ICON (SMALL CARD ONLY)
+  // PRIORITY ICON (small card only)
   const prioEl = cardClone.querySelector('.prio');
-  prioEl.innerHTML = ''; // Clear any text
+  prioEl.innerHTML = '';
   if (task.priority === 'urgent') {
     prioEl.innerHTML = `<img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="Urgent" />`;
   } else if (task.priority === 'medium') {
@@ -186,7 +172,6 @@ function createTaskCard(task) {
   chipsContainer.innerHTML = '';
   if (task.assignedTo && task.assignedTo.length > 0) {
     task.assignedTo.forEach((contact) => {
-      // Create a "chip" with background color + initials
       const chip = document.createElement('div');
       chip.classList.add('contact-chip');
       chip.style.backgroundColor = contact.color || '#999';
@@ -195,7 +180,7 @@ function createTaskCard(task) {
     });
   }
 
-  // Place card into the correct column
+  // Place the card into the correct column
   const columnId = task.status || 'toDo';
   const column = document.getElementById(columnId);
   if (column) {
@@ -211,16 +196,15 @@ function createTaskCard(task) {
 
 /**
  * Opens the larger "detail view" modal with data from the given task.
- * Renders contact avatars in color, plus text+icon for priority.
+ * Populates fields in view mode.
  */
 function openTaskModal(task) {
-  // Store current task for later use (e.g., deletion)
+  // Store the current task so that the delete button knows which task to remove.
   currentTask = task;
 
   // CATEGORY BADGE
   const categoryBadge = document.getElementById('taskCategoryBadge');
   categoryBadge.classList.remove('category-user', 'category-technical');
-
   if (task.category === 'user-story') {
     categoryBadge.classList.add('category-user');
     categoryBadge.textContent = 'User Story';
@@ -240,10 +224,9 @@ function openTaskModal(task) {
   document.getElementById('taskDueDate').textContent =
     task.dueDate || 'No date set';
 
-  // PRIORITY TEXT + ICON (BIG CARD)
+  // PRIORITY TEXT + ICON
   const taskPrioritySpan = document.getElementById('taskPriority');
-  taskPrioritySpan.innerHTML = ''; // Clear old content
-
+  taskPrioritySpan.innerHTML = '';
   if (task.priority === 'urgent') {
     taskPrioritySpan.innerHTML = `
       Urgent <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="Urgent" />
@@ -266,16 +249,12 @@ function openTaskModal(task) {
   if (task.assignedTo && task.assignedTo.length > 0) {
     task.assignedTo.forEach((person) => {
       const li = document.createElement('li');
-
-      // Colored avatar
       const avatar = document.createElement('div');
       avatar.classList.add('avatar');
       avatar.style.backgroundColor = person.color || '#999';
       avatar.textContent = person.initials || '??';
-
       const nameSpan = document.createElement('span');
       nameSpan.textContent = person.fullName || 'No Name';
-
       li.appendChild(avatar);
       li.appendChild(nameSpan);
       assignedEl.appendChild(li);
@@ -292,20 +271,14 @@ function openTaskModal(task) {
   if (task.subtasks && task.subtasks.length > 0) {
     task.subtasks.forEach((sub, index) => {
       const li = document.createElement('li');
-
-      // Create a checkbox
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
-      checkbox.checked = !!sub.done; // true/false
+      checkbox.checked = !!sub.done;
       checkbox.addEventListener('change', () => {
-        // Update this subtask's "done" status in Firebase
         toggleSubtaskDone(task, index, checkbox.checked);
       });
-
-      // Label for the subtask text
       const label = document.createElement('label');
       label.textContent = sub.text;
-
       li.appendChild(checkbox);
       li.appendChild(label);
       subtasksList.appendChild(li);
@@ -316,31 +289,24 @@ function openTaskModal(task) {
     subtasksList.appendChild(li);
   }
 
-  // Show the modal
+  // Reset footer buttons (delete button remains as delete)
+  document.getElementById('deleteTaskBtn').innerHTML =
+    `<img src="../../assets/img/icons/addTask/delete_icon.svg" alt="Delete" /> Delete`;
+
   openModal('viewTaskModal');
 }
 
 /**
- * Toggles a single subtask's 'done' status and updates in Firebase.
- * Then it updates the progress bar on the small card in real time.
- * @param {Object} task - The full task object (including firebaseId).
- * @param {number} subtaskIndex - Index of the subtask in task.subtasks.
- * @param {boolean} isDone - The new 'done' state (true/false).
+ * Toggles a subtask's 'done' status and updates Firebase.
  */
 function toggleSubtaskDone(task, subtaskIndex, isDone) {
-  // Update local object
   task.subtasks[subtaskIndex].done = isDone;
-
-  // Build the updated subtasks array
   const updatedSubtasks = task.subtasks.map((s) => ({
     text: s.text,
     done: s.done,
   }));
-
-  // PATCH to Firebase
   const firebaseId = task.firebaseId;
   const updateUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
-
   fetch(updateUrl, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
@@ -348,7 +314,6 @@ function toggleSubtaskDone(task, subtaskIndex, isDone) {
   })
     .then((res) => res.json())
     .then(() => {
-      // Update small card's progress
       updateCardProgress(firebaseId, updatedSubtasks);
     })
     .catch((error) =>
@@ -358,7 +323,6 @@ function toggleSubtaskDone(task, subtaskIndex, isDone) {
 
 /**
  * Updates the small card's progress bar & counter based on updated subtasks.
- * Hides the bar if there are zero subtasks.
  */
 function updateCardProgress(firebaseId, newSubtasks) {
   const cardId = 'card-' + firebaseId;
@@ -373,15 +337,12 @@ function updateCardProgress(firebaseId, newSubtasks) {
   }
 
   progressAndSubtaskEl.style.display = 'flex';
-
   const completedSubtasks = newSubtasks.filter((s) => s.done).length;
   const fillPercent = (completedSubtasks / totalSubtasks) * 100;
-
   const subtaskCounterEl = card.querySelector('.subtask-counter');
   if (subtaskCounterEl) {
     subtaskCounterEl.textContent = `${completedSubtasks}/${totalSubtasks} subtasks`;
   }
-
   const progressFillEl = card.querySelector('.progressbar-fill');
   if (progressFillEl) {
     progressFillEl.style.width = fillPercent + '%';
@@ -394,7 +355,6 @@ function updateCardProgress(firebaseId, newSubtasks) {
 function updateTaskStatusInFirebase(cardId, newStatus) {
   const firebaseId = cardId.replace('card-', '');
   const updateUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
-
   fetch(updateUrl, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
@@ -407,7 +367,6 @@ function updateTaskStatusInFirebase(cardId, newStatus) {
 
 /**
  * Adds a new task to Firebase and reloads the board.
- * Make sure 'subtasks' is an array of { text, done } objects if you want checkboxes.
  */
 function addTask(newTaskData) {
   fetch(
@@ -432,16 +391,13 @@ function addTask(newTaskData) {
  */
 function deleteTask(firebaseId) {
   const deleteUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
-
   fetch(deleteUrl, {
     method: 'DELETE',
   })
     .then((response) => response.json())
     .then(() => {
       console.log(`Task ${firebaseId} deleted successfully`);
-      // Close the modal (assuming closeModal is defined elsewhere)
       closeModal('viewTaskModal');
-      // Refresh the board tasks
       loadTasks();
     })
     .catch((error) => console.error('Error deleting task:', error));
@@ -453,6 +409,8 @@ function deleteTask(firebaseId) {
 function addPlaceholderIfEmpty(column) {
   const placeholderDiv = document.createElement('div');
   placeholderDiv.classList.add('board-task-element');
+  placeholderDiv.style.textAlign = 'center';
+  placeholderDiv.style.padding = '20px';
 
   let placeholderText = '';
   if (column.id === 'toDo') {
@@ -466,13 +424,12 @@ function addPlaceholderIfEmpty(column) {
   } else {
     placeholderText = 'No tasks';
   }
-
   placeholderDiv.textContent = placeholderText;
   column.appendChild(placeholderDiv);
 }
 
 /**
- * Checks each board column and adds placeholder if it's empty.
+ * Checks each board column and adds a placeholder if it's empty.
  */
 function addPlaceholdersToEmptyColumns() {
   document.querySelectorAll('.board-list-column').forEach((column) => {
@@ -504,18 +461,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const cardId = event.dataTransfer.getData('text/plain');
       const card = document.getElementById(cardId);
-
       if (card) {
-        // Remove "No tasks" placeholder if present
         const placeholder = column.querySelector('.board-task-element');
         if (placeholder) {
           placeholder.remove();
         }
-
-        // Move card to new column
         column.appendChild(card);
-
-        // If old column is now empty, restore placeholder
         if (originColumnId && originColumnId !== column.id) {
           const oldColumn = document.getElementById(originColumnId);
           if (oldColumn) {
@@ -525,14 +476,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           }
         }
-
-        // Update status in Firebase
         updateTaskStatusInFirebase(cardId, column.id);
       }
     });
   });
 
-  // Attach event listener to the delete button in the modal (ID updated to match HTML)
+  // Attach event listener to the delete button in the modal.
+  // (Ensure the modal's delete button has the ID "deleteTaskBtn" in your HTML.)
   const deleteButton = document.getElementById('deleteTaskBtn');
   if (deleteButton) {
     deleteButton.addEventListener('click', () => {
