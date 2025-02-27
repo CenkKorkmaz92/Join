@@ -5,7 +5,7 @@
 
 /* === NAVBAR === */
 .navbar {
-    grid-row: 1 / span 2;
+    grid-row: 1;
     grid-column: 1;
     background-color: #2A3647;
     height: 100vh;
@@ -119,7 +119,8 @@ body.legal-page .login {
 
     .navbar-header {
         flex-direction: row;
-
+        justify-content: space-between;
+        width: 100%;
     }
 
     .navbar-menu {
@@ -159,9 +160,7 @@ body.legal-page .login {
         margin-top: 2px;
     }
 
-    .navbar-footer,
-    .navbar-header {
+    .navbar-footer {
         display: none;
     }
 }
-
