@@ -122,42 +122,21 @@ function renderContacts() {
     });
 }
 
-
-
-
-
+/**
+ * Displays the contact details in the UI.
+ * It updates the current contact, shows the contact container,
+ * updates the display with the contact's information, sets the delete button attribute,
+ * and adjusts the layout for responsive design.
+ *
+ * @param {Object} contact - The contact object containing details such as fullName, email, phone, initials, and color.
+ */
 function showContactDetails(contact) {
   currentContact = contact;
-  // Gesamten Container anzeigen
-  document.getElementById("contactDetail").style.display = "flex";
-  // Detaillierten Info-Bereich anzeigen
-  document.getElementById("detailedContactInfo").classList.remove("hidden");
-  
-  updateTextContent("contactName", contact.fullName);
-  
-  const contactEmailElement = document.getElementById("contactEmail");
-  contactEmailElement.innerHTML = "";
-  contactEmailElement.appendChild(createLinkElement(`mailto:${contact.email}`, contact.email, "email-link"));
-  
-  const contactPhoneElement = document.getElementById("contactPhone");
-  contactPhoneElement.innerHTML = "";
-  contactPhoneElement.appendChild(createLinkElement(`tel:${contact.phone}`, contact.phone, "phone-link"));
-  
-  updateContactCircle(contact.initials, contact.color);
-  document.getElementById("deleteContactBtn")?.setAttribute("data-contact-id", contact.id);
-
-  if (window.matchMedia("(max-width: 1275px)").matches) {
-    document.getElementById("containerContact").classList.add("hidden");
-    // Zusätzlich den Header ausblenden:
-    document.querySelector(".contact-header").classList.add("hidden");
-  }
+  showContactContainer();
+  updateContactDisplay(contact);
+  setContactDeleteButton(contact.id);
+  handleResponsiveLayout();
 }
-
-
-
-
-
-
 
 /**
  * Resets the detailed contact view by clearing all displayed information.

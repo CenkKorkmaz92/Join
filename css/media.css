@@ -46,6 +46,10 @@
         left: 216px;
     }
 
+    .back-to-contact-list-button{
+        display: block !important;
+    }
+
 }
 
 @media (max-width: 950px) {

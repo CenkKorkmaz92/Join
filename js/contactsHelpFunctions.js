@@ -312,4 +312,51 @@ function closeEditPopup() {
 function removeClassesAndReflow(element, ...classes) {
     element.classList.remove(...classes);
     void element.offsetWidth; // Force reflow to restart CSS animations
-  }
+}
+
+/**
+ * Shows the contact detail container by removing the hidden classes
+ * and setting the appropriate display styles.
+ */
+function showContactContainer() {
+    document.querySelector(".contact-detail").classList.remove("hidden");
+    document.getElementById("contactDetail").style.display = "flex";
+    document.getElementById("detailedContactInfo").classList.remove("hidden");
+}
+  
+/**
+ * Updates the display of the contact details using the provided contact information.
+ * This includes updating the name, email, phone links, and the contact circle.
+ *
+ * @param {Object} contact - The contact object with details to display.
+ */
+function updateContactDisplay(contact) {
+    updateTextContent("contactName", contact.fullName);
+    const emailEl = document.getElementById("contactEmail");
+    emailEl.innerHTML = "";
+    emailEl.appendChild(createLinkElement(`mailto:${contact.email}`, contact.email, "email-link"));
+    const phoneEl = document.getElementById("contactPhone");
+    phoneEl.innerHTML = "";
+    phoneEl.appendChild(createLinkElement(`tel:${contact.phone}`, contact.phone, "phone-link"));
+    updateContactCircle(contact.initials, contact.color);
+}
+  
+/**
+ * Sets the data attribute for the delete contact button with the given contact ID.
+ *
+ * @param {string} contactId - The unique identifier of the contact.
+ */
+function setContactDeleteButton(contactId) {
+    document.getElementById("deleteContactBtn")?.setAttribute("data-contact-id", contactId);
+}
+  
+/**
+ * Adjusts the layout for responsive design.
+ * If the viewport width is less than or equal to 1275px, it hides the container contact list and contact header.
+ */
+function handleResponsiveLayout() {
+    if (window.matchMedia("(max-width: 1275px)").matches) {
+      document.getElementById("containerContact").classList.add("hidden");
+      document.querySelector(".contact-header").classList.add("hidden");
+    }
+}

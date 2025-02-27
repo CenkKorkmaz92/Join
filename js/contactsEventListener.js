@@ -174,3 +174,38 @@ document.getElementById("editContactBtn").addEventListener("click", function () 
 document.querySelector(".add-new-contact-responsive").addEventListener("click", function () {
   openPopupGeneric("popup", ".popup-form");
 });
+
+
+document.querySelector(".back-to-contact-list-button").addEventListener("click", function () {
+  // Detailansicht ausblenden
+  document.querySelector(".contact-detail").classList.add("hidden");
+  // Kontaktliste wieder einblenden (hier wird angenommen, dass sie im Element mit der ID "containerContact" liegt)
+  document.getElementById("containerContact").classList.remove("hidden");
+});
+
+/**
+ * Adds an event listener to the window object that triggers the handleResize function
+ * whenever the window is resized. This ensures that the layout adapts to changes in
+ * window size.
+ */
+window.addEventListener('resize', handleResize);
+
+/**
+ * Handles the window resize event to toggle the visibility of the contact list and header
+ * based on the current window width. If the width exceeds 1275 pixels, the contact list
+ * and header are shown; otherwise, they are hidden.
+ */
+function handleResize() {
+  if (window.innerWidth > 1275) {
+    // Show the contact list and header when window width is greater than 1275px
+    document.getElementById('containerContact').classList.remove('hidden');
+    document.querySelector('.contact-header').classList.remove('hidden');
+  } else if (currentContact) {
+    // Hide the contact list and header when window width is 1275px or less
+    document.getElementById('containerContact').classList.add('hidden');
+    document.querySelector('.contact-header').classList.add('hidden');
+  }
+}
+
+// Initial call to set the correct visibility based on the current window size
+handleResize();
