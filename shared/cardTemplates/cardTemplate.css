@@ -40,6 +40,12 @@ body {
 
 /* The modal content (your card) */
 .modal-content {
+  overflow-y: auto;
+  /* keep scrolling functional */
+  -ms-overflow-style: none;
+  /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
   width: 525px;
   border-radius: 30px;
   gap: 24px;
@@ -49,6 +55,12 @@ body {
   /* prevent the card from overflowing the screen */
   overflow-y: auto;
   /* add scroll if content is too tall */
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 0;
+  display: none;
+  /* Chrome/Safari/Edge */
 }
 
 /* The rest of your card styles */
@@ -143,7 +155,7 @@ body {
 
 .assignees-list {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 4px;
   padding: 0;
   margin: 0;
@@ -162,6 +174,8 @@ body {
 .subtasks {
   gap: 8px;
   margin-bottom: 24px;
+  max-height: 146px;
+  overflow: auto;
 }
 
 .subtasks h3 {

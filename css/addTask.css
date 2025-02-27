@@ -400,7 +400,7 @@ select {
 
 .subtask-list-wrapper {
     overflow-y: auto;
-    height: 146px;
+    max-height: 146px;
 }
 
 .subtask-edit-input {

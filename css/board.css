@@ -215,12 +215,6 @@
 /* The modal container and backdrop might already be styled in your existing CSS.
    We'll focus on #viewModeContainer and #editFormContainer. */
 
-/* View Mode Container */
-#viewModeContainer {
-  padding: 24px;
-  /* Add spacing inside the card */
-}
-
 /* Headline, description, etc. can reuse your existing card styling. */
 
 /* ----------------------------------
@@ -342,7 +336,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  margin-bottom: 16px;
+  padding-top: 8px;
 }
 
 #editSubtasksList li {
@@ -427,10 +421,6 @@
 .edit-subtask-container .subtask-buttons {
   display: flex;
   gap: 4px;
-}
-
-.edit-subtask-container .subtask-list-wrapper {
-  margin-top: 8px;
 }
 
 /* Each subtask line item in edit mode */
