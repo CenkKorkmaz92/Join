@@ -95,6 +95,11 @@
   height: 32px;
 }
 
+.chips {
+  height: 100%;
+  overflow: auto;
+}
+
 .card-body.dragging {
   transform: rotate(5deg) scale(1.02);
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
@@ -107,6 +112,7 @@
   border-radius: 8px;
   position: relative;
 }
+
 .progressbar-fill {
   height: 100%;
   width: 0%;
