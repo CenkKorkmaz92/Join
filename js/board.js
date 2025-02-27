@@ -36,8 +36,13 @@ function loadAllContacts() {
       }
 
       // Convert the Firebase object into an array
+      // and ensure each contact has a "firebaseId"
       allContacts = Object.entries(data).map(([id, contact]) => ({
-        ...contact
+        firebaseId: id,
+        fullName: contact.fullName,
+        color: contact.color,
+        initials: contact.initials,
+        // Add any other fields if needed (like contact.email)
       }));
       console.log('Contacts loaded:', allContacts);
     })
@@ -629,7 +634,8 @@ function renderEditContactsDropdown() {
   dropdownList.innerHTML = '';
 
   allContacts.forEach((contact) => {
-    const contactId = `editContactCheckbox-${contact.email}`;
+    // Use contact.firebaseId to uniquely identify
+    const contactId = `editContactCheckbox-${contact.firebaseId}`;
 
     // Create a label+checkbox
     const label = document.createElement('label');
@@ -638,7 +644,12 @@ function renderEditContactsDropdown() {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.id = contactId;
-    checkbox.checked = editAssignedTo.some((c) => c.email === contact.email);
+
+    // Compare firebaseId to see if user is assigned
+    checkbox.checked = editAssignedTo.some(
+      (c) => c.firebaseId === contact.firebaseId
+    );
+
     checkbox.addEventListener('change', () => {
       toggleEditContact(contact);
     });
@@ -650,14 +661,18 @@ function renderEditContactsDropdown() {
 }
 
 function toggleEditContact(contact) {
-  const index = editAssignedTo.findIndex((c) => c.email === contact.email);
+  // Compare by firebaseId
+  const index = editAssignedTo.findIndex(
+    (c) => c.firebaseId === contact.firebaseId
+  );
   if (index === -1) {
     // Add
     editAssignedTo.push({
+      firebaseId: contact.firebaseId,
       fullName: contact.fullName,
-      email: contact.email,
-      color: contact.color,
       initials: contact.initials,
+      color: contact.color,
+      // email: contact.email (if you use it)
     });
   } else {
     // Remove

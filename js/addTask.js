@@ -14,58 +14,35 @@ document.addEventListener("DOMContentLoaded", () => {
   // --------------------------------------------------------------------------
   // DOM References
   // --------------------------------------------------------------------------
-  /** @type {HTMLInputElement} */
-  const titleInput = document.querySelector(
-    'input[placeholder="Enter a title"]'
-  );
-  /** @type {HTMLInputElement} */
+  const titleInput = document.querySelector('input[placeholder="Enter a title"]');
   const dueDateInput = document.querySelector('input[type="date"]');
-  /** @type {HTMLSelectElement} */
   const categorySelect = document.getElementById("category");
-  /** @type {HTMLButtonElement} */
   const createTaskBtn = document.querySelector(".create-btn");
 
   // Subtask references
-  /** @type {HTMLInputElement} */
   const inputField = document.getElementById("subtask-input");
-  /** @type {HTMLButtonElement} */
   const addButton = document.getElementById("add-subtask-btn");
-  /** @type {HTMLButtonElement} */
   const clearButton = document.getElementById("clear-subtask");
-  /** @type {HTMLButtonElement} */
   const confirmButton = document.getElementById("confirm-subtask");
-  /** @type {HTMLElement} */
   const vector = document.getElementById("vector");
-  /** @type {HTMLUListElement} */
   const subtaskList = document.getElementById("subtask-list");
-  /** @type {HTMLButtonElement} */
   const bottomClearButton = document.getElementById("clear-all-fields-btn");
 
-  // --------------------------------------------------------------------------
-  // MULTI-SELECT CONTACTS: DOM Elements
-  // --------------------------------------------------------------------------
-  /** @type {HTMLDivElement} */
+  // Multi-select contacts
   const dropdownToggle = document.getElementById("dropdownToggle");
-  /** @type {HTMLSpanElement} */
   const dropdownArrow = document.getElementById("dropdownArrow");
-  /** @type {HTMLDivElement} */
   const contactsDropdownList = document.getElementById("contactsDropdownList");
-  /** @type {HTMLDivElement} */
   const selectedContactsContainer = document.getElementById(
     "selectedContactsContainer"
   );
-  /** @type {HTMLSpanElement} */
   const dropdownPlaceholder = document.getElementById("dropdownPlaceholder");
 
-  // Keep track of all contacts fetched from Firebase
-  let allContacts = [];
-  // Keep track of which contacts are selected
-  let selectedContacts = [];
-  // Track whether the dropdown is open or closed
+  let allContacts = [];      // All contacts from Firebase
+  let selectedContacts = []; // Which contacts are selected
   let dropdownOpen = false;
 
   // --------------------------------------------------------------------------
-  // Fetch Contacts from Firebase (with fullName, initials, color, etc.)
+  // Fetch Contacts
   // --------------------------------------------------------------------------
   fetch(FIREBASE_CONTACTS_URL)
     .then((response) => response.json())
@@ -76,15 +53,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Convert the object to an array, preserving push keys
+      // Convert object to array
       allContacts = Object.entries(data).map(([pushKey, contactObj]) => ({
         firebaseId: pushKey,
-        ...contactObj,
+        fullName: contactObj.fullName,
+        color: contactObj.color,
+        initials: contactObj.initials,
+        // If you have email, add it here:
+        // email: contactObj.email
       }));
 
       console.log("allContacts array:", allContacts);
-
-      // Render the dropdown list
       renderContactsDropdown(allContacts);
     })
     .catch((error) => {
@@ -95,12 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
    * Renders the list of contacts (with checkboxes) inside the dropdown.
    */
   function renderContactsDropdown(contactsArray) {
-    console.log("Rendering dropdown with:", contactsArray);
     contactsDropdownList.innerHTML = ""; // Clear old items
 
     contactsArray.forEach((contact) => {
-      console.log("Rendering contact:", contact);
-
       // Build the container
       const item = document.createElement("div");
       item.className = "contact-list-item";
@@ -114,13 +90,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // Label
       const label = document.createElement("span");
       label.className = "contact-label";
-      label.textContent = contact.fullName; // Must match your field name in Firebase
+      label.textContent = contact.fullName;
 
       // Checkbox
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
 
-      // When checkbox changes, update selectedContacts
       checkbox.addEventListener("change", () => {
         if (checkbox.checked) {
           selectedContacts.push(contact);
@@ -156,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
       selectedContactsContainer.appendChild(chip);
     });
 
-    // If you want to show how many are selected, update the placeholder text:
     if (selectedContacts.length > 0) {
       dropdownPlaceholder.textContent = `${selectedContacts.length} contact(s) selected`;
     } else {
@@ -165,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --------------------------------------------------------------------------
-  // Toggle the dropdown open/closed
+  // Toggle dropdown open/close
   // --------------------------------------------------------------------------
   dropdownToggle.addEventListener("click", () => {
     dropdownOpen = !dropdownOpen;
@@ -236,9 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Edit subtask event
     editIcon.addEventListener("click", () => handleInlineEdit(subtaskSpan));
-    subtaskSpan.addEventListener("dblclick", () =>
-      handleInlineEdit(subtaskSpan)
-    );
+    subtaskSpan.addEventListener("dblclick", () => handleInlineEdit(subtaskSpan));
 
     // Delete subtask event
     deleteIcon.addEventListener("click", () => listItem.remove());
@@ -255,8 +227,12 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="input-subtask-wrapper editing-subtask">
         <input type="text" class="subtask-edit-input" value="${originalText}" />
         <div class="subtask-buttons">
-          <button class="cancel-edit"><img src="./assets/img/icons/addTask/delete_icon.svg" alt="Cancel Edit"></button>
-          <button class="confirm-edit"><img src="./assets/img/icons/addTask/check_Subtasks_icon.svg" alt="Confirm Edit"></button>
+          <button class="cancel-edit">
+            <img src="./assets/img/icons/addTask/delete_icon.svg" alt="Cancel Edit">
+          </button>
+          <button class="confirm-edit">
+            <img src="./assets/img/icons/addTask/check_Subtasks_icon.svg" alt="Confirm Edit">
+          </button>
         </div>
       </div>
     `;
@@ -305,9 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --------------------------------------------------------------------------
   function clearAllFields() {
     titleInput.value = "";
-    document.querySelector(
-      'textarea[placeholder="Enter a Description"]'
-    ).value = "";
+    document.querySelector('textarea[placeholder="Enter a Description"]').value = "";
     dueDateInput.value = "";
     categorySelect.value = "";
     subtaskList.innerHTML = "";
@@ -321,9 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document
       .querySelectorAll(".prio-option")
       .forEach((opt) => opt.classList.remove("selected"));
-    const mediumPrio = document.querySelector(
-      '.prio-option[data-prio="medium"]'
-    );
+    const mediumPrio = document.querySelector('.prio-option[data-prio="medium"]');
     if (mediumPrio) mediumPrio.classList.add("selected");
 
     // Clear selected contacts
@@ -402,15 +374,17 @@ document.addEventListener("DOMContentLoaded", () => {
       subtasks.push(el.textContent.replace(/^•\s*/, "").trim());
     });
 
-    // selectedContacts is an array of contact objects; include their color now!
+    // selectedContacts is an array of contact objects; 
+    // store the same firebaseId so that board.js can match them
     const assignedTo = selectedContacts.map((c) => ({
       firebaseId: c.firebaseId,
       fullName: c.fullName,
       initials: c.initials,
-      color: c.color, // <- Make sure we store the color
+      color: c.color,
+      // email: c.email, // only if needed
     }));
 
-    // Create a task object to send to Firebase
+    // Create a task object
     const newTask = {
       title,
       description,
@@ -418,11 +392,12 @@ document.addEventListener("DOMContentLoaded", () => {
       dueDate,
       priority: selectedPrio,
       category,
-      subtasks, // plain strings; board.js will convert to {text, done} if needed
+      subtasks, // plain strings; board.js will convert if needed
       createdAt: new Date().toISOString(),
+      // status defaults to "toDo" or similar if you want
     };
 
-    // Push the task to Firebase using a POST request
+    // Push to Firebase
     fetch(FIREBASE_TASKS_URL, {
       method: "POST",
       headers: {
@@ -439,15 +414,16 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         console.log("Task added successfully:", data);
 
-        // Show the success popup
+        // Show success popup
         const popupSuccess = document.getElementById("popupSuccess");
         popupSuccess.style.display = "flex";
         setTimeout(() => {
           popupSuccess.style.display = "none";
+          // Optionally navigate back to board
           window.location.href = "board.html";
         }, 1000);
 
-        // Optionally clear the form fields after success
+        // Clear the form
         clearAllFields();
       })
       .catch((error) => {

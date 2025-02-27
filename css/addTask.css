@@ -83,8 +83,9 @@
 .drop-down-assignt-to-container {
     display: flex;
     flex-direction: column;
-    height: 260px;
+    height: 290px;
     gap: 8px;
+    filter: blur(0);
 }
 
 .drop-down-assignt-to-container span {
@@ -96,9 +97,10 @@
 .assigned-container {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
     position: relative;
+    flex-direction: column-reverse;
 }
 
 .selected-contacts-container {
@@ -121,6 +123,7 @@
 }
 
 .dropdown-toggle {
+    width: 414px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -145,7 +148,10 @@
 
 .dropdown-list {
     z-index: 9999;
-    overflow-y: auto;
+    max-height: 240px;
+    overflow: auto;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
     background-color: #fff;
     border: 1px solid #d1d1d1;
     border-radius: 10px;

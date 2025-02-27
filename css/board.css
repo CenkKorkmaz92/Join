@@ -252,6 +252,20 @@
   border-radius: 10px;
 }
 
+.dropdown-toggle-edit {
+  width: 499px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 16px;
+}
+
 #editFormContainer input[type="text"],
 #editFormContainer textarea,
 #editFormContainer input[type="date"] {
@@ -435,6 +449,7 @@
   flex-direction: column;
   gap: 8px;
   padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .edit-subtask-item .subtask-text {

@@ -41,7 +41,6 @@ body {
 /* The modal content (your card) */
 .modal-content {
   width: 525px;
-  padding: 48px;
   border-radius: 30px;
   gap: 24px;
   box-shadow: 0px 0px 4px 0px #00000029;
