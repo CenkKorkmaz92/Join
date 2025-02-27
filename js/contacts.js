@@ -122,23 +122,42 @@ function renderContacts() {
     });
 }
 
-/**
- * Displays the detailed information of a selected contact.
- * @param {Object} contact - The contact whose details are to be displayed.
- */
+
+
+
+
 function showContactDetails(contact) {
   currentContact = contact;
-  document.getElementById("detailedContactInfo")?.classList.remove("hidden");
+  // Gesamten Container anzeigen
+  document.getElementById("contactDetail").style.display = "flex";
+  // Detaillierten Info-Bereich anzeigen
+  document.getElementById("detailedContactInfo").classList.remove("hidden");
+  
   updateTextContent("contactName", contact.fullName);
+  
   const contactEmailElement = document.getElementById("contactEmail");
   contactEmailElement.innerHTML = "";
   contactEmailElement.appendChild(createLinkElement(`mailto:${contact.email}`, contact.email, "email-link"));
+  
   const contactPhoneElement = document.getElementById("contactPhone");
   contactPhoneElement.innerHTML = "";
   contactPhoneElement.appendChild(createLinkElement(`tel:${contact.phone}`, contact.phone, "phone-link"));
+  
   updateContactCircle(contact.initials, contact.color);
   document.getElementById("deleteContactBtn")?.setAttribute("data-contact-id", contact.id);
+
+  if (window.matchMedia("(max-width: 1275px)").matches) {
+    document.getElementById("containerContact").classList.add("hidden");
+    // Zusätzlich den Header ausblenden:
+    document.querySelector(".contact-header").classList.add("hidden");
+  }
 }
+
+
+
+
+
+
 
 /**
  * Resets the detailed contact view by clearing all displayed information.

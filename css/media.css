@@ -6,7 +6,7 @@
     }
 
     /* contacts */
-    .contact-header{
+    .contact-header {
         display: none;
     }
 
@@ -40,6 +40,10 @@
     .add-new-contact-responsive:hover{
         cursor: pointer;
         box-shadow: 2.5px 2.5px 2.5px rgba(0,0,0,0.4);
+    }
+
+    .contact-detail{
+        left: 216px;
     }
 
 }

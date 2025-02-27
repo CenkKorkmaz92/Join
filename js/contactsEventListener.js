@@ -169,3 +169,8 @@ document.getElementById("addContactBtn").addEventListener("click", function () {
 document.getElementById("editContactBtn").addEventListener("click", function () {
   openPopupGeneric("editPopup", ".popup-content");
 });
+
+
+document.querySelector(".add-new-contact-responsive").addEventListener("click", function () {
+  openPopupGeneric("popup", ".popup-form");
+});
