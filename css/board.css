@@ -173,6 +173,10 @@
   gap: 8px;
 }
 
+.prio-selection-container {
+  padding-top: 8px;
+}
+
 /* The form container (centered) */
 .add-task-modal-content {
   position: absolute;
@@ -430,6 +434,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding-top: 8px;
 }
 
 .edit-subtask-item .subtask-text {
