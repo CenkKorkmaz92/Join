@@ -95,10 +95,58 @@
   height: 32px;
 }
 
+/* Container for chips */
 .chips {
-  height: 100%;
-  overflow: auto;
+  display: flex;
+  align-items: center;
+  /* If you want to ensure that the overlapped parts are not cut off, 
+     use overflow: visible. */
+  overflow: hidden;
+  /* Optional: if the row might get long, you could allow wrapping: 
+  flex-wrap: wrap; */
 }
+
+/* Individual chip style */
+.chip {
+  /* Set a fixed width/height so they’re perfect circles */
+  width: 32px;
+  height: 32px;
+
+  /* Circle shape */
+  border-radius: 50%;
+
+  /* Center text (initials) inside */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* White text color for contrast, or adjust as needed */
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+
+  /* Overlap effect: negative margin on the left */
+  margin-left: -10px;
+
+  /* Optional: a white border so each chip is outlined when overlapped */
+  border: 2px solid #fff;
+
+  /* Adjust as you see fit */
+  box-sizing: border-box;
+}
+
+.contact-chip {
+  margin-left: -15px;
+  border: solid 1px white;
+  /* tweak how much overlap you want */
+}
+
+.contact-chip:first-child {
+  margin-left: 0;
+  /* so the very first chip doesn't shift left */
+}
+
+
 
 .card-body.dragging {
   transform: rotate(5deg) scale(1.02);
