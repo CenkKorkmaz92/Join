@@ -95,7 +95,7 @@
   height: 32px;
 }
 
-/* Container for chips */
+Container for chips
 .chips {
   display: flex;
   align-items: center;
@@ -145,8 +145,6 @@
   margin-left: 0;
   /* so the very first chip doesn't shift left */
 }
-
-
 
 .card-body.dragging {
   transform: rotate(5deg) scale(1.02);
