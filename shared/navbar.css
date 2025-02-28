@@ -135,15 +135,30 @@ body.legal-page .login {
     }
 
     .navbar-item {
-        width: auto;
-        height: 100%;
-        padding: 0 15px;
+        width: 76px !important;
+        height: 70px !important;
+        padding: 0 !important;
         justify-content: center;
-        flex-grow: 1;
         display: flex !important;
         align-items: center;
         flex-direction: column;
         color: white;
+    }
+
+    .navbar-item.active {
+        background-color: #091931;
+        border-radius: 8px !important;
+        width: 76px !important;
+        height: 70px !important;
+        transform: none;
+    }
+
+    .navbar-item:hover {
+        background-color: #091931;
+        border-radius: 8px !important;
+        width: 76px !important;
+        height: 70px !important;
+        transform: none;
     }
 
     .navbar-logo {
@@ -162,5 +177,9 @@ body.legal-page .login {
 
     .navbar-footer {
         display: none;
+    }
+
+    .login {
+        display: none !important;
     }
 }

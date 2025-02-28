@@ -1,7 +1,7 @@
 @media (max-width: 1275px) {
 
     /* summary */
-    .greeting-container{
+    .greeting-container {
         display: none;
     }
 
@@ -10,20 +10,20 @@
         display: none;
     }
 
-    .contact-list-hidden{
+    .contact-list-hidden {
         display: none;
     }
 
-    .container{
+    .container {
         width: 100%;
         align-items: end;
-    } 
+    }
 
-    #contactList{
+    #contactList {
         margin-top: 0px !important;
     }
 
-    .add-new-contact-responsive{
+    .add-new-contact-responsive {
         display: flex !important;
         width: 56px;
         height: 56px;
@@ -37,16 +37,16 @@
         border: none;
     }
 
-    .add-new-contact-responsive:hover{
+    .add-new-contact-responsive:hover {
         cursor: pointer;
-        box-shadow: 2.5px 2.5px 2.5px rgba(0,0,0,0.4);
+        box-shadow: 2.5px 2.5px 2.5px rgba(0, 0, 0, 0.4);
     }
 
-    .contact-detail{
+    .contact-detail {
         left: 216px;
     }
 
-    .back-to-contact-list-button{
+    .back-to-contact-list-button {
         display: block !important;
     }
 
@@ -55,18 +55,18 @@
 @media (max-width: 950px) {
 
     /* summary */
-    .headline-container{
+    .headline-container {
         flex-direction: column;
         align-items: start;
         gap: 0;
     }
 
-    .blue-vector{
+    .blue-vector {
         display: none;
         transform: rotate(90deg);
     }
 
-    .blue-vector-responsive{
+    .blue-vector-responsive {
         display: block !important;
         border: solid 1.5px #29ABE2;
         width: 90px;
@@ -79,11 +79,11 @@
 @media (max-width: 920px) {
 
     /* summary */
-    .headline-container{
+    .headline-container {
         padding-left: 26px;
     }
 
-    .task-summary{
+    .task-summary {
         padding-left: 26px;
     }
 
@@ -93,66 +93,66 @@
 @media (max-width: 850px) {
 
     /* summary */
-    .layout{
+    .layout {
         justify-content: end;
     }
 
-    .content{
+    .content {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
-    .headline-container{
+    .headline-container {
         padding-left: 0;
         padding-top: 48px;
         margin-left: -210px;
     }
 
-    .task-summary{
+    .task-summary {
         width: 500px;
         height: 500px;
         padding-left: 0;
     }
 
-    .to-do-task{
+    .to-do-task {
         width: 500px;
         height: 128px;
     }
 
-    .to-do{
+    .to-do {
         width: 224px;
         height: 128px;
     }
 
-    .icon-summary{
+    .icon-summary {
         width: 40px;
         height: 40px;
     }
 
-    .icon-summary-status{
+    .icon-summary-status {
         width: 40px;
         height: 40px;
     }
 
-    .to-do-number{
+    .to-do-number {
         font-size: 48px;
     }
 
-    .summary-task-status{
+    .summary-task-status {
         width: 500px;
     }
 
-    .count-number-span{
+    .count-number-span {
         width: 140px;
     }
 
-    .count-number{
+    .count-number {
         font-size: 48px;
     }
 
     /* contacts */
-    .contact-body{
+    .contact-body {
         width: 100%;
     }
 }
@@ -160,46 +160,46 @@
 @media (max-width: 525px) {
 
     /* summary */
-    .headline-container{
+    .headline-container {
         margin-left: -140px;
     }
 
-    .headline-summary{
+    .headline-summary {
         font-size: 52px;
     }
 
-    .headline-text{
+    .headline-text {
         font-size: 18px;
     }
 
-    .task-summary{
+    .task-summary {
         width: 360px;
     }
 
-    .to-do-task{
+    .to-do-task {
         width: 320px;
         height: auto;
     }
 
-    .to-do{
+    .to-do {
         width: 140px;
         height: auto;
     }
 
-    .icon-summary{
+    .icon-summary {
         width: 26px;
         height: 26px;
     }
 
-    .to-do-number{
+    .to-do-number {
         font-size: 32px;
     }
 
-    span{
+    span {
         font-size: 14px !important;
     }
 
-    .summary-task-status{
+    .summary-task-status {
         width: 320px;
         height: auto;
         gap: 15px;
@@ -207,31 +207,31 @@
         margin-bottom: 10px;
     }
 
-    .icon-summary-status{
+    .icon-summary-status {
         width: 26px;
         height: 26px;
     }
 
-    .icon-and-span-task-status{
+    .icon-and-span-task-status {
         margin-top: 10px;
         margin-bottom: 10px;
     }
 
-    .gray-vector{
+    .gray-vector {
         height: 65px;
     }
 
-    .summary-task-count-containers{
+    .summary-task-count-containers {
         width: 320px;
     }
 
-    .count-number-span{
+    .count-number-span {
         width: 90px;
         height: auto;
         gap: 0;
     }
 
-    .count-number{
+    .count-number {
         font-size: 32px;
     }
 
@@ -241,38 +241,38 @@
 @media (max-width: 380px) {
 
     /* summary */
-    .task-summary{
+    .task-summary {
         width: 290px;
     }
 
-    .headline-container{
+    .headline-container {
         margin-left: -60px !important;
     }
 
-    .to-do-task{
+    .to-do-task {
         width: 290px;
     }
 
-    .summary-task-status{
+    .summary-task-status {
         width: 290px;
         gap: 5;
     }
 
-    .summary-task-count-containers{
+    .summary-task-count-containers {
         width: 290px;
     }
 
     /* contacts */
-    .contact{
+    .contact {
         width: 300px !important;
         gap: 10px !important;
     }
 
-    .contact-name{
+    .contact-name {
         font-size: 14px;
     }
 
-    .contact-email{
+    .contact-email {
         font-size: 12px;
     }
 }
