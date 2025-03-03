@@ -1,105 +1,67 @@
-/*
- * Global styles for smooth scrolling and hiding scrollbars
- */
 body,
 html {
   max-width: 1440px;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    /* Firefox */
-    -ms-overflow-style: none;
-    /* Internet Explorer 10+ */
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/*
-  * Padding utility class for left and right spacing
-  */
 .pl {
-    padding-left: 96px;
-    padding-right: 96px;
+  padding-left: 96px;
+  padding-right: 96px;
 }
 
-/*
-  * Font color utility class
-  */
 .font-color {
-    color: #29ABE2;
+  color: #29ABE2;
 }
 
-/*
-  * Headline text styling
-  */
-  .headline {
-    margin: 0;
-    padding-top: 110px;
-    font-weight: 700;
-    font-size: 61px;
-    line-height: 73.2px;
-  }
+.headline {
+  margin: 0;
+  padding-top: 110px;
+  font-weight: 700;
+  font-size: 61px;
+  line-height: 73.2px;
+}
 
-/*
-  * Subtitle text styling
-  */
 .subtitle-p {
-    font-weight: 700;
-    font-size: 27px;
-    line-height: 32.4px;
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 32.4px;
 }
 
-/*
-  * Text formatting container
-  * Uses flexbox for column alignment
-  */
 .text-format {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-/*
-  * Anchor tag styles
-  */
 a {
-    text-decoration: none;
-    color: #29ABE2;
+  text-decoration: none;
+  color: #29ABE2;
 }
 
 a:hover {
-    text-decoration: underline;
-    cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-/*
-  * Headline image container
-  * Aligns images properly with flexbox and spacing
-  */
 .headline-img-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-right: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 96px;
 }
 
-/*
-  * Hover effect for arrows
-  * Slight scale-up effect and background change on hover
-  */
 .arrow:hover {
-    transform: scale(1.05);
-    background-color: rgb(233, 233, 233);
-    border-radius: 50%;
-    padding: 1px;
-    cursor: pointer;
+  transform: scale(1.05);
+  background-color: rgb(233, 233, 233);
+  border-radius: 50%;
+  padding: 1px;
+  cursor: pointer;
 }
 
-/*
-  * Content container
-  * Allows smooth scrolling and hides scrollbars
-  */
 .content {
-    overflow: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    /* Firefox */
-    -ms-overflow-style: none;
-    /* Internet Explorer 10+ */
+  overflow: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }

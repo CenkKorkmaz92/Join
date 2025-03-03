@@ -143,12 +143,10 @@
   gap: 12px;
 }
 
-/* Hide the Add Task modal by default */
 .add-task-modal.hidden {
   display: none;
 }
 
-/* Fullscreen container for Add Task modal */
 .add-task-modal {
   position: fixed;
   top: 0;
@@ -158,7 +156,6 @@
   z-index: 999;
 }
 
-/* Semi-transparent overlay */
 .add-task-overlay {
   position: absolute;
   top: 0;
@@ -177,7 +174,6 @@
   padding-top: 8px;
 }
 
-/* The form container (centered) */
 .add-task-modal-content {
   position: absolute;
   top: 50%;
@@ -197,48 +193,26 @@
   align-items: center;
   justify-content: center;
   width: 32px;
-  /* or any size you like */
   height: 32px;
   border-radius: 50%;
-  /* makes it a circle */
   color: #fff;
-  /* text color */
   font-weight: 700;
   margin-right: 4px;
-  /* spacing between chips */
 }
 
-/* ----------------------------------
-   Big Card (Modal) Shared Styles
----------------------------------- */
-
-/* The modal container and backdrop might already be styled in your existing CSS.
-   We'll focus on #viewModeContainer and #editFormContainer. */
-
-/* Headline, description, etc. can reuse your existing card styling. */
-
-/* ----------------------------------
-   Edit Mode Container
----------------------------------- */
 #editFormContainer {
-  /* Hidden by default, shown via JS */
   display: none;
-  /* Provide some spacing around the form */
   gap: 16px;
-  /* A simple vertical layout */
   display: flex;
   flex-direction: column;
   max-height: 80vh;
 }
 
-/* Label + Input Layout */
 #editFormContainer label {
   font-weight: 600;
   padding: 4px;
   display: block;
-  /* Force each label on its own line */
   color: #2a3647;
-  /* Example color */
 }
 
 .dropdown-list label:hover {
@@ -248,16 +222,16 @@
 
 .dropdown-toggle-edit {
   width: 499px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 4px;
-    cursor: pointer;
-    background-color: #fff;
-    border: 1px solid #d1d1d1;
-    border-radius: 10px;
-    padding: 8px 12px;
-    font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 16px;
 }
 
 #editFormContainer input[type="text"],
@@ -278,15 +252,11 @@
   border-color: #29abe2;
 }
 
-/* Textarea styling to match input */
 #editFormContainer textarea {
   resize: vertical;
-  /* allow vertical resize only */
   min-height: 80px;
-  /* a bit bigger by default */
 }
 
-/* Priority Container */
 .priority-container {
   display: flex;
   gap: 12px;
@@ -314,7 +284,6 @@
   border-color: #29abe2;
 }
 
-/* Assigned to (simple example) */
 #editAssignedSelect {
   width: 100%;
   min-height: 40px;
@@ -331,7 +300,6 @@
   border-color: #29abe2;
 }
 
-/* Subtasks list in edit form */
 #editSubtasksList {
   list-style: none;
   padding: 0;
@@ -346,11 +314,6 @@
   margin-bottom: 8px;
 }
 
-/* If you have an "Add subtask" button, style it similarly. */
-
-/* ----------------------------------
-   Edit Form Footer
----------------------------------- */
 .edit-form-footer {
   display: flex;
   align-items: center;
@@ -358,7 +321,6 @@
   margin-top: 16px;
 }
 
-/* Dismiss and Save Buttons (inside the edit form) */
 .edit-form-footer #dismissEditBtn,
 .edit-form-footer #saveEditBtn {
   padding: 10px 24px;
@@ -389,10 +351,8 @@
   opacity: 0.9;
 }
 
-/* Assigned to (in edit mode) */
 #editAssignedSelect {
   width: 507px;
-  /* match your input widths */
   min-height: 40px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -407,7 +367,6 @@
   border-color: #29abe2;
 }
 
-/* Subtask editing container (similar to Add Task) */
 .edit-subtask-container {
   margin-bottom: 16px;
 }
@@ -423,7 +382,6 @@
   gap: 4px;
 }
 
-/* Each subtask line item in edit mode */
 .edit-subtask-item {
   display: flex;
   align-items: center;

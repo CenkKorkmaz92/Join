@@ -20,9 +20,6 @@ body {
     overflow: auto;
 }
 
-/**
- * Sign-Up Screen
- */
 .sign-up-main {
     height: 100vh;
     display: flex;
@@ -31,9 +28,6 @@ body {
     justify-content: space-between;
 }
 
-/**
- * Navbar
- */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -58,10 +52,6 @@ body {
     visibility: hidden;
 }
 
-
-/**
- * Sign-Up Container
- */
 .sign-up-container {
     display: flex;
     flex-direction: column;
@@ -115,9 +105,6 @@ body {
     transform: translateX(-50%);
 }
 
-/**
- * Input Fields with Staggered Animation
- */
 .input-container:nth-of-type(1) {
     animation: slideIn 0.8s ease-out forwards;
     animation-delay: 0.6s;
@@ -176,27 +163,18 @@ body {
     height: 20px;
 }
 
-/**
- * Checkbox Animation (after inputs)
- */
 .form-check {
     animation: slideIn 0.8s ease-out forwards;
     animation-delay: 1s;
     opacity: 0;
 }
 
-/**
- * Sign-Up Button Animation (after checkbox)
- */
 .sign-in-btn-container {
     animation: slideIn 0.8s ease-out forwards;
     animation-delay: 1.1s;
     opacity: 0;
 }
 
-/**
- * Legal Section (appears last)
- */
 .legal-btn-container {
     padding-bottom: 30px;
     animation: slideIn 0.8s ease-out forwards;
@@ -204,9 +182,6 @@ body {
     opacity: 0;
 }
 
-/**
- * Sign-Up Button
- */
 .sign-in-btn {
     width: 110px;
     height: 48px;
@@ -226,12 +201,10 @@ body {
 
 .form-check-label {
     pointer-events: none;
-    /* Prevents clicking the label from toggling the checkbox */
 }
 
 .privacy-policy {
     pointer-events: auto;
-    /* Allows clicking on the privacy policy link */
     color: #29ABE2;
     cursor: pointer;
 }
@@ -240,10 +213,6 @@ body {
     scale: 1.1;
 }
 
-
-/**
- * Legal Section
- */
 .legal-btn {
     width: 121px;
     height: 35px;
@@ -271,7 +240,6 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* halbtransparenter Hintergrund */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -293,5 +261,4 @@ body {
     border-color: #aaaaaa;
     color: #666666;
     cursor: not-allowed;
-  }
-  
+}

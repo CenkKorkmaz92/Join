@@ -34,9 +34,6 @@ body {
     overflow: auto;
 }
 
-/**
- * Loading Screen
- */
 .loading-screen {
     position: fixed;
     top: 0;
@@ -66,9 +63,6 @@ body {
     transform: translate(-650px, -250px) scale(0.3);
 }
 
-/**
- * Navbar
- */
 .main-logo {
     opacity: 1;
     transition: opacity 0.5s ease-in;
@@ -107,9 +101,6 @@ body {
     animation-delay: 3s;
 }
 
-/**
- * Sign-Up Button
- */
 .sign-up-btn {
     display: flex;
     align-items: center;
@@ -138,9 +129,6 @@ body {
     border-color: #29ABE2;
 }
 
-/**
- * Login Container
- */
 .login-main .login-container {
     display: flex;
     flex-direction: column;
@@ -178,9 +166,6 @@ body {
     transform: translateX(-50%);
 }
 
-/**
- * Input Fields
- */
 .login-main .input-container {
     display: flex;
     align-items: center;
@@ -217,9 +202,6 @@ body {
     height: 20px;
 }
 
-/**
- * Buttons
- */
 .login-main .submit-buttons-login {
     display: flex;
     gap: 35px;
@@ -262,9 +244,6 @@ body {
     color: #29ABE2;
 }
 
-/**
- * Legal Section (Matches Sign-Up Page)
- */
 .legal-btn-container {
     padding-bottom: 30px;
     animation: slideIn 0.8s ease-out forwards;
@@ -274,9 +253,6 @@ body {
     gap: 10px;
 }
 
-/**
- * Legal Buttons (Matches Sign-Up Page)
- */
 .legal-btn {
     width: 121px;
     height: 35px;
