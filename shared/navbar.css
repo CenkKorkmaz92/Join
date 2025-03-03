@@ -1,9 +1,3 @@
-/**
- * Sidebar (Navbar) styles for the Kanban project.
- * Ensures proper positioning and alignment of the sidebar and menu items.
- */
-
-/* === NAVBAR === */
 .navbar {
     grid-row: 1;
     grid-column: 1;
@@ -17,7 +11,6 @@
     max-width: 232px;
 }
 
-/* === NAVBAR HEADER === */
 .navbar-header {
     display: flex;
     flex-direction: column;
@@ -25,13 +18,11 @@
     gap: 100px;
 }
 
-/* === NAVBAR LOGO === */
 .navbar-logo {
     width: 100px;
     height: 122px;
 }
 
-/* === NAVBAR MENU === */
 .navbar-menu {
     display: flex;
     flex-direction: column;
@@ -44,7 +35,6 @@
     display: none !important;
 }
 
-/* === NAVBAR ITEMS === */
 .navbar-item {
     display: flex;
     align-items: center;
@@ -71,7 +61,6 @@
     background-color: #091931;
 }
 
-/* === NAVBAR FOOTER === */
 .navbar-footer {
     display: flex;
     flex-direction: column;
@@ -80,7 +69,6 @@
     padding-top: 140px;
 }
 
-/* === FOOTER LINKS === */
 .navbar-footer-item {
     font-size: 14px;
 }
@@ -89,15 +77,12 @@
     color: #29ABE2;
 }
 
-/* In legal pages, hide all navbar menu items except the login button */
 body.legal-page .navbar-menu .navbar-item:not(.login) {
     display: none;
 }
 
-/* Ensure the login button is visible */
 body.legal-page .login {
     display: flex !important;
-    /* or block/flex as needed */
 }
 
 @media (max-width: 850px) {
