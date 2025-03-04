@@ -1,45 +1,76 @@
 /**
  * boardTaskModal.js
- * Controls the large modal (view mode) showing task details.
+ * When opening the big card, we fetch the latest task from Firebase
+ * so we always have the correct status (column) and other fields.
  */
 
 import { toggleSubtaskDone } from './boardSubtask.js';
 import { updateCardProgress } from './boardTaskCard.js';
-import { openModal, closeModal } from './boardUtils.js';
+import { patchTask } from './boardTaskService.js';
+import { openModal } from './boardUtils.js';
 
 let currentTask = null;
 
+/** Returns the in-memory task object currently displayed in the big card. */
 export function getCurrentTask() {
     return currentTask;
 }
+
+/** Sets the in-memory task object. */
 export function setCurrentTask(task) {
     currentTask = task;
 }
 
 /**
- * Opens the larger "detail view" modal with data from the given task.
+ * Fetch a single task by firebaseId from Firebase.
  */
-export function openTaskModal(task) {
-    setCurrentTask(task);
+async function fetchTaskFromFirebase(firebaseId) {
+    const url = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (!data) return null;
+        // Put firebaseId back into the object
+        return { firebaseId, ...data };
+    } catch (err) {
+        console.error('Error fetching single task:', err);
+        return null;
+    }
+}
 
+/**
+ * Opens the big card in view mode, always fetching the latest task from Firebase.
+ */
+export async function openTaskModal(task) {
+    // 1) Fetch the latest data from Firebase by this task's ID
+    const latestTask = await fetchTaskFromFirebase(task.firebaseId);
+    if (!latestTask) {
+        console.warn('Task not found in Firebase. Possibly deleted?');
+        return;
+    }
+    setCurrentTask(latestTask);
+
+    // 2) Fill the big card UI (view mode)
     document.getElementById('viewModeContainer').style.display = 'block';
     document.getElementById('editFormContainer').style.display = 'none';
 
-    setCategoryBadge(task.category);
-    setTitleDescription(task.title, task.description);
-    setDueDate(task.dueDate);
-    setPriority(task.priority);
-    setAssigned(task.assignedTo);
-    setSubtasks(task);
+    setCategoryBadge(latestTask.category);
+    setTitleDescription(latestTask.title, latestTask.description);
+    setDueDate(latestTask.dueDate);
+    setPriority(latestTask.priority);
+    setAssigned(latestTask.assignedTo);
+    setSubtasks(latestTask);
 
+    // 3) Show the modal
     openModal('viewTaskModal');
 }
+
+/** The rest is your original logic for updating the big card's fields. */
 
 function setCategoryBadge(category) {
     const catBadge = document.getElementById('taskCategoryBadge');
     catBadge.classList.remove('category-user', 'category-technical');
     catBadge.textContent = category || 'No category';
-
     if (category === 'user-story') catBadge.classList.add('category-user');
     if (category === 'technical-task') catBadge.classList.add('category-technical');
 }
@@ -88,9 +119,6 @@ function setAssigned(assigned) {
     });
 }
 
-/**
- * Build the subtask checkboxes and attach toggle listeners.
- */
 function setSubtasks(task) {
     const list = document.getElementById('taskSubtasks');
     list.innerHTML = '';

@@ -8,7 +8,7 @@ import { fixSubtaskFormat } from './boardSubtask.js';
 import {
   addTask,
   deleteTask,
-  updateTaskStatusInFirebase,
+  updateTaskStatusInFirebase
 } from './boardTaskService.js';
 import { createTaskCard } from './boardTaskCard.js';
 import { openTaskModal, getCurrentTask } from './boardTaskModal.js';
@@ -16,7 +16,7 @@ import {
   enterEditMode,
   dismissEditMode,
   saveEditMode,
-  toggleEditContactsDropdown,
+  toggleEditContactsDropdown
 } from './boardEditMode.js';
 import { addPlaceholdersToEmptyColumns } from './boardUtils.js';
 
@@ -92,8 +92,6 @@ function initDragAndDrop() {
           const oldCol = document.getElementById(originColumnId);
           if (oldCol && oldCol.querySelectorAll('.card-body').length === 0) {
             // If old column now empty, add placeholder
-            // card-body is the top-level of your card in the template
-            // Adjust if your markup differs
             addPlaceholdersToEmptyColumns();
           }
         }
@@ -146,4 +144,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Toggle the assigned-contacts dropdown in edit mode
   document.getElementById('editDropdownToggle').onclick = toggleEditContactsDropdown;
+
+  // --------------- ADDED EVENT LISTENER FOR "taskUpdated" ---------------
+  document.addEventListener('taskUpdated', () => {
+    loadTasks();
+  });
 });

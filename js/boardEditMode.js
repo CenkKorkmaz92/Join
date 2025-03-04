@@ -1,17 +1,14 @@
 /**
  * boardEditMode.js
- * Handles switching the task modal to "edit mode" and saving changes.
  */
-
 import { getCurrentTask, openTaskModal } from './boardTaskModal.js';
 import { allContacts } from './boardContacts.js';
 import { patchTask } from './boardTaskService.js';
 
-/** Local state for assigned contacts in edit mode. */
 let editAssignedTo = [];
 
 /**
- * Enter edit mode (hide view container, show edit form, populate fields).
+ * Enter edit mode.
  */
 export function enterEditMode() {
     const task = getCurrentTask();
@@ -32,7 +29,7 @@ export function enterEditMode() {
 }
 
 /**
- * Dismiss changes and revert to view mode.
+ * Dismiss edit mode, revert to view mode of the same task.
  */
 export function dismissEditMode() {
     document.getElementById('editFormContainer').style.display = 'none';
@@ -41,48 +38,59 @@ export function dismissEditMode() {
 }
 
 /**
- * Save changes to Firebase, then revert to view mode.
+ * Save changes, re-open the big card in view mode, and dispatch "taskUpdated".
  */
 export async function saveEditMode() {
     const task = getCurrentTask();
+
     task.title = document.getElementById('editTitleInput').value;
     task.description = document.getElementById('editDescriptionInput').value;
     task.dueDate =
         document.getElementById('editDueDateInput').value || 'No date set';
     task.priority = document.getElementById('editPriorityInput').value || 'medium';
     task.assignedTo = editAssignedTo;
+    // Note: We do NOT overwrite task.status; we keep whatever is in currentTask.status
 
     await patchTask(task.firebaseId, task);
 
+    // Return to view mode
     document.getElementById('editFormContainer').style.display = 'none';
     document.getElementById('viewModeContainer').style.display = 'block';
     openTaskModal(task);
+
+    // Let board.js re-fetch small cards
+    document.dispatchEvent(new CustomEvent('taskUpdated'));
 }
 
-/**
- * Highlight the correct priority button in the edit form.
- */
 export function highlightPriorityButton(priority) {
     ['prioUrgentBtn', 'prioMediumBtn', 'prioLowBtn'].forEach((id) => {
         document.getElementById(id).classList.remove('selected');
     });
-    if (priority === 'urgent') document.getElementById('prioUrgentBtn').classList.add('selected');
-    if (priority === 'medium') document.getElementById('prioMediumBtn').classList.add('selected');
-    if (priority === 'low') document.getElementById('prioLowBtn').classList.add('selected');
+    if (priority === 'urgent') {
+        document.getElementById('prioUrgentBtn').classList.add('selected');
+    } else if (priority === 'medium') {
+        document.getElementById('prioMediumBtn').classList.add('selected');
+    } else if (priority === 'low') {
+        document.getElementById('prioLowBtn').classList.add('selected');
+    }
 }
 
-// -----------------------
+// The rest is subtask & assigned-contacts logic (unchanged)...
+
+
+// ---------------------------------------------------------------------------
 // Subtask Editing
-// -----------------------
+// ---------------------------------------------------------------------------
 function initEditSubtasks(task) {
-    if (!task.subtasks) task.subtasks = [];
+    if (!task.subtasks) {
+        task.subtasks = [];
+    }
     populateEditSubtasksList(task.subtasks);
 
     document.getElementById('editAddSubtaskBtn').onclick = (e) => {
         e.preventDefault();
         addNewSubtask(task);
     };
-
     document.getElementById('editSubtaskInput').onkeypress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -94,7 +102,9 @@ function initEditSubtasks(task) {
 function populateEditSubtasksList(subtasks) {
     const list = document.getElementById('editSubtasksList');
     list.innerHTML = '';
-    subtasks.forEach((sub, i) => list.appendChild(createSubtaskListItem(sub, i, subtasks)));
+    subtasks.forEach((sub, i) => {
+        list.appendChild(createSubtaskListItem(sub, i, subtasks));
+    });
 }
 
 function createSubtaskListItem(subtask, index, subtasks) {
@@ -157,11 +167,13 @@ function addNewSubtask(task) {
     }
 }
 
-// -----------------------
+// ---------------------------------------------------------------------------
 // Assigned Contacts in Edit
-// -----------------------
+// ---------------------------------------------------------------------------
 function initAssignedContacts(task) {
-    editAssignedTo = task.assignedTo ? JSON.parse(JSON.stringify(task.assignedTo)) : [];
+    editAssignedTo = task.assignedTo
+        ? JSON.parse(JSON.stringify(task.assignedTo))
+        : [];
     renderEditContactsDropdown();
     updateEditSelectedContactsContainer();
     document.getElementById('editContactsDropdownList').classList.add('hidden');
@@ -176,7 +188,9 @@ function renderEditContactsDropdown() {
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.id = `editContactCheckbox-${contact.firebaseId}`;
-        checkbox.checked = editAssignedTo.some((c) => c.firebaseId === contact.firebaseId);
+        checkbox.checked = editAssignedTo.some(
+            (c) => c.firebaseId === contact.firebaseId
+        );
         checkbox.onchange = () => toggleEditContact(contact);
 
         label.appendChild(checkbox);
@@ -186,7 +200,9 @@ function renderEditContactsDropdown() {
 }
 
 function toggleEditContact(contact) {
-    const index = editAssignedTo.findIndex((c) => c.firebaseId === contact.firebaseId);
+    const index = editAssignedTo.findIndex(
+        (c) => c.firebaseId === contact.firebaseId
+    );
     if (index === -1) {
         editAssignedTo.push(contact);
     } else {
@@ -207,9 +223,7 @@ function updateEditSelectedContactsContainer() {
     });
 }
 
-/**
- * Toggle the dropdown list for assigned-contacts in edit mode.
- */
+/** Toggles the dropdown list for assigned-contacts in edit mode. */
 export function toggleEditContactsDropdown() {
     const dropdown = document.getElementById('editContactsDropdownList');
     dropdown.classList.toggle('hidden');
