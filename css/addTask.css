@@ -1,30 +1,30 @@
 body,
 html {
 
-  /* Gesamter Scrollbar */
-  ::-webkit-scrollbar {
-    width: 4px;
-    /* Breite des vertikalen Scrollbars */
-    height: 4px;
-    /* Höhe des horizontalen Scrollbars */
-  }
+    /* Gesamter Scrollbar */
+    ::-webkit-scrollbar {
+        width: 4px;
+        /* Breite des vertikalen Scrollbars */
+        height: 4px;
+        /* Höhe des horizontalen Scrollbars */
+    }
 
-  /* Hintergrund des Scrollbar-Tracks */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
+    /* Hintergrund des Scrollbar-Tracks */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
 
-  /* Scrollbar-Schieber (Thumb) */
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-    /* Optional: Abrundung für ein weicheres Erscheinungsbild */
-  }
+    /* Scrollbar-Schieber (Thumb) */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+        /* Optional: Abrundung für ein weicheres Erscheinungsbild */
+    }
 
-  /* Optional: Hover-Effekt für den Schieber */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+    /* Optional: Hover-Effekt für den Schieber */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 }
 
 .add-task-main-container {
@@ -600,4 +600,123 @@ select {
     font-size: 18px;
     text-align: center;
     color: white;
+}
+
+@media (max-width: 1439px) {
+    .left-input-fields {
+        width: 400px !important;
+    }
+
+    .dropdown-toggle {
+        width: 374px !important;
+    }
+
+    .right-input-fields {
+        width: 400px !important;
+    }
+
+    .prio-option {
+        width: 110px !important;
+        height: 46px !important;
+    }
+}
+
+@media (max-width: 1280px) {
+    .left-input-fields {
+        width: 350px !important;
+    }
+
+    .dropdown-toggle {
+        width: 324px !important;
+    }
+
+    .right-input-fields {
+        width: 350px !important;
+    }
+
+    .prio-option {
+        width: 110px !important;
+        height: 46px !important;
+    }
+}
+
+@media (max-width: 1150px) {
+    .add-task-input-containers {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .left-input-fields {
+        width: 450px !important;
+    }
+
+    .dropdown-toggle {
+        width: 424px !important;
+    }
+
+    .right-input-fields {
+        width: 450px !important;
+    }
+
+    .prio-option {
+        width: 125px !important;
+        height: 54px !important;
+    }
+
+    .create-btn {
+        width: 160px !important;
+        height: 40px !important;
+    }
+
+    .clear-btn {
+        width: 90px !important;
+        height: 40px !important;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .add-task-main-container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+}
+
+@media (max-width: 460px) {
+    h1 {
+        font-weight: 700 !important;
+        font-size: 47px !important;
+    }
+
+    .add-task-bottom-container {
+        flex-direction: column-reverse !important;
+        gap: 8px !important;
+    }
+
+    .add-task-main-container {
+        width: 300px !important;
+        padding-top: 40px !important;
+    }
+
+    .add-task-input-containers {
+        padding-top: 40px !important;
+    }
+
+    .left-input-fields {
+        width: 300px !important;
+    }
+
+    .dropdown-toggle {
+        width: 274px !important;
+    }
+
+    .right-input-fields {
+        width: 300px !important;
+    }
+
+    .prio-option {
+        width: 90px !important;
+        height: 46px !important;
+    }
 }

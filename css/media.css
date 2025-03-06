@@ -83,6 +83,9 @@
 }
 
 @media (max-width: 850px) {
+    .content {
+        height: calc(100vh - 96px - 80px) !important;
+    }
 
     .layout {
         justify-content: end;
