@@ -127,7 +127,15 @@ html {
 .subline-container {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   width: 100%;
+  gap: 8px;
+}
+
+.subline-container span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .subline-container img {

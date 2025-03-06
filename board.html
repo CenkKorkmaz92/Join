@@ -49,25 +49,36 @@
 
         <div class="board-subline-and-add-btn">
           <div class="subline-container">
-            <span>To do</span>
-            <img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg" alt="" />
+            <span>To do<img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg" alt="" /></span>
+            <div id="toDo" class="board-list-column">
+              <div class="board-task-element">No tasks To do</div>
+            </div>
           </div>
           <div class="subline-container">
-            <span>In progress</span>
-            <img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg" alt="" />
+            <span>In progress<img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg"
+                alt="" /></span>
+            <div id="inProgress" class="board-list-column">
+              <div class="board-task-element">No tasks To do</div>
+            </div>
           </div>
           <div class="subline-container">
-            <span>Await feedback</span>
-            <img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg" alt="" />
+            <span>Await feedback<img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg"
+                alt="" /></span>
+            <div id="awaitFeedback" class="board-list-column">
+              <div class="board-task-element">No tasks To do</div>
+            </div>
           </div>
           <div class="subline-container">
-            <span>Done</span>
-            <img src="./assets/img/icons/board/add_btn_subline_icon.svg" style="visibility: hidden" alt="" />
+            <span>Done<img src="./assets/img/icons/board/add_btn_subline_icon.svg" style="visibility: hidden"
+                alt="" /></span>
+            <div id="done" class="board-list-column">
+              <div class="board-task-element">No tasks To do</div>
+            </div>
           </div>
         </div>
 
         <!-- Board columns (each column now has its own ID for drag/drop) -->
-        <div class="board-list">
+        <!-- <div class="board-list">
           <div id="toDo" class="board-list-column">
             <div class="board-task-element">No tasks To do</div>
           </div>
@@ -80,7 +91,7 @@
           <div id="done" class="board-list-column">
             <div class="board-task-element">No tasks To do</div>
           </div>
-        </div>
+        </div> -->
       </div>
     </main>
   </div>
