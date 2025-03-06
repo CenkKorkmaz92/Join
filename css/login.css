@@ -306,6 +306,13 @@ body {
 }
 
 @media (max-width: 480px) {
+    .loading-screen {
+        background-color: #2A3647 !important;
+    }
+
+    .loading-logo {
+        content: url("../assets/img/logos/join_logo_loading_screen_dark.svg");
+    }
 
     .login-container {
         width: 320px !important;
