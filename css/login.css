@@ -271,9 +271,18 @@ body {
 }
 
 @media (max-width: 768px) {
+    .main-logo {
+        width: 64px !important;
+        height: 78px !important;
+    }
 
     .login-container {
         width: 530px !important;
+    }
+
+    h1 {
+        font-weight: 700 !important;
+        font-size: 47px !important;
     }
 }
 

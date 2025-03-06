@@ -262,3 +262,47 @@ body {
     color: #666666;
     cursor: not-allowed;
 }
+
+@media (max-width: 768px) {
+    .main-logo {
+        width: 64px !important;
+        height: 78px !important;
+    }
+
+    .sign-up-container {
+        width: 500px !important;
+    }
+
+    .back-arrow {
+        left: 60px !important;
+    }
+
+    h1 {
+        font-weight: 700 !important;
+        font-size: 47px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .sign-up-container {
+        width: 316px !important;
+    }
+
+    .back-arrow {
+        left: 30px !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .sign-up-container {
+        width: 224px !important;
+    }
+
+    .back-arrow {
+        left: 20px !important;
+    }
+
+    .icon {
+        padding-left: 0 !important;
+    }
+}
