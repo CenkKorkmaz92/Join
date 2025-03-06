@@ -269,3 +269,71 @@ body {
 .legal-btn:hover {
     color: #29ABE2;
 }
+
+@media (max-width: 768px) {
+
+    .login-container {
+        width: 530px !important;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .login-container {
+        width: 440px !important;
+    }
+
+    .input-container {
+        max-width: 364px !important;
+    }
+
+    .responsive-screen {
+        display: flex !important;
+    }
+
+    .default-screen {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .login-container {
+        width: 320px !important;
+    }
+
+    .input-container {
+        max-width: 250px !important;
+    }
+
+    .submit-buttons-login {
+        gap: 22px !important;
+    }
+
+    .guest-login-btn {
+        width: 143px !important;
+    }
+}
+
+@media (max-width: 320px) {
+
+    .login-container {
+        width: 300px !important;
+    }
+
+    .input-container {
+        max-width: 230px !important;
+    }
+
+    .submit-buttons-login {
+        gap: 34px !important;
+    }
+
+    .guest-login-btn {
+        width: 143px !important;
+    }
+
+    .login-btn {
+        width: 77px !important;
+    }
+}
