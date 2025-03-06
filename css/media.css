@@ -46,7 +46,6 @@
     .back-to-contact-list-button {
         display: block !important;
     }
-
 }
 
 @media (max-width: 950px) {
@@ -251,7 +250,7 @@
     }
 
     .contact {
-        width: 300px !important;
+        width: 250px !important;
         gap: 10px !important;
     }
 
