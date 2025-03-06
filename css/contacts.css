@@ -969,6 +969,11 @@ html {
         font-size: 32px !important;
     }
 
+    .blanco-img-new-contact{
+        width: 94px !important;
+        height: 94px !important;
+    }
+
     .popup-main-section {
         margin-top: -356px;
     }
