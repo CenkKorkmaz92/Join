@@ -180,6 +180,10 @@ body {
   gap: 8px;
 }
 
+#taskSubTasks {
+  cursor: pointer;
+}
+
 .card-footer {
   display: flex;
   justify-content: flex-end;
