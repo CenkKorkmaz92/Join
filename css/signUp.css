@@ -169,6 +169,10 @@ body {
     opacity: 0;
 }
 
+.form-check-input:hover {
+    cursor: pointer;
+}
+
 .sign-in-btn-container {
     animation: slideIn 0.8s ease-out forwards;
     animation-delay: 1.1s;
