@@ -213,3 +213,37 @@ body {
   font-weight: 700;
   margin-right: 8px;
 }
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 440px !important;
+  }
+
+  .modal-dialog {
+    top: 46% !important;
+  }
+
+  .assignees-list span {
+    display: none !important;
+  }
+
+  .card-title {
+    font-size: 47px !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .modal-content {
+    width: 400px !important;
+  }
+
+  .assignees-list li {
+    width: auto !important;
+  }
+}
+
+@media (max-width: 460px) {
+  .modal-content {
+    width: 260px !important;
+  }
+}

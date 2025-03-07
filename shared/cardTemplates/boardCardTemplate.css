@@ -150,3 +150,53 @@
 .add-task-main-container {
   padding-top: 18px !important;
 }
+
+@media (max-width: 850px) {
+  .modal-dialog {
+    top: 46% !important;
+  }
+}
+
+@media (max-width: 600px) {
+
+  #editFormContainer input[type="text"],
+  #editFormContainer textarea,
+  #editFormContainer input[type="date"] {
+    width: 418px !important;
+  }
+
+  .dropdown-toggle-edit {
+    width: 418px !important;
+  }
+}
+
+@media (max-width: 500px) {
+
+  #editFormContainer input[type="text"],
+  #editFormContainer textarea,
+  #editFormContainer input[type="date"] {
+    width: 378px !important;
+  }
+
+  .dropdown-toggle-edit {
+    width: 378px !important;
+  }
+}
+
+@media (max-width: 460px) {
+
+  #editFormContainer input[type="text"],
+  #editFormContainer textarea,
+  #editFormContainer input[type="date"] {
+    width: 238px !important;
+  }
+
+  .dropdown-toggle-edit {
+    width: 238px !important;
+  }
+
+  .prio-option {
+    width: 80px !important;
+    height: 44px !important;
+  }
+}
