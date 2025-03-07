@@ -151,6 +151,10 @@
   padding-top: 18px !important;
 }
 
+#editDueDateInput:hover {
+  cursor: pointer;
+}
+
 @media (max-width: 850px) {
   .modal-dialog {
     top: 46% !important;
