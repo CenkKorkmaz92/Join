@@ -11,8 +11,6 @@ import { patchSubtasks } from './boardTaskService.js';
 export function fixSubtaskFormat(task) {
     const subs = task.subtasks;
     if (!subs || !Array.isArray(subs) || typeof subs[0] !== 'string') return;
-
-    console.log(`Converting string subtasks for task ${task.firebaseId}`);
     const newSubtasks = subs.map((s) => ({ text: s, done: false }));
     task.subtasks = newSubtasks;
     patchSubtasks(task.firebaseId, newSubtasks);

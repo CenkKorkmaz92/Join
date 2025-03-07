@@ -33,7 +33,6 @@ async function loadTasks() {
     const response = await fetch(FIREBASE_TASKS_URL);
     const data = await response.json();
     if (!data) {
-      console.log('No tasks found');
       addPlaceholdersToEmptyColumns();
       return;
     }

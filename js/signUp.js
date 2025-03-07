@@ -85,7 +85,6 @@ async function signUp() {
 
   try {
     await saveData(`users/${id}`, newUser);
-    console.log("User successfully created:", newUser);
     // Optionally clear the form fields after a successful sign up
     nameInput.value = "";
     emailInput.value = "";

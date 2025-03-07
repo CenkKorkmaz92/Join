@@ -14,7 +14,6 @@ export async function patchSubtasks(firebaseId, newSubtasks) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ subtasks: newSubtasks }),
         });
-        console.log(`Subtasks patched for task: ${firebaseId}`);
     } catch (error) {
         console.error('Error patching subtasks:', error);
     }
@@ -31,7 +30,6 @@ export async function updateTaskStatusInFirebase(firebaseId, newStatus) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status: newStatus }),
         });
-        console.log(`Task ${firebaseId} status updated to ${newStatus}`);
     } catch (error) {
         console.error('Error updating task status:', error);
     }
@@ -50,7 +48,6 @@ export async function addTask(newTaskData) {
             body: JSON.stringify(newTaskData),
         });
         const data = await response.json();
-        console.log('Task created:', data);
     } catch (error) {
         console.error('Error creating task:', error);
     }
@@ -63,7 +60,6 @@ export async function deleteTask(firebaseId) {
     const deleteUrl = `https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseId}.json`;
     try {
         await fetch(deleteUrl, { method: 'DELETE' });
-        console.log(`Task ${firebaseId} deleted successfully`);
     } catch (error) {
         console.error('Error deleting task:', error);
     }
@@ -80,7 +76,6 @@ export async function patchTask(firebaseId, updatedTask) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedTask),
         });
-        console.log(`Task ${firebaseId} updated successfully`);
     } catch (error) {
         console.error('Error updating task:', error);
     }

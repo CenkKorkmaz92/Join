@@ -40,14 +40,10 @@ document.addEventListener("DOMContentLoaded", function () {
         backArrow.addEventListener("click", function () {
             window.history.back(); // Go back to the previous page
         });
-        console.log("Back arrow event listener added!");
-    } else {
-        console.error("Back arrow not found! Check the ID in your HTML.");
     }
 });
 
 function redirectTo(url) {
-    console.log("Redirecting to:", url);
     window.location.href = url;
 }
 

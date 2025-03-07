@@ -17,7 +17,6 @@ export async function loadAllContacts() {
         const data = await response.json();
 
         if (!data) {
-            console.log('No contacts found');
             allContacts = [];
             return;
         }
@@ -28,7 +27,6 @@ export async function loadAllContacts() {
             color: contact.color,
             initials: contact.initials,
         }));
-        console.log('Contacts loaded:', allContacts);
     } catch (error) {
         console.error('Error fetching contacts:', error);
         allContacts = [];

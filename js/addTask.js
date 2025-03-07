@@ -151,7 +151,6 @@ function buildTaskData() {
  * Show success popup, then redirect to board.
  */
 function showSuccessAndRedirect(responseData) {
-  console.log('Task added successfully:', responseData);
   const popup = document.getElementById('popupSuccess');
   popup.style.display = 'flex';
   setTimeout(() => {
