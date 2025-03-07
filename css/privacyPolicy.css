@@ -49,3 +49,23 @@ html {
   padding: 1px;
   cursor: pointer;
 }
+
+@media (max-width: 580px) {
+
+  .content {
+    align-items: start !important;
+  }
+
+  .headline {
+    padding-right: 20px !important;
+  }
+
+  .pl {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .privacy-policy {
+    width: 300px !important;
+  }
+}
