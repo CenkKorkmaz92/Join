@@ -453,3 +453,77 @@ html {
 .subtask-item-icons img:hover {
   opacity: 0.8;
 }
+
+@media (max-width: 1439px) {
+  .board-subline-and-add-btn {
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+
+  .board-list-column {
+    flex-direction: row !important;
+    height: 100% !important;
+  }
+}
+
+@media (max-width: 1280px) {
+  .input-and-btn {
+    gap: 10px !important;
+  }
+
+  .add-task-btn-summary {
+    width: 159px !important;
+  }
+
+  .input-container {
+    width: 254px !important;
+  }
+}
+
+@media (max-width: 1080px) {
+  .headline-and-input-with-btn {
+    flex-direction: column !important;
+  }
+
+  .input-and-btn {
+    justify-content: space-between !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .input-and-btn {
+    align-items: flex-start !important;
+    flex-direction: column-reverse !important;
+  }
+}
+
+@media (max-width: 850px) {
+  .input-and-btn {
+    flex-direction: row !important;
+  }
+
+  .board-main-content {
+    padding-top: 40px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .input-and-btn {
+    flex-direction: column-reverse !important;
+  }
+
+  #headline.headline {
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    line-height: 19.2px !important;
+  }
+
+}
+
+@media (max-width: 450px) {
+  .board-main-content {
+    width: 300px !important;
+  }
+}
