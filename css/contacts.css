@@ -795,6 +795,14 @@ body {
 
 @media (max-width: 1275px) {
 
+    .contact-wrapper {
+        width: calc(100% - 267px) !important;
+    }
+
+    .popup-input-field {
+        background-size: 14px 14px;
+    }
+
     .contact-detail {
         left: auto !important;
     }
@@ -956,6 +964,14 @@ body {
         position: absolute !important;
         right: 50px !important;
         top: 55px !important;
+    }
+}
+
+@media (max-width: 850px) {
+
+    .contact-wrapper {
+        left: 0;
+        width: calc(100% - 30px)!important;
     }
 }
 
