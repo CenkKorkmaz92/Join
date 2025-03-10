@@ -144,13 +144,48 @@ function createDeleteIcon(onClick) {
 }
 
 function editSubtask(index, subtasks) {
-    const oldText = subtasks[index].text;
-    const newText = prompt('Edit subtask:', oldText);
-    if (newText && newText.trim()) {
-        subtasks[index].text = newText.trim();
-        populateEditSubtasksList(subtasks);
-    }
+    const listItem = getSubtaskListItem(index);
+    if (!listItem) return;
+    const span = listItem.querySelector('.subtask-text');
+    if (!span) return;
+
+    const input = createInlineInput(subtasks[index].text);
+    listItem.replaceChild(input, span);
+    attachFinishEditingListeners(input, listItem, index, subtasks);
+    input.focus();
+    input.select();
 }
+
+function getSubtaskListItem(index) {
+    const listItems = document.querySelectorAll('.edit-subtask-item');
+    return listItems[index];
+}
+
+function createInlineInput(text) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = text;
+    input.classList.add('subtask-edit-input');
+    return input;
+}
+
+function finishEditing(input, listItem, index, subtasks) {
+    const newText = input.value.trim();
+    if (newText) subtasks[index].text = newText;
+    const newSpan = document.createElement('span');
+    newSpan.classList.add('subtask-text');
+    newSpan.textContent = subtasks[index].text;
+    listItem.replaceChild(newSpan, input);
+}
+
+function attachFinishEditingListeners(input, listItem, index, subtasks) {
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') finishEditing(input, listItem, index, subtasks);
+    });
+    input.addEventListener('blur', () => finishEditing(input, listItem, index, subtasks));
+}
+
+
 
 function deleteSubtask(index, subtasks) {
     subtasks.splice(index, 1);
