@@ -719,4 +719,8 @@ select {
         width: 90px !important;
         height: 46px !important;
     }
+
+    .input-subtask-wrapper input {
+        width: auto !important;
+    }
 }

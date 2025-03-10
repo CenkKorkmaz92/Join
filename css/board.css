@@ -478,6 +478,16 @@ html {
   .input-container {
     width: 254px !important;
   }
+
+  .add-task-modal-content {
+    width: 1000px !important;
+  }
+}
+
+@media (max-width: 1150px) {
+  .add-task-modal-content {
+    width: auto !important;
+  }
 }
 
 @media (max-width: 1080px) {
@@ -507,6 +517,17 @@ html {
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
+
+  .add-task-modal-content {
+    padding: 0 !important;
+    top: 46% !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .add-task-modal-content {
+    width: 460px !important;
+  }
 }
 
 @media (max-width: 500px) {
@@ -520,10 +541,33 @@ html {
     line-height: 19.2px !important;
   }
 
+  .dropdown-toggle {
+    width: 374px !important;
+  }
+
+  .left-input-fields {
+    width: 450px !important;
+  }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 460px) {
   .board-main-content {
     width: 300px !important;
+  }
+
+  .add-task-modal-content {
+    width: 400px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .add-task-modal-content {
+    width: 350px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .add-task-modal-content {
+    width: 310px !important;
   }
 }
