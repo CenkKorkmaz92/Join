@@ -43,17 +43,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function setupDOMReferences() {
-  // Just rename the HTML inputs with IDs:
+  // Just rename the HTML inputs with IDs, if needed.
   document.getElementById('titleInput').addEventListener('input', () => { });
-  // ... if you need other small rebindings, do them here.
+  // ...any other small rebindings...
 }
 
 /**
- * Converts the Firebase contact object into an array for rendering.
+ * Converts the Firebase contact object into an array for rendering,
+ * storing the Firebase key as "id".
  */
 function mapContactsData(data) {
   return Object.entries(data).map(([pushKey, obj]) => ({
-    firebaseId: pushKey,
+    id: pushKey,            // <-- use "id" as the field name (instead of "firebaseId")
     fullName: obj.fullName,
     color: obj.color,
     initials: obj.initials,
@@ -117,7 +118,8 @@ function isFormValid() {
 }
 
 /**
- * Builds the task object from form input values.
+ * Builds the task object from form input values,
+ * storing assigned contacts with "id" (not "firebaseId").
  */
 function buildTaskData() {
   const title = document.getElementById('titleInput').value.trim();
@@ -129,12 +131,15 @@ function buildTaskData() {
   const subtasks = Array.from(subtaskItems).map((el) =>
     el.textContent.replace(/^•\s*/, '').trim()
   );
+
+  // Now each selected contact is .id, not .firebaseId
   const assignedTo = getSelectedContacts().map((c) => ({
-    firebaseId: c.firebaseId,
+    id: c.id,                 // <-- store c.id
     fullName: c.fullName,
     initials: c.initials,
     color: c.color,
   }));
+
   return {
     title,
     description,

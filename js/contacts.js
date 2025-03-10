@@ -63,15 +63,30 @@ let currentContact = null;
  */
 async function pushContactToAPI(contact) {
   try {
+    // 1) POST the new contact (without any "id" field)
     const response = await sendPostRequest(`${FIREBASE_BASE_URL}.json`, contact);
     await handleResponseErrors(response);
     const responseData = await response.json();
-    contact.id = responseData.name;
+
+    // 2) The new push key
+    const firebaseKey = responseData.name;
+
+    // 3) Store that key in `contact.id`
+    contact.id = firebaseKey;
+
+    // 4) Now PUT the contact again so that, in Firebase, it is stored with "id": "thePushKey"
+    await fetch(`${FIREBASE_BASE_URL}/${firebaseKey}.json`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(contact),
+    });
+
     return responseData;
   } catch (error) {
     console.error("Fehler beim Senden des Kontakts an die API:", error.message);
   }
 }
+
 
 /**
  * Fetches all contacts from the Firebase API and processes the data.
@@ -96,14 +111,57 @@ async function fetchContactsFromAPI() {
  */
 async function deleteContactFromAPI(contactId) {
   try {
+    // 1) Delete the contact from Firebase (contacts node)
     const response = await sendDeleteRequest(contactId);
     await handleDeleteErrors(response);
+
+    // 2) Remove from local "contacts" array
     removeContactFromList(contactId);
+
+    // 3) Also remove that contact from any tasks referencing it
+    await removeContactFromAllTasks(contactId);
+
+    // 4) Show success (which triggers reload or does a re-render)
     showDeleteSuccessPopup();
   } catch (error) {
-    console.error("Fehler beim Löschen des Kontakts aus der API:", error.message);
+    console.error("Error deleting contact:", error.message);
   }
 }
+
+/**
+ * Removes a given contact from all tasks' assignedTo arrays.
+ */
+async function removeContactFromAllTasks(contactId) {
+  const tasksUrl = "https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
+
+  // 1) Fetch all tasks
+  const resp = await fetch(tasksUrl);
+  const tasksData = await resp.json();
+  if (!tasksData) return;
+
+  // 2) Build a PATCH object for tasks that changed
+  const updates = {};
+
+  for (const [taskKey, taskObj] of Object.entries(tasksData)) {
+    if (Array.isArray(taskObj.assignedTo)) {
+      const newAssigned = taskObj.assignedTo.filter(c => c.id !== contactId);
+      if (newAssigned.length !== taskObj.assignedTo.length) {
+        updates[taskKey] = { ...taskObj, assignedTo: newAssigned };
+      }
+    }
+  }
+
+  // 3) If any tasks were changed, PATCH them all at once
+  if (Object.keys(updates).length > 0) {
+    await fetch(tasksUrl, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updates),
+    });
+  }
+  location.reload()
+}
+
 
 /**
  * Renders the list of contacts in the DOM, grouping them by the first letter of their names.

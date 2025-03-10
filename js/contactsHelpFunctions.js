@@ -235,16 +235,17 @@ function createContact() {
     const email = emailInput.value.trim();
     const phone = phoneInput.value.trim();
     return {
-        id: generateUUID(),
-        fullName,
-        email,
-        phone,
-        initials: getInitials(fullName),
-        firstLetter: fullName.charAt(0).toUpperCase(),
-        color: getRandomColor(),
-        profileImage: ""
+      // No random "id" here!
+      fullName,
+      email,
+      phone,
+      initials: getInitials(fullName),
+      firstLetter: fullName.charAt(0).toUpperCase(),
+      color: getRandomColor(),
+      profileImage: "",
     };
-}
+  }
+  
 
 /**
  * Validates the input form for creating a contact.
