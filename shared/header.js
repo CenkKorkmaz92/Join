@@ -57,10 +57,8 @@ function updateHeaderElements() {
       const user = JSON.parse(storedUser);
       userProfile.textContent = user.initials;
       logoutLink.classList.remove("hidden");
-      console.log("Header updated with user initials:", user.initials);
     } else {
       userProfile.textContent = "G";
-      console.log("No user data found; defaulting header initials to 'G'");
     }
   } else {
     // Retry if elements are not yet available.
@@ -89,7 +87,6 @@ function guestLogin() {
 function attachHelpIconListener() {
   const helpIcon = document.querySelector(".help-icon");
   if (!helpIcon) {
-    console.warn("Help icon not found, retrying...");
     return setTimeout(attachHelpIconListener, 100);
   }
   
@@ -98,13 +95,11 @@ function attachHelpIconListener() {
       event.preventDefault();
       redirectTo("../helpExternal.html");
     };
-    console.log("External page detected; help icon set to external help page.");
   } else {
     helpIcon.onclick = function(event) {
       event.preventDefault();
       redirectTo("../help.html");
     };
-    console.log("Normal page detected; help icon set to internal help page.");
   }
 }
 
