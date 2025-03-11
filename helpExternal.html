@@ -12,134 +12,149 @@
     <title>Join - Help</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon/join_logo_dark.svg" />
 </head>
-
-<body class="legal-page">
-    <div class="layout">
-        <!-- Sidebar (Navbar) -->
-        <div id="navbar-container" class="navbar"></div>
-
-        <!-- Header -->
-        <div id="header-container" class="top-header"></div>
-
-        <!-- Main Content -->
-        <main class="content">
-            <section class="help-container">
-                <!-- Header Section -->
-                <header class="headline-and-arrow">
-                    <h1 class="headline-main">Help</h1>
-                    <img onclick="goBack()" class="arrow" src="./assets/img/icons/help/back-arrow-help.svg"
-                        alt="Go back">
-                </header>
-
-                <div class="span-container">
-                    <p>Welcome to the help page for <span class="join">Join</span>, your guide to using our kanban
-                        project management tool.
-                        Here, we'll provide an overview of what <span class="join">Join</span> is, how it can benefit
-                        you, and how to use it.</p>
-
-                    <h2 class="sub-headline">What is Join?</h2>
-                    <p><span class="join">Join</span> is a kanban-based project management tool designed and built by a
-                        group of dedicated
-                        students as part of their web development bootcamp at the Developer Akademie.</p>
-                    <p>Kanban, a Japanese term meaning "billboard", is a highly effective method to visualize work,
-                        limit work-in-progress,
-                        and maximize efficiency. <span class="join">Join</span> leverages the principles of kanban to
-                        help users manage their
-                        tasks and projects in an intuitive, visual interface.</p>
-                    <p>It is important to note that <span class="join">Join</span> is designed as an educational
-                        exercise and is not intended
-                        for extensive business usage. While we strive to ensure the best possible user experience, we
-                        cannot guarantee consistent
-                        availability, reliability, accuracy, or other aspects of quality regarding <span
-                            class="join">Join</span>.</p>
-
-                    <h2 class="sub-headline">How to use it</h2>
-                    <p>Here is a step-by-step guide on how to use <span class="join">Join</span>:</p>
-
-                    <ul class="rp-ul-overflow">
-                        <li class="li-flexbox">
-                            <div class="number-and-headline">
-                                <span class="number">1.</span>
-                            </div>
-                            <div class="li-text">
-                                <h3 class="sub-sub-headline">Exploring the Board</h3>
-                                <p>When you log in to <span class="join">Join</span>, you'll find a default board. This
-                                    board represents your
-                                    project and contains four default lists: "To Do", "In Progress", "Await feedback",
-                                    and "Done".</p>
-                            </div>
-                        </li>
-                        <li class="li-flexbox">
-                            <div class="number-and-headline">
-                                <span class="number">2.</span>
-                            </div>
-                            <div class="li-text">
-                                <h3 class="sub-sub-headline">Creating Contacts</h3>
-                                <p>In <span class="join">Join</span>, you can add contacts to collaborate on your
-                                    projects. Go to the "Contacts"
-                                    section, click on "New contact", and fill in the required information. Once added,
-                                    these contacts can be
-                                    assigned tasks and interact with tasks on the board.</p>
-                            </div>
-                        </li>
-                        <li class="li-flexbox">
-                            <div class="number-and-headline">
-                                <span class="number">3.</span>
-                            </div>
-                            <div class="li-text">
-                                <h3 class="sub-sub-headline">Adding Cards</h3>
-                                <p>Now that you've added your contacts, you can start adding cards. Cards represent
-                                    individual tasks. Click the "+"
-                                    button under the appropriate list to create a new card. Fill in the task details
-                                    like task name, description,
-                                    due date, and assignees.</p>
-                            </div>
-                        </li>
-                        <li class="li-flexbox">
-                            <div class="number-and-headline">
-                                <span class="number">4.</span>
-                            </div>
-                            <div class="li-text">
-                                <h3 class="sub-sub-headline">Moving Cards</h3>
-                                <p>As the task moves from one stage to another, you can reflect that on the board by
-                                    dragging and dropping the card
-                                    from one list to another.</p>
-                            </div>
-                        </li>
-                        <li class="li-flexbox">
-                            <div class="number-and-headline">
-                                <span class="number">5.</span>
-                            </div>
-                            <div class="li-text">
-                                <h3 class="sub-sub-headline">Deleting Cards</h3>
-                                <p>Once a task is completed, you can either move it to the "Done" list or delete it.
-                                    Deleting a card will permanently
-                                    remove it from the board. Please exercise caution when deleting cards, as this
-                                    action is irreversible.</p>
-                                <p>Remember that using <span class="join">Join</span> effectively requires consistent
-                                    updates from you and your team
-                                    to ensure the board reflects the current state of your project.</p>
-                                <p>Have more questions about <span class="join">Join</span>? Feel free to contact us at
-                                    <a href="mailto:Cenk.Korkmaz92@gmail.com">Cenk.Korkmaz92@gmail.com</a>. We're here
-                                    to help you!
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                    <h2 class="sub-headline">Enjoy using Join!</h2>
-                </div>
-            </section>
-        </main>
+<hmtl>
+    <!-- Landscape Warning -->
+    <div id="landscapeWarning">
+        <img src="./assets/img/mobile/rotateDevice.png" alt="" />
     </div>
 
-    <!-- Link Scripts -->
-    <script src="./js/help.js"></script>
-    <script src="./js/main.js"></script>
-    <script type="module" src="./js/firebase.js"></script>
-    <script src="./shared/includeHTML.js"></script>
-    <script src="./shared/navbar.js"></script>
-    <script src="./shared/header.js"></script>
-    <script src="./shared/landscapeCheck.js" defer></script>
-</body>
+    <body class="legal-page">
+        <div class="layout">
+            <!-- Sidebar (Navbar) -->
+            <div id="navbar-container" class="navbar"></div>
+
+            <!-- Header -->
+            <div id="header-container" class="top-header"></div>
+
+            <!-- Main Content -->
+            <main class="content">
+                <section class="help-container">
+                    <!-- Header Section -->
+                    <header class="headline-and-arrow">
+                        <h1 class="headline-main">Help</h1>
+                        <img onclick="goBack()" class="arrow" src="./assets/img/icons/help/back-arrow-help.svg"
+                            alt="Go back">
+                    </header>
+
+                    <div class="span-container">
+                        <p>Welcome to the help page for <span class="join">Join</span>, your guide to using our kanban
+                            project management tool.
+                            Here, we'll provide an overview of what <span class="join">Join</span> is, how it can
+                            benefit
+                            you, and how to use it.</p>
+
+                        <h2 class="sub-headline">What is Join?</h2>
+                        <p><span class="join">Join</span> is a kanban-based project management tool designed and built
+                            by a
+                            group of dedicated
+                            students as part of their web development bootcamp at the Developer Akademie.</p>
+                        <p>Kanban, a Japanese term meaning "billboard", is a highly effective method to visualize work,
+                            limit work-in-progress,
+                            and maximize efficiency. <span class="join">Join</span> leverages the principles of kanban
+                            to
+                            help users manage their
+                            tasks and projects in an intuitive, visual interface.</p>
+                        <p>It is important to note that <span class="join">Join</span> is designed as an educational
+                            exercise and is not intended
+                            for extensive business usage. While we strive to ensure the best possible user experience,
+                            we
+                            cannot guarantee consistent
+                            availability, reliability, accuracy, or other aspects of quality regarding <span
+                                class="join">Join</span>.</p>
+
+                        <h2 class="sub-headline">How to use it</h2>
+                        <p>Here is a step-by-step guide on how to use <span class="join">Join</span>:</p>
+
+                        <ul class="rp-ul-overflow">
+                            <li class="li-flexbox">
+                                <div class="number-and-headline">
+                                    <span class="number">1.</span>
+                                </div>
+                                <div class="li-text">
+                                    <h3 class="sub-sub-headline">Exploring the Board</h3>
+                                    <p>When you log in to <span class="join">Join</span>, you'll find a default board.
+                                        This
+                                        board represents your
+                                        project and contains four default lists: "To Do", "In Progress", "Await
+                                        feedback",
+                                        and "Done".</p>
+                                </div>
+                            </li>
+                            <li class="li-flexbox">
+                                <div class="number-and-headline">
+                                    <span class="number">2.</span>
+                                </div>
+                                <div class="li-text">
+                                    <h3 class="sub-sub-headline">Creating Contacts</h3>
+                                    <p>In <span class="join">Join</span>, you can add contacts to collaborate on your
+                                        projects. Go to the "Contacts"
+                                        section, click on "New contact", and fill in the required information. Once
+                                        added,
+                                        these contacts can be
+                                        assigned tasks and interact with tasks on the board.</p>
+                                </div>
+                            </li>
+                            <li class="li-flexbox">
+                                <div class="number-and-headline">
+                                    <span class="number">3.</span>
+                                </div>
+                                <div class="li-text">
+                                    <h3 class="sub-sub-headline">Adding Cards</h3>
+                                    <p>Now that you've added your contacts, you can start adding cards. Cards represent
+                                        individual tasks. Click the "+"
+                                        button under the appropriate list to create a new card. Fill in the task details
+                                        like task name, description,
+                                        due date, and assignees.</p>
+                                </div>
+                            </li>
+                            <li class="li-flexbox">
+                                <div class="number-and-headline">
+                                    <span class="number">4.</span>
+                                </div>
+                                <div class="li-text">
+                                    <h3 class="sub-sub-headline">Moving Cards</h3>
+                                    <p>As the task moves from one stage to another, you can reflect that on the board by
+                                        dragging and dropping the card
+                                        from one list to another.</p>
+                                </div>
+                            </li>
+                            <li class="li-flexbox">
+                                <div class="number-and-headline">
+                                    <span class="number">5.</span>
+                                </div>
+                                <div class="li-text">
+                                    <h3 class="sub-sub-headline">Deleting Cards</h3>
+                                    <p>Once a task is completed, you can either move it to the "Done" list or delete it.
+                                        Deleting a card will permanently
+                                        remove it from the board. Please exercise caution when deleting cards, as this
+                                        action is irreversible.</p>
+                                    <p>Remember that using <span class="join">Join</span> effectively requires
+                                        consistent
+                                        updates from you and your team
+                                        to ensure the board reflects the current state of your project.</p>
+                                    <p>Have more questions about <span class="join">Join</span>? Feel free to contact us
+                                        at
+                                        <a href="mailto:Cenk.Korkmaz92@gmail.com">Cenk.Korkmaz92@gmail.com</a>. We're
+                                        here
+                                        to help you!
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                        <h2 class="sub-headline">Enjoy using Join!</h2>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Link Scripts -->
+        <script src="./js/help.js"></script>
+        <script src="./js/main.js"></script>
+        <script type="module" src="./js/firebase.js"></script>
+        <script src="./shared/includeHTML.js"></script>
+        <script src="./shared/navbar.js"></script>
+        <script src="./shared/header.js"></script>
+        <script src="./shared/landscapeCheck.js" defer></script>
+    </body>
 
 </html>

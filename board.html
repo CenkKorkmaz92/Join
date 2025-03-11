@@ -20,344 +20,352 @@
 </head>
 
 <body>
-  <div class="layout">
-    <!-- Sidebar (Navbar) -->
-    <div id="navbar-container" class="navbar"></div>
 
-    <!-- Header -->
-    <div id="header-container" class="top-header"></div>
+  <body>
+    <!-- Landscape Warning -->
+    <div id="landscapeWarning">
+      <img src="./assets/img/mobile/rotateDevice.png" alt="" />
+    </div>
+    
+    <div class="layout">
+      <!-- Sidebar (Navbar) -->
+      <div id="navbar-container" class="navbar"></div>
 
-    <!-- Main Content -->
-    <main class="content">
-      <div class="board-main-content">
-        <div class="board-header">
-          <div class="headline-and-input-with-btn">
-            <h1 class="headline-board">Board</h1>
-            <div class="input-and-btn">
-              <div class="input-container">
-                <input type="text" placeholder="Name" />
-                <span class="icon">
-                  <img src="./assets/img/icons/board/search_icon.svg" alt="search Icon" />
-                </span>
-              </div>
-              <button class="add-task-btn-summary">
-                Add task
-                <img src="./assets/img/icons/board/+_icon.svg" alt="" />
-              </button>
-            </div>
-          </div>
-        </div>
+      <!-- Header -->
+      <div id="header-container" class="top-header"></div>
 
-        <div class="board-subline-and-add-btn">
-          <div class="subline-container">
-            <span>To do<img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg" alt="" /></span>
-            <div id="toDo" class="board-list-column">
-              <div class="board-task-element">No tasks To do</div>
-            </div>
-          </div>
-          <div class="subline-container">
-            <span>In progress<img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg"
-                alt="" /></span>
-            <div id="inProgress" class="board-list-column">
-              <div class="board-task-element">No tasks To do</div>
-            </div>
-          </div>
-          <div class="subline-container">
-            <span>Await feedback<img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg"
-                alt="" /></span>
-            <div id="awaitFeedback" class="board-list-column">
-              <div class="board-task-element">No tasks To do</div>
-            </div>
-          </div>
-          <div class="subline-container">
-            <span>Done<img src="./assets/img/icons/board/add_btn_subline_icon.svg" style="visibility: hidden"
-                alt="" /></span>
-            <div id="done" class="board-list-column">
-              <div class="board-task-element">No tasks To do</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <!-- Add Task Modal -->
-  <div id="addTaskModal" class="add-task-modal hidden">
-    <div class="add-task-overlay"></div>
-    <div class="add-task-modal-content">
+      <!-- Main Content -->
       <main class="content">
-        <div class="add-task-main-container">
-          <h1 class="headline-add-task">Add Task</h1>
-          <div class="add-task-input-containers">
-            <div class="left-input-fields">
-              <div class="input-title-container">
-                <span>Title<span style="color: red;">*</span></span>
-                <input type="text" class="focus" id="titleInput" required placeholder="Enter a title" />
-              </div>
-              <div class="input-description-container">
-                <span>Description</span>
-                <textarea class="focus" id="descriptionInput" placeholder="Enter a Description"></textarea>
-              </div>
-
-              <!-- Assigned to -->
-              <div class="drop-down-assignt-to-container">
-                <span>Assigned to</span>
-                <div class="dropdown-wrapper">
-                  <div class="dropdown-toggle" id="dropdownToggle">
-                    <span id="dropdownPlaceholder">Select contact(s)</span>
-                    <img class="dropdown-arrow" id="dropdownArrow" src="./assets/img/icons/addTask/arrow_drop_down.svg"
-                      alt="Dropdown arrow" />
-                  </div>
-                  <div class="dropdown-list hidden" id="contactsDropdownList">
-                  </div>
+        <div class="board-main-content">
+          <div class="board-header">
+            <div class="headline-and-input-with-btn">
+              <h1 class="headline-board">Board</h1>
+              <div class="input-and-btn">
+                <div class="input-container">
+                  <input type="text" placeholder="Name" />
+                  <span class="icon">
+                    <img src="./assets/img/icons/board/search_icon.svg" alt="search Icon" />
+                  </span>
                 </div>
-                <div class="selected-contacts-container" id="selectedContactsContainer"></div>
-              </div>
-            </div>
-
-            <div class="grey-vector"></div>
-
-            <div class="right-input-fields">
-              <div class="input-due-date-container">
-                <span>Due date<span style="color: red;">*</span></span>
-                <input type="date" class="focus" id="dueDateInput" required />
-              </div>
-              <div class="prio-selection-container">
-                <span>Prio</span>
-                <div class="prio-selector-container">
-                  <!-- .prio-option class -->
-                  <div class="prio-option" data-prio="urgent">
-                    <span>Urgent</span>
-                    <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority" />
-                  </div>
-                  <!-- Start with "selected" on medium -->
-                  <div class="prio-option selected" data-prio="medium">
-                    <span>Medium</span>
-                    <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority" />
-                  </div>
-                  <div class="prio-option" data-prio="low">
-                    <span>Low</span>
-                    <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority" />
-                  </div>
-                </div>
-              </div>
-
-              <div class="input-category-container">
-                <label for="category" required>Category<span style="color: red;">*</span></label>
-                <select class="focus" id="categorySelect" required>
-                  <option value="" selected hidden>Select task category</option>
-                  <option value="user-story">User Story</option>
-                  <option value="technical-task">Technical Task</option>
-                </select>
-              </div>
-
-              <!-- Subtasks -->
-              <div class="subtask-container">
-                <label for="subtask">Subtasks</label>
-                <div class="input-subtask-wrapper">
-                  <input type="text" id="subtask-input" placeholder="Add new subtask" />
-                  <div class="subtask-buttons">
-                    <button id="clear-subtask" class="hidden">✖</button>
-                    <div id="vector" class="hidden">|</div>
-                    <button id="confirm-subtask" class="hidden">✔</button>
-                    <button id="add-subtask-btn">+</button>
-                  </div>
-                </div>
-                <div class="subtask-list-wrapper">
-                  <ul id="subtask-list"></ul>
-                </div>
+                <button class="add-task-btn-summary">
+                  Add task
+                  <img src="./assets/img/icons/board/+_icon.svg" alt="" />
+                </button>
               </div>
             </div>
           </div>
 
-          <div class="add-task-bottom-container">
-            <span><span style="color: red;">*</span> This field is required</span>
-            <div class="add-task-create-btn-container">
-              <button id="clear-all-fields-btn" class="clear-btn">
-                Clear
-                <img src="./assets/img/icons/addTask/add_task_x_icon.svg" alt="" />
-              </button>
-              <button class="create-btn">
-                Create Task
-                <img src="./assets/img/icons/addTask/add_task_check_icon.svg" alt="" />
-              </button>
+          <div class="board-subline-and-add-btn">
+            <div class="subline-container">
+              <span>To do<img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg"
+                  alt="" /></span>
+              <div id="toDo" class="board-list-column">
+                <div class="board-task-element">No tasks To do</div>
+              </div>
             </div>
-          </div>
-
-          <div id="popupSuccess" class="popup-success" style="display: none;">
-            <div class="popup-content-success">
-              <p>Your task was created successfully!</p>
+            <div class="subline-container">
+              <span>In progress<img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg"
+                  alt="" /></span>
+              <div id="inProgress" class="board-list-column">
+                <div class="board-task-element">No tasks To do</div>
+              </div>
+            </div>
+            <div class="subline-container">
+              <span>Await feedback<img class="open-modal" src="./assets/img/icons/board/add_btn_subline_icon.svg"
+                  alt="" /></span>
+              <div id="awaitFeedback" class="board-list-column">
+                <div class="board-task-element">No tasks To do</div>
+              </div>
+            </div>
+            <div class="subline-container">
+              <span>Done<img src="./assets/img/icons/board/add_btn_subline_icon.svg" style="visibility: hidden"
+                  alt="" /></span>
+              <div id="done" class="board-list-column">
+                <div class="board-task-element">No tasks To do</div>
+              </div>
             </div>
           </div>
         </div>
       </main>
     </div>
-  </div>
 
-  <!-- Card Template (for tasks) -->
-  <template id="cardTemplate">
-    <div class="card-body">
-      <div class="category" id="category"></div>
-      <div>
-        <h1 class="headline" id="headline"></h1>
-        <span class="info" id="info"></span>
-      </div>
-      <div class="progress-and-subtask">
-        <div class="progressbar" id="progressbar">
-          <div class="progressbar-fill" id="progressbarFill"></div>
-        </div>
-        <div class="subtask-counter" id="subtaskCounter">0/0 subtasks</div>
-      </div>
-      <div class="chips-and-prio">
-        <div class="chips" id="chips"></div>
-        <div class="prio" id="prio"></div>
+    <!-- Add Task Modal -->
+    <div id="addTaskModal" class="add-task-modal hidden">
+      <div class="add-task-overlay"></div>
+      <div class="add-task-modal-content">
+        <main class="content">
+          <div class="add-task-main-container">
+            <h1 class="headline-add-task">Add Task</h1>
+            <div class="add-task-input-containers">
+              <div class="left-input-fields">
+                <div class="input-title-container">
+                  <span>Title<span style="color: red;">*</span></span>
+                  <input type="text" class="focus" id="titleInput" required placeholder="Enter a title" />
+                </div>
+                <div class="input-description-container">
+                  <span>Description</span>
+                  <textarea class="focus" id="descriptionInput" placeholder="Enter a Description"></textarea>
+                </div>
+
+                <!-- Assigned to -->
+                <div class="drop-down-assignt-to-container">
+                  <span>Assigned to</span>
+                  <div class="dropdown-wrapper">
+                    <div class="dropdown-toggle" id="dropdownToggle">
+                      <span id="dropdownPlaceholder">Select contact(s)</span>
+                      <img class="dropdown-arrow" id="dropdownArrow"
+                        src="./assets/img/icons/addTask/arrow_drop_down.svg" alt="Dropdown arrow" />
+                    </div>
+                    <div class="dropdown-list hidden" id="contactsDropdownList">
+                    </div>
+                  </div>
+                  <div class="selected-contacts-container" id="selectedContactsContainer"></div>
+                </div>
+              </div>
+
+              <div class="grey-vector"></div>
+
+              <div class="right-input-fields">
+                <div class="input-due-date-container">
+                  <span>Due date<span style="color: red;">*</span></span>
+                  <input type="date" class="focus" id="dueDateInput" required />
+                </div>
+                <div class="prio-selection-container">
+                  <span>Prio</span>
+                  <div class="prio-selector-container">
+                    <!-- .prio-option class -->
+                    <div class="prio-option" data-prio="urgent">
+                      <span>Urgent</span>
+                      <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority" />
+                    </div>
+                    <!-- Start with "selected" on medium -->
+                    <div class="prio-option selected" data-prio="medium">
+                      <span>Medium</span>
+                      <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority" />
+                    </div>
+                    <div class="prio-option" data-prio="low">
+                      <span>Low</span>
+                      <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="input-category-container">
+                  <label for="category" required>Category<span style="color: red;">*</span></label>
+                  <select class="focus" id="categorySelect" required>
+                    <option value="" selected hidden>Select task category</option>
+                    <option value="user-story">User Story</option>
+                    <option value="technical-task">Technical Task</option>
+                  </select>
+                </div>
+
+                <!-- Subtasks -->
+                <div class="subtask-container">
+                  <label for="subtask">Subtasks</label>
+                  <div class="input-subtask-wrapper">
+                    <input type="text" id="subtask-input" placeholder="Add new subtask" />
+                    <div class="subtask-buttons">
+                      <button id="clear-subtask" class="hidden">✖</button>
+                      <div id="vector" class="hidden">|</div>
+                      <button id="confirm-subtask" class="hidden">✔</button>
+                      <button id="add-subtask-btn">+</button>
+                    </div>
+                  </div>
+                  <div class="subtask-list-wrapper">
+                    <ul id="subtask-list"></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="add-task-bottom-container">
+              <span><span style="color: red;">*</span> This field is required</span>
+              <div class="add-task-create-btn-container">
+                <button id="clear-all-fields-btn" class="clear-btn">
+                  Clear
+                  <img src="./assets/img/icons/addTask/add_task_x_icon.svg" alt="" />
+                </button>
+                <button class="create-btn">
+                  Create Task
+                  <img src="./assets/img/icons/addTask/add_task_check_icon.svg" alt="" />
+                </button>
+              </div>
+            </div>
+
+            <div id="popupSuccess" class="popup-success" style="display: none;">
+              <div class="popup-content-success">
+                <p>Your task was created successfully!</p>
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
-  </template>
 
-  <!-- Big Card Modal -->
-  <div class="modal hidden" id="viewTaskModal">
-    <div class="modal-backdrop" id="closeViewTaskModalOverlay"></div>
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <!-- Card Template (for tasks) -->
+    <template id="cardTemplate">
+      <div class="card-body">
+        <div class="category" id="category"></div>
+        <div>
+          <h1 class="headline" id="headline"></h1>
+          <span class="info" id="info"></span>
+        </div>
+        <div class="progress-and-subtask">
+          <div class="progressbar" id="progressbar">
+            <div class="progressbar-fill" id="progressbarFill"></div>
+          </div>
+          <div class="subtask-counter" id="subtaskCounter">0/0 subtasks</div>
+        </div>
+        <div class="chips-and-prio">
+          <div class="chips" id="chips"></div>
+          <div class="prio" id="prio"></div>
+        </div>
+      </div>
+    </template>
 
-        <!-- VIEW MODE -->
-        <div id="viewModeContainer">
-          <div class="card-header">
-            <div class="user-story-label">
-              <span class="category" id="taskCategoryBadge"></span>
-              <button class="close-button" id="closeViewTaskModalBtn">
-                <img src="../../assets/img/icons/board/close.svg" alt="Close" />
+    <!-- Big Card Modal -->
+    <div class="modal hidden" id="viewTaskModal">
+      <div class="modal-backdrop" id="closeViewTaskModalOverlay"></div>
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- VIEW MODE -->
+          <div id="viewModeContainer">
+            <div class="card-header">
+              <div class="user-story-label">
+                <span class="category" id="taskCategoryBadge"></span>
+                <button class="close-button" id="closeViewTaskModalBtn">
+                  <img src="../../assets/img/icons/board/close.svg" alt="Close" />
+                </button>
+              </div>
+            </div>
+            <h1 class="card-title" id="taskTitle">Headline</h1>
+            <p class="card-description" id="taskDescription">Info Text</p>
+
+            <p class="date">
+              <strong>Due date:</strong> <span id="taskDueDate"></span>
+            </p>
+            <p class="prio">
+              <strong>Priority:</strong> <span id="taskPriority"></span>
+            </p>
+
+            <div class="assigned-to">
+              <p>Assigned to:</p>
+              <ul class="assignees-list" id="taskAssignedTo"></ul>
+            </div>
+
+            <div class="subtasks">
+              <h3>Subtasks</h3>
+              <ul id="taskSubtasks"></ul>
+            </div>
+
+            <div class="card-footer">
+              <button class="delete-btn" id="deleteTaskBtn">
+                <img src="../../assets/img/icons/addTask/delete_icon.svg" alt="Delete" />
+                Delete
+              </button>
+              <div class="gray-vector"></div>
+              <button class="edit-icon" id="editTaskBtn">
+                <img src="../../assets/img/icons/board/edit.svg" alt="Edit" />
+                Edit
               </button>
             </div>
           </div>
-          <h1 class="card-title" id="taskTitle">Headline</h1>
-          <p class="card-description" id="taskDescription">Info Text</p>
 
-          <p class="date">
-            <strong>Due date:</strong> <span id="taskDueDate"></span>
-          </p>
-          <p class="prio">
-            <strong>Priority:</strong> <span id="taskPriority"></span>
-          </p>
+          <!-- EDIT MODE (hidden by default) -->
+          <div id="editFormContainer" style="display: none">
 
-          <div class="assigned-to">
-            <p>Assigned to:</p>
-            <ul class="assignees-list" id="taskAssignedTo"></ul>
-          </div>
+            <!-- Title -->
+            <label for="editTitleInput">Title</label>
+            <input type="text" id="editTitleInput" />
 
-          <div class="subtasks">
-            <h3>Subtasks</h3>
-            <ul id="taskSubtasks"></ul>
-          </div>
+            <!-- Description -->
+            <label for="editDescriptionInput">Description</label>
+            <textarea id="editDescriptionInput"></textarea>
 
-          <div class="card-footer">
-            <button class="delete-btn" id="deleteTaskBtn">
-              <img src="../../assets/img/icons/addTask/delete_icon.svg" alt="Delete" />
-              Delete
-            </button>
-            <div class="gray-vector"></div>
-            <button class="edit-icon" id="editTaskBtn">
-              <img src="../../assets/img/icons/board/edit.svg" alt="Edit" />
-              Edit
-            </button>
-          </div>
-        </div>
+            <!-- Due Date -->
+            <label for="editDueDateInput">Due date</label>
+            <input type="date" id="editDueDateInput" />
 
-        <!-- EDIT MODE (hidden by default) -->
-        <div id="editFormContainer" style="display: none">
-
-          <!-- Title -->
-          <label for="editTitleInput">Title</label>
-          <input type="text" id="editTitleInput" />
-
-          <!-- Description -->
-          <label for="editDescriptionInput">Description</label>
-          <textarea id="editDescriptionInput"></textarea>
-
-          <!-- Due Date -->
-          <label for="editDueDateInput">Due date</label>
-          <input type="date" id="editDueDateInput" />
-
-          <!-- Priority -->
-          <div class="prio-selection-container">
-            <span><strong>Priority</strong></span>
-            <div class="prio-selector-container">
-              <div class="prio-option" data-prio="urgent" id="prioUrgentBtn">
-                <span>Urgent</span>
-                <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority" />
-              </div>
-              <div class="prio-option selected" data-prio="medium" id="prioMediumBtn">
-                <span>Medium</span>
-                <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority" />
-              </div>
-              <div class="prio-option" data-prio="low" id="prioLowBtn">
-                <span>Low</span>
-                <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority" />
-              </div>
-            </div>
-          </div>
-
-          <input type="hidden" id="editPriorityInput" value="medium" />
-
-          <!-- Assigned to -->
-          <div class="drop-down-assignt-to-container-edit">
-            <span>Assigned to</span>
-            <div class="assigned-container">
-              <div id="editSelectedContactsContainer" class="selected-contacts-container"></div>
-              <div class="dropdown-wrapper">
-                <div class="dropdown-toggle-edit" id="editDropdownToggle">
-                  <span id="editDropdownPlaceholder">Select contact(s)</span>
-                  <img class="dropdown-arrow" id="editDropdownArrow"
-                    src="./assets/img/icons/addTask/arrow_drop_down.svg" alt="Dropdown arrow" />
+            <!-- Priority -->
+            <div class="prio-selection-container">
+              <span><strong>Priority</strong></span>
+              <div class="prio-selector-container">
+                <div class="prio-option" data-prio="urgent" id="prioUrgentBtn">
+                  <span>Urgent</span>
+                  <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority" />
                 </div>
-                <div class="dropdown-list hidden" id="editContactsDropdownList"></div>
+                <div class="prio-option selected" data-prio="medium" id="prioMediumBtn">
+                  <span>Medium</span>
+                  <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority" />
+                </div>
+                <div class="prio-option" data-prio="low" id="prioLowBtn">
+                  <span>Low</span>
+                  <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority" />
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Subtasks -->
-          <label for="editSubtaskInput">Subtasks</label>
-          <div class="edit-subtask-container">
-            <div class="input-subtask-wrapper">
-              <input type="text" id="editSubtaskInput" placeholder="Add new subtask" />
-              <div class="subtask-buttons">
-                <button id="editClearSubtaskBtn" class="hidden">✖</button>
-                <div id="editVector" class="hidden">|</div>
-                <button id="editConfirmSubtaskBtn" class="hidden">✔</button>
-                <button id="editAddSubtaskBtn">+</button>
+            <input type="hidden" id="editPriorityInput" value="medium" />
+
+            <!-- Assigned to -->
+            <div class="drop-down-assignt-to-container-edit">
+              <span>Assigned to</span>
+              <div class="assigned-container">
+                <div id="editSelectedContactsContainer" class="selected-contacts-container"></div>
+                <div class="dropdown-wrapper">
+                  <div class="dropdown-toggle-edit" id="editDropdownToggle">
+                    <span id="editDropdownPlaceholder">Select contact(s)</span>
+                    <img class="dropdown-arrow" id="editDropdownArrow"
+                      src="./assets/img/icons/addTask/arrow_drop_down.svg" alt="Dropdown arrow" />
+                  </div>
+                  <div class="dropdown-list hidden" id="editContactsDropdownList"></div>
+                </div>
               </div>
             </div>
-            <div class="subtask-list-wrapper">
-              <ul id="editSubtasksList"></ul>
-            </div>
-          </div>
 
-          <!-- Footer (Dismiss + Save) -->
-          <div class="edit-form-footer">
-            <button type="button" class="delete-btn" id="dismissEditBtn">
-              <img src="../../assets/img/icons/addTask/add_task_x_icon.svg" alt="Delete" />
-              Cancel
-            </button>
-            <div class="gray-vector"></div>
-            <button type="button" id="saveEditBtn">
-              <img src="./assets/img/icons/addTask/check_Subtasks_icon.svg" alt="" />
-              Save
-            </button>
+            <!-- Subtasks -->
+            <label for="editSubtaskInput">Subtasks</label>
+            <div class="edit-subtask-container">
+              <div class="input-subtask-wrapper">
+                <input type="text" id="editSubtaskInput" placeholder="Add new subtask" />
+                <div class="subtask-buttons">
+                  <button id="editClearSubtaskBtn" class="hidden">✖</button>
+                  <div id="editVector" class="hidden">|</div>
+                  <button id="editConfirmSubtaskBtn" class="hidden">✔</button>
+                  <button id="editAddSubtaskBtn">+</button>
+                </div>
+              </div>
+              <div class="subtask-list-wrapper">
+                <ul id="editSubtasksList"></ul>
+              </div>
+            </div>
+
+            <!-- Footer (Dismiss + Save) -->
+            <div class="edit-form-footer">
+              <button type="button" class="delete-btn" id="dismissEditBtn">
+                <img src="../../assets/img/icons/addTask/add_task_x_icon.svg" alt="Delete" />
+                Cancel
+              </button>
+              <div class="gray-vector"></div>
+              <button type="button" id="saveEditBtn">
+                <img src="./assets/img/icons/addTask/check_Subtasks_icon.svg" alt="" />
+                Save
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script type="module" src="./shared/includeHTML.js"></script>
-  <script type="module" src="./js/addTask.js"></script>
-  <script type="module" src="./js/firebase.js"></script>
-  <script type="module" src="./shared/navbar.js"></script>
-  <script type="module" src="./shared/header.js"></script>
-  <script type="module" src="./shared/modal.js"></script>
-  <script type="module" src="./js/board.js"></script>
-  <script src="./shared/landscapeCheck.js" defer></script>
-</body>
+    <script type="module" src="./shared/includeHTML.js"></script>
+    <script type="module" src="./js/addTask.js"></script>
+    <script type="module" src="./js/firebase.js"></script>
+    <script type="module" src="./shared/navbar.js"></script>
+    <script type="module" src="./shared/header.js"></script>
+    <script type="module" src="./shared/modal.js"></script>
+    <script type="module" src="./js/board.js"></script>
+    <script src="./shared/landscapeCheck.js" defer></script>
+  </body>
 
 </html>
