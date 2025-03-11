@@ -30,7 +30,7 @@ html {
 .add-task-main-container {
     display: flex;
     flex-direction: column;
-    padding-top: 110px;
+    padding-top: 60px;
     padding-left: 96px;
     padding-right: 96px;
 }
@@ -38,7 +38,7 @@ html {
 .add-task-input-containers {
     display: flex;
     justify-content: space-between;
-    padding-top: 67px;
+    padding-top: 34px;
 }
 
 .headline-add-task {
