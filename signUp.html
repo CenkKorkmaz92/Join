@@ -30,41 +30,55 @@
             <h1 class="headline">Sign up</h1>
 
             <div class="input-container">
-                <input type="text" placeholder="Name" id="name">
-                <span class="icon">
-                    <img src="./assets/img/icons/signUp/avatar_icon.svg" alt="Avatar Icon">
-                </span>
+                <div class="input-wrapper">
+                    <input type="text" placeholder="Name" id="name" onblur="validateInput(this)">
+                    <span class="icon">
+                        <img src="./assets/img/icons/signUp/avatar_icon.svg" alt="Avatar Icon">
+                    </span>
+                </div>
+                <p class="error-message" id="name-error">Bitte geben Sie Ihren Namen ein. Der Name muss mindestens zwei Wörter enthalten, mit jeweils mindestens zwei Buchstaben.</p>
             </div>
-
+            
             <div class="input-container">
-                <input type="email" placeholder="Email" id="email">
-                <span class="icon">
-                    <img src="./assets/img/icons/login/mail_icon.svg" alt="Email Icon">
-                </span>
+                <div class="input-wrapper">
+                    <input type="email" placeholder="Email" id="email" onblur="validateInput(this)">
+                    <span class="icon">
+                        <img src="./assets/img/icons/login/mail_icon.svg" alt="Email Icon">
+                    </span>
+                </div>
+                <p class="error-message" id="email-error">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
             </div>
-
+            
             <div class="input-container">
-                <input type="password" placeholder="Password" id="password">
-                <span class="icon">
-                    <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
-                </span>
+                <div class="input-wrapper">
+                    <input type="password" placeholder="Password" id="password" onblur="validateInput(this)">
+                    <span class="icon">
+                        <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
+                    </span>
+                </div>
+                <p class="error-message" id="password-error">Bitte geben Sie ein Passwort ein. Das Passwort muss mindestens einen Großbuchstaben, eine Zahl und mindestens 8 Zeichen enthalten.</p>
             </div>
-
+            
             <div class="input-container">
-                <input type="password" placeholder="Confirm Password" id="confirmPassword">
-                <span class="icon">
-                    <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
-                </span>
+                <div class="input-wrapper">
+                    <input type="password" placeholder="Confirm Password" id="confirmPassword" onblur="validateInput(this)">
+                    <span class="icon">
+                        <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
+                    </span>
+                </div>
+                <p class="error-message" id="confirmPassword-error">Bitte bestätigen Sie Ihr Passwort. Die Passwörter müssen übereinstimmen.</p>
             </div>
+            
+        </div>
 
             <!-- Terms and Conditions -->
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="termsCheckbox">
+                <input class="form-check-input" type="checkbox" id="termsCheckbox" onchange="validateCheckbox()">
                 <label class="form-check-label" for="termsCheckbox">
                     I accept the
-                    <span class="privacy-policy" onclick="redirectTo('./privacyPolicyExternal.html')">Privacy
-                        Policy</span>
+                    <span class="privacy-policy" onclick="redirectTo('./privacyPolicyExternal.html')">Privacy Policy</span>
                 </label>
+                <p class="error-message" id="termsCheckbox-error">Bitte akzeptieren Sie die Datenschutzrichtlinie.</p>
             </div>
 
             <!-- Sign-Up Button -->

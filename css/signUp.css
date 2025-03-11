@@ -132,7 +132,7 @@ body {
 
 .input-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 0px 15px;
@@ -140,6 +140,15 @@ body {
     max-width: 422px;
     height: 48px;
     background-color: #fff;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+    width: 100%;
 }
 
 .input-container input {
@@ -265,6 +274,20 @@ body {
     border-color: #aaaaaa;
     color: #666666;
     cursor: not-allowed;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    display: none;
+    margin-top: 4px;
+}
+
+#termsCheckbox-error {
+    color: red;
+    font-size: 12px !important;
+    margin-top: 4px;
+    display: block;
 }
 
 @media (max-width: 768px) {
