@@ -53,36 +53,92 @@ function checkFormValidity() {
 }
 
 /**
- * Signs up a new user.
- * Gathers input data, saves the user to Firebase, shows a success popup,
- * and redirects to index.html after 2 seconds.
+ * Handles the sign-up process, including gathering user inputs,
+ * validating the password, creating a new user, and saving the user.
+ * Shows a success popup if the user is successfully saved.
  */
 async function signUp() {
-  const nameInput = document.getElementById("name");
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const confirmPasswordInput = document.getElementById("confirmPassword");
-  const name = nameInput.value;
-  const email = emailInput.value;
-  const password = passwordInput.value;
-  const confirmPassword = confirmPasswordInput.value;
+  const name = getInputValue("name");
+  const email = getInputValue("email");
+  const password = getInputValue("password");
+  const confirmPassword = getInputValue("confirmPassword");
+  if (!validatePasswords(password, confirmPassword)) return;
+  const newUser = createNewUser(name, email, password);
+  if (await saveUser(newUser)) {
+    showSuccessPopup();
+  }
+}
+
+/**
+ * Retrieves the value from an input element by its id.
+ * 
+ * @param {string} id - The id of the input element to retrieve the value from.
+ * @returns {string} The value of the input element.
+ */
+function getInputValue(id) {
+  return document.getElementById(id).value;
+}
+
+/**
+ * Validates if the password and confirmPassword match.
+ * 
+ * @param {string} password - The password entered by the user.
+ * @param {string} confirmPassword - The confirmation password entered by the user.
+ * @returns {boolean} Returns true if passwords match, otherwise false.
+ */
+function validatePasswords(password, confirmPassword) {
   if (password !== confirmPassword) {
     alert("Passwords do not match!");
-    return;
+    return false;
   }
+  return true;
+}
+
+/**
+ * Creates a new user object with the provided details.
+ * 
+ * @param {string} name - The user's name.
+ * @param {string} email - The user's email address.
+ * @param {string} password - The user's password.
+ * @returns {Object} The new user object with id, name, email, password, and initials.
+ */
+function createNewUser(name, email, password) {
   const id = generateUUID();
   const initials = getInitials(name);
-  const newUser = { id, name, email, password, initials };
+  return { id, name, email, password, initials };
+}
+
+/**
+ * Saves the new user object to the data store (e.g., database or local storage).
+ * 
+ * @param {Object} newUser - The new user object to save.
+ * @returns {Promise<boolean>} Returns a promise that resolves to true if the user is saved, otherwise false.
+ */
+async function saveUser(newUser) {
   try {
-    await saveData(`users/${id}`, newUser);
-    nameInput.value = "";
-    emailInput.value = "";
-    passwordInput.value = "";
-    confirmPasswordInput.value = "";
+    await saveData(`users/${newUser.id}`, newUser);
+    clearInputs();
+    return true;
   } catch (error) {
     console.error("Error creating user:", error);
-    return;
+    return false;
   }
+}
+
+/**
+ * Clears the input fields for the sign-up form.
+ */
+function clearInputs() {
+  document.getElementById("name").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("password").value = "";
+  document.getElementById("confirmPassword").value = "";
+}
+
+/**
+ * Displays a success popup for a short duration and redirects to the home page.
+ */
+function showSuccessPopup() {
   const popupSuccess = document.getElementById("popupSuccess");
   popupSuccess.style.display = "flex";
   setTimeout(() => {
@@ -91,6 +147,7 @@ async function signUp() {
   }, 2000);
 }
 
+
 /**
  * Displays or hides the error message based on the validation result.
  * @param {HTMLElement} errorMessage The error message element to show or hide.
@@ -98,10 +155,10 @@ async function signUp() {
  */
 function toggleErrorMessage(errorMessage, errorText) {
   if (errorText) {
-      errorMessage.style.display = "block";
-      errorMessage.textContent = errorText;
+    errorMessage.style.display = "block";
+    errorMessage.textContent = errorText;
   } else {
-      errorMessage.style.display = "none";
+    errorMessage.style.display = "none";
   }
 }
 
@@ -116,20 +173,39 @@ function validateInput(input) {
 }
 
 /**
-* Gets the validation error text based on the input's id.
-* @param {HTMLInputElement} input The input element being validated.
-* @returns {string} The error message or an empty string if valid.
-*/
+ * Validates the input field and shows or hides the error message.
+ * @param {HTMLInputElement} input - The input element that needs validation.
+ */
+window.validateInput = function (input) {
+  const errorMessage = document.getElementById(`${input.id}-error`);
+  const errorText = getValidationError(input);
+  toggleErrorMessage(errorMessage, errorText);
+};
+
+/**
+ * Returns the validation error message for a specific input field.
+ * @param {HTMLInputElement} input - The input element to validate.
+ * @returns {string} - The validation error message or an empty string if valid.
+ */
 function getValidationError(input) {
   switch (input.id) {
-      case "name": return validateName(input.value);
-      case "email": return validateEmail(input.value);
-      case "password": return validatePassword(input.value);
-      case "confirmPassword":
-          return validateConfirmPassword(input.value, document.getElementById("password").value.trim());
-      default: return input.value.trim() === "" ? "Dieses Feld darf nicht leer sein." : "";
+    case "name": return validateName(input.value);
+    case "email": return validateEmail(input.value);
+    case "password": return validatePassword(input.value);
+    case "confirmPassword": return validateConfirmPassword(input.value, document.getElementById("password").value.trim());
+    default: return input.value.trim() === "" ? "This field cannot be empty." : "";
   }
 }
+
+/**
+ * Event listener for when the DOM content is loaded. It attaches 'input' event listeners to all input fields.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach(input => {
+    input.addEventListener("input", () => validateInput(input));
+  });
+});
 
 /**
  * Validates the name input.
@@ -182,7 +258,7 @@ function validateConfirmPassword(value, password) {
 document.addEventListener("DOMContentLoaded", () => {
   const inputs = document.querySelectorAll("input");
   inputs.forEach(input => {
-      input.addEventListener("blur", () => validateInput(input));
+    input.addEventListener("blur", () => validateInput(input));
   });
 });
 
@@ -194,9 +270,9 @@ function validateCheckbox() {
   const termsCheckbox = document.getElementById("termsCheckbox");
   const errorMessage = document.getElementById("termsCheckbox-error");
   if (termsCheckbox.checked) {
-      errorMessage.style.display = "none";
+    errorMessage.style.display = "none";
   } else {
-      errorMessage.style.display = "block";
+    errorMessage.style.display = "block";
   }
 }
 
