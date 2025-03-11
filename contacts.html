@@ -16,236 +16,250 @@
 </head>
 
 <body>
-    <div class="layout">
-        <!-- Sidebar (Navbar) -->
-        <div id="navbar-container" class="navbar"></div>
 
-        <!-- Header -->
-        <div id="header-container" class="top-header"></div>
+    <body>
+        <!-- Landscape Warning -->
+        <div id="landscapeWarning">
+            <img src="./assets/img/mobile/rotateDevice.png" alt="" />
+        </div>
 
-        <main class="content">
-            <div class="contact-body">
+        <div class="layout">
+            <!-- Sidebar (Navbar) -->
+            <div id="navbar-container" class="navbar"></div>
 
-            <div class="contact-wrapper">
-                <div class="container" id="containerContact">
-                    <div class="contact-list-hidden">
-                        <button class="add-contact-btn" id="addContactBtn">
-                            Add new contact
-                            <img src="./assets/img/icons/contact/person_add.svg" alt="" class="img-add-contact">
-                        </button>
-                    </div>
-                    <div id="contactList"></div>
-                    <button class="add-new-contact-responsive" style="display: none;">
-                        <img src="./assets/img/icons/contact/person_add_responsive.svg" alt="">
-                    </button>
-                </div>
-            </div>
+            <!-- Header -->
+            <div id="header-container" class="top-header"></div>
 
-                <div id="popup" class="popup" style="display: none;">
-                    <div class="background-popup">
-                        <form id="contactForm" class="popup-form">
-                            <div class="popup-header">
-                                <div class="popup-header-main">
-                                    <div class="popup-header-logo-box">
-                                        <img src="/assets/img/icons/contact/contact_logo.svg" alt="">
-                                    </div>
-                                    <div class="popup-header-text-box">
-                                        <span class="popup-header-text-box-headline">Add contact</span>
-                                        <span class="popup-header-text-box-subtext">Tasks are better with a team!</span>
-                                    </div>
-                                    <div class="popup-header-separator-box">
-                                        <img src="/assets/img/icons/contact/contact_separator.svg" alt="">
-                                    </div>
-                                </div>
+            <main class="content">
+                <div class="contact-body">
+
+                    <div class="contact-wrapper">
+                        <div class="container" id="containerContact">
+                            <div class="contact-list-hidden">
+                                <button class="add-contact-btn" id="addContactBtn">
+                                    Add new contact
+                                    <img src="./assets/img/icons/contact/person_add.svg" alt="" class="img-add-contact">
+                                </button>
                             </div>
-                            <div class="popup-content">
-                                <div class="pop-up-close-button">
-                                    <img src="/assets/img/icons/contact/contact_close.svg" alt=""
-                                        onclick="closePopupGeneric('popup', '.popup-form')"
-                                        class="pop-up-close-button-img">
-                                    <img src="/assets/img/icons/contact/contact_close_responsive.svg" alt=""
-                                        onclick="closePopupGeneric('popup', '.popup-form')"
-                                        class="pop-up-close-button-img-responsive" style="display: none;">
-                                </div>
-                                <div class="popup-overclass">
-                                    <div class="popup-main-section">
-                                        <img src="/assets/img/icons/contact/contact_profile_blanco.svg" alt="" class="blanco-img-new-contact">
-                                    </div>
-                                    <div class="popup-sub-section">
-                                        <div class="popup-input">
-                                            <div class="input-group">
-                                                <input type="text" id="nameInput" placeholder="Name"
-                                                    class="popup-input-field" required
-                                                    pattern="^[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$">
-                                                <span class="error-message" id="nameError"></span>
-                                            </div>
-                                            <div class="input-group">
-                                                <input type="email" id="emailInput" placeholder="E-Mail"
-                                                    class="popup-input-field" required
-                                                    pattern="^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A-Za-z]{2,}$">
-                                                <span class="error-message" id="emailError"></span>
-                                            </div>
-                                            <div class="input-group">
-                                                <input type="tel" id="phoneInput" placeholder="Telefonnummer"
-                                                    class="popup-input-field" required pattern="^[0-9+\s]{6,}$">
-                                                <span class="error-message" id="phoneError"></span>
-                                            </div>
+                            <div id="contactList"></div>
+                            <button class="add-new-contact-responsive" style="display: none;">
+                                <img src="./assets/img/icons/contact/person_add_responsive.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="popup" class="popup" style="display: none;">
+                        <div class="background-popup">
+                            <form id="contactForm" class="popup-form">
+                                <div class="popup-header">
+                                    <div class="popup-header-main">
+                                        <div class="popup-header-logo-box">
+                                            <img src="/assets/img/icons/contact/contact_logo.svg" alt="">
                                         </div>
-                                        <div class="popup-buttons">
-                                            <button type="button" id="clearBtn" class="popup-button-cancel">
-                                                Cancel
-                                                <img src="/assets/img/icons/contact/contact_cancel.svg" alt="">
-                                            </button>
-                                            <button type="submit" id="saveBtn" class="popup-button-check">
-                                                Create contact
-                                                <img src="/assets/img/icons/contact/contact_check.svg" alt="">
-                                            </button>
+                                        <div class="popup-header-text-box">
+                                            <span class="popup-header-text-box-headline">Add contact</span>
+                                            <span class="popup-header-text-box-subtext">Tasks are better with a
+                                                team!</span>
+                                        </div>
+                                        <div class="popup-header-separator-box">
+                                            <img src="/assets/img/icons/contact/contact_separator.svg" alt="">
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="contact-detail">
-                    <div class="contact-header" id="contactDetail">
-                        <p class="contact-detail-headline">Contact</p>
-                        <img src="./assets/img/icons/contact/separator-contact.svg" alt="" class="content-header-separator">
-                        <p class="contact-detail-subheadline">Better with a team</p>
-                        <img src="./assets/img/icons/contact/separator-contact.svg" alt="" class="content-header-separator-responsive" style="display: none;">
-                        <button class="back-to-contact-list-button" style="display: none;">
-                            <img src="./assets/img/icons/contact/arrow_contatcs_responsive.svg" alt="">
-                        </button>
-                    </div>
-                    <div class="contact-info hidden" id="detailedContactInfo">
-                        <div class="contact-info-section">
-                            <div id="contactCircle" class="contact-circle-detail"></div>
-                            <div class="contact-personal-info">
-                                <p id="contactName" class="contact-detailed-name"></p>
-                                <div class="contact-buttons">
-                                    <button id="editContactBtn" class="button-edit">
-                                        <img src="./assets/img/icons/contact/contact_edit.svg" alt=""
-                                            class="icons-contact-detail-edit">
-                                        Edit
-                                    </button>
-                                    <button id="deleteContactBtn" class="button-delete">
-                                        <img src="./assets/img/icons/contact/contact_delete.svg" alt=""
-                                            class="icons-contact-detail-delete">
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-details">
-                            <p class="contact-details-headline">Contact Information</p>
-                            <div class="contact-information-mail">
-                                <p class="contact-details-subtitel">Email:</p>
-                                <p id="contactEmail">-</p>
-                            </div>
-                            <div class="contact-information-phone">
-                                <p class="contact-details-subtitel">Phone:</p>
-                                <p id="contactPhone">-</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="editPopup" class="popup" style="display: none;">
-                    <div class="background-popup">
-                        <div class="edit-popup-content">
-                            <div class="popup-header">
-                                <div class="popup-header-main">
-                                    <div class="popup-header-logo-box">
-                                        <img src="/assets/img/icons/contact/contact_logo.svg" alt="">
+                                <div class="popup-content">
+                                    <div class="pop-up-close-button">
+                                        <img src="/assets/img/icons/contact/contact_close.svg" alt=""
+                                            onclick="closePopupGeneric('popup', '.popup-form')"
+                                            class="pop-up-close-button-img">
+                                        <img src="/assets/img/icons/contact/contact_close_responsive.svg" alt=""
+                                            onclick="closePopupGeneric('popup', '.popup-form')"
+                                            class="pop-up-close-button-img-responsive" style="display: none;">
                                     </div>
-                                    <div class="popup-header-text-box">
-                                        <span class="popup-header-text-box-headline">Edit Contact</span>
-                                        <span class="popup-header-text-box-subtext">Update your contact details</span>
-                                    </div>
-                                    <div class="popup-header-separator-box">
-                                        <img src="/assets/img/icons/contact/contact_separator.svg" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="popup-content">
-                                <div class="pop-up-close-button-edit-contact">
-                                    <img src="/assets/img/icons/contact/contact_close.svg" alt=""
-                                        onclick="closePopupGeneric('editPopup', '.popup-content')"
-                                        class="pop-up-close-button-img-edit-contact" >
-                                    <img src="/assets/img/icons/contact/contact_close_responsive.svg" alt=""
-                                        onclick="closePopupGeneric('editPopup', '.popup-form')"
-                                        class="pop-up-close-button-img-edit-contact-responsive" style="display: none;">
-                                </div>
-                                <div class="popup-overclass">
-                                    <div class="popup-main-section">
-                                        <div id="selectedContactProfile" class="contact-circle-detail-edit"></div>
-                                    </div>
-                                    <div class="popup-sub-section">
-                                        <form id="editContactForm" class="popup-form" novalidate>
+                                    <div class="popup-overclass">
+                                        <div class="popup-main-section">
+                                            <img src="/assets/img/icons/contact/contact_profile_blanco.svg" alt=""
+                                                class="blanco-img-new-contact">
+                                        </div>
+                                        <div class="popup-sub-section">
                                             <div class="popup-input">
                                                 <div class="input-group">
-                                                    <input type="text" id="editNameInput" placeholder="Name"
+                                                    <input type="text" id="nameInput" placeholder="Name"
                                                         class="popup-input-field" required
                                                         pattern="^[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$">
-                                                    <span class="error-message" id="editNameError"></span>
+                                                    <span class="error-message" id="nameError"></span>
                                                 </div>
                                                 <div class="input-group">
-                                                    <input type="email" id="editEmailInput" placeholder="E-Mail"
+                                                    <input type="email" id="emailInput" placeholder="E-Mail"
                                                         class="popup-input-field" required
                                                         pattern="^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A-Za-z]{2,}$">
-                                                    <span class="error-message" id="editEmailError"></span>
+                                                    <span class="error-message" id="emailError"></span>
                                                 </div>
                                                 <div class="input-group">
-                                                    <input type="tel" id="editPhoneInput" placeholder="Telefonnummer"
+                                                    <input type="tel" id="phoneInput" placeholder="Telefonnummer"
                                                         class="popup-input-field" required pattern="^[0-9+\s]{6,}$">
-                                                    <span class="error-message" id="editPhoneError"></span>
+                                                    <span class="error-message" id="phoneError"></span>
                                                 </div>
                                             </div>
                                             <div class="popup-buttons">
-                                                <button type="button" id="deleteBtn" class="popup-button-cancel">
-                                                    Delete
+                                                <button type="button" id="clearBtn" class="popup-button-cancel">
+                                                    Cancel
                                                     <img src="/assets/img/icons/contact/contact_cancel.svg" alt="">
                                                 </button>
-                                                <button type="submit" id="saveEditBtn" class="popup-button-check">
-                                                    Save
+                                                <button type="submit" id="saveBtn" class="popup-button-check">
+                                                    Create contact
                                                     <img src="/assets/img/icons/contact/contact_check.svg" alt="">
                                                 </button>
                                             </div>
-                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="contact-detail">
+                        <div class="contact-header" id="contactDetail">
+                            <p class="contact-detail-headline">Contact</p>
+                            <img src="./assets/img/icons/contact/separator-contact.svg" alt=""
+                                class="content-header-separator">
+                            <p class="contact-detail-subheadline">Better with a team</p>
+                            <img src="./assets/img/icons/contact/separator-contact.svg" alt=""
+                                class="content-header-separator-responsive" style="display: none;">
+                            <button class="back-to-contact-list-button" style="display: none;">
+                                <img src="./assets/img/icons/contact/arrow_contatcs_responsive.svg" alt="">
+                            </button>
+                        </div>
+                        <div class="contact-info hidden" id="detailedContactInfo">
+                            <div class="contact-info-section">
+                                <div id="contactCircle" class="contact-circle-detail"></div>
+                                <div class="contact-personal-info">
+                                    <p id="contactName" class="contact-detailed-name"></p>
+                                    <div class="contact-buttons">
+                                        <button id="editContactBtn" class="button-edit">
+                                            <img src="./assets/img/icons/contact/contact_edit.svg" alt=""
+                                                class="icons-contact-detail-edit">
+                                            Edit
+                                        </button>
+                                        <button id="deleteContactBtn" class="button-delete">
+                                            <img src="./assets/img/icons/contact/contact_delete.svg" alt=""
+                                                class="icons-contact-detail-delete">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-details">
+                                <p class="contact-details-headline">Contact Information</p>
+                                <div class="contact-information-mail">
+                                    <p class="contact-details-subtitel">Email:</p>
+                                    <p id="contactEmail">-</p>
+                                </div>
+                                <div class="contact-information-phone">
+                                    <p class="contact-details-subtitel">Phone:</p>
+                                    <p id="contactPhone">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="editPopup" class="popup" style="display: none;">
+                        <div class="background-popup">
+                            <div class="edit-popup-content">
+                                <div class="popup-header">
+                                    <div class="popup-header-main">
+                                        <div class="popup-header-logo-box">
+                                            <img src="/assets/img/icons/contact/contact_logo.svg" alt="">
+                                        </div>
+                                        <div class="popup-header-text-box">
+                                            <span class="popup-header-text-box-headline">Edit Contact</span>
+                                            <span class="popup-header-text-box-subtext">Update your contact
+                                                details</span>
+                                        </div>
+                                        <div class="popup-header-separator-box">
+                                            <img src="/assets/img/icons/contact/contact_separator.svg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="popup-content">
+                                    <div class="pop-up-close-button-edit-contact">
+                                        <img src="/assets/img/icons/contact/contact_close.svg" alt=""
+                                            onclick="closePopupGeneric('editPopup', '.popup-content')"
+                                            class="pop-up-close-button-img-edit-contact">
+                                        <img src="/assets/img/icons/contact/contact_close_responsive.svg" alt=""
+                                            onclick="closePopupGeneric('editPopup', '.popup-form')"
+                                            class="pop-up-close-button-img-edit-contact-responsive"
+                                            style="display: none;">
+                                    </div>
+                                    <div class="popup-overclass">
+                                        <div class="popup-main-section">
+                                            <div id="selectedContactProfile" class="contact-circle-detail-edit"></div>
+                                        </div>
+                                        <div class="popup-sub-section">
+                                            <form id="editContactForm" class="popup-form" novalidate>
+                                                <div class="popup-input">
+                                                    <div class="input-group">
+                                                        <input type="text" id="editNameInput" placeholder="Name"
+                                                            class="popup-input-field" required
+                                                            pattern="^[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$">
+                                                        <span class="error-message" id="editNameError"></span>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <input type="email" id="editEmailInput" placeholder="E-Mail"
+                                                            class="popup-input-field" required
+                                                            pattern="^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A-Za-z]{2,}$">
+                                                        <span class="error-message" id="editEmailError"></span>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <input type="tel" id="editPhoneInput"
+                                                            placeholder="Telefonnummer" class="popup-input-field"
+                                                            required pattern="^[0-9+\s]{6,}$">
+                                                        <span class="error-message" id="editPhoneError"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="popup-buttons">
+                                                    <button type="button" id="deleteBtn" class="popup-button-cancel">
+                                                        Delete
+                                                        <img src="/assets/img/icons/contact/contact_cancel.svg" alt="">
+                                                    </button>
+                                                    <button type="submit" id="saveEditBtn" class="popup-button-check">
+                                                        Save
+                                                        <img src="/assets/img/icons/contact/contact_check.svg" alt="">
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div id="popupSuccess" class="popup-success" style="display: none;">
-                    <div class="popup-content-success">
-                        <p>Your contact was created successfully!</p>
+                    <div id="popupSuccess" class="popup-success" style="display: none;">
+                        <div class="popup-content-success">
+                            <p>Your contact was created successfully!</p>
+                        </div>
                     </div>
-                </div>
 
-                <div id="popupDelete" class="popup-success" style="display: none;">
-                    <div class="popup-content-success">
-                        <p>Your contact was deleted</p>
+                    <div id="popupDelete" class="popup-success" style="display: none;">
+                        <div class="popup-content-success">
+                            <p>Your contact was deleted</p>
+                        </div>
                     </div>
+
                 </div>
+            </main>
+        </div>
 
-            </div>
-        </main>
-    </div>
-
-    <!-- Link Scripts -->
-    <script src="./shared/includeHTML.js"></script>
-    <script src="./shared/navbar.js"></script>
-    <script type="module" src="./js/firebase.js"></script>
-    <script src="./shared/header.js"></script>
-    <script src="./js/contacts.js"></script>
-    <script src="./js/contactsHelpFunctions.js"></script>
-    <script src="./js/contactsEventListener.js"></script>
-    <script src="./js/contactsHTML.js"></script>
-    <script src="./shared/landscapeCheck.js" defer></script>
-</body>
+        <!-- Link Scripts -->
+        <script src="./shared/includeHTML.js"></script>
+        <script src="./shared/navbar.js"></script>
+        <script type="module" src="./js/firebase.js"></script>
+        <script src="./shared/header.js"></script>
+        <script src="./js/contacts.js"></script>
+        <script src="./js/contactsHelpFunctions.js"></script>
+        <script src="./js/contactsEventListener.js"></script>
+        <script src="./js/contactsHTML.js"></script>
+        <script src="./shared/landscapeCheck.js" defer></script>
+    </body>
 
 </html>
