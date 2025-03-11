@@ -41,6 +41,8 @@ html {
     padding-top: 34px;
 }
 
+
+
 .headline-add-task {
     font-size: 61px;
     font-weight: 700;
@@ -102,6 +104,11 @@ html {
     line-height: 24px;
     padding: 8px;
     resize: vertical;
+}
+
+.focus:focus {
+    border-color: #29ABE2 !important;
+    outline: none;
 }
 
 .input-description-container textarea::placeholder {

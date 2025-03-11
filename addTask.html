@@ -28,12 +28,12 @@
                         <div class="input-title-container">
                             <span>Title<span style="color: red;">*</span></span>
                             <!-- ADD ID HERE -->
-                            <input type="text" id="titleInput" required placeholder="Enter a title" />
+                            <input type="text" class="focus" id="titleInput" required placeholder="Enter a title" />
                         </div>
                         <div class="input-description-container">
                             <span>Description</span>
                             <!-- ADD ID HERE -->
-                            <textarea id="descriptionInput" placeholder="Enter a Description"></textarea>
+                            <textarea class="focus" id="descriptionInput" placeholder="Enter a Description"></textarea>
                         </div>
 
                         <!-- Assigned to -->
@@ -59,7 +59,7 @@
                         <div class="input-due-date-container">
                             <span>Due date<span style="color: red;">*</span></span>
                             <!-- ADD ID HERE -->
-                            <input type="date" id="dueDateInput" required />
+                            <input type="date" class="focus" id="dueDateInput" required />
                         </div>
                         <div class="prio-selection-container">
                             <span>Prio</span>
@@ -84,7 +84,7 @@
                         <div class="input-category-container">
                             <label for="category" required>Category<span style="color: red;">*</span></label>
                             <!-- ADD ID HERE -->
-                            <select id="categorySelect" required>
+                            <select class="focus" id="categorySelect" required>
                                 <option value="" selected hidden>Select task category</option>
                                 <option value="user-story">User Story</option>
                                 <option value="technical-task">Technical Task</option>
