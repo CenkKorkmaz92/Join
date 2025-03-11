@@ -29,8 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(() => {
             loadingScreen.classList.add("fade-out");
             navbarLogo.classList.add("show");
-        }, 1000); // Matches transition duration
-    }, 2000); // Delay before animation starts
+        }, 700); // Matches transition duration
+    }, 1000); // Delay before animation starts
 });
 
 document.addEventListener("DOMContentLoaded", function () {
