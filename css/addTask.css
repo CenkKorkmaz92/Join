@@ -27,6 +27,16 @@ html {
     }
 }
 
+.drop-down-assignt-to-container,
+body,
+html,
+.layout,
+.content,
+.add-task-main-container {
+    filter: none !important;
+}
+
+
 .add-task-main-container {
     display: flex;
     flex-direction: column;
@@ -186,14 +196,17 @@ html {
     z-index: 9999;
     max-height: 173px;
     overflow: auto;
-    -webkit-font-smoothing: antialiased;
-    backface-visibility: hidden;
     background-color: #fff;
     border: 1px solid #d1d1d1;
-    border-radius: 10px;
     margin-top: 4px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     padding: 8px;
+}
+
+#editFormContainer label {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
 .contact-list-item {

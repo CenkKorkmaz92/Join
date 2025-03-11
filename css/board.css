@@ -1,3 +1,16 @@
+.board-main-content,
+body,
+html,
+.layout,
+.content,
+.add-task-modal,
+.add-task-overlay,
+.add-task-modal-content {
+    filter: none !important;
+    backdrop-filter: none !important;
+}
+
+
 .board-main-content {
   padding-top: 60px;
   padding-left: 96px;

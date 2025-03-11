@@ -92,12 +92,10 @@
             <div class="left-input-fields">
               <div class="input-title-container">
                 <span>Title<span style="color: red;">*</span></span>
-                <!-- ADD ID HERE -->
                 <input type="text" class="focus" id="titleInput" required placeholder="Enter a title" />
               </div>
               <div class="input-description-container">
                 <span>Description</span>
-                <!-- ADD ID HERE -->
                 <textarea class="focus" id="descriptionInput" placeholder="Enter a Description"></textarea>
               </div>
 
@@ -111,7 +109,6 @@
                       alt="Dropdown arrow" />
                   </div>
                   <div class="dropdown-list hidden" id="contactsDropdownList">
-                    <!-- JS adds contact items here -->
                   </div>
                 </div>
                 <div class="selected-contacts-container" id="selectedContactsContainer"></div>
@@ -123,13 +120,12 @@
             <div class="right-input-fields">
               <div class="input-due-date-container">
                 <span>Due date<span style="color: red;">*</span></span>
-                <!-- ADD ID HERE -->
                 <input type="date" class="focus" id="dueDateInput" required />
               </div>
               <div class="prio-selection-container">
                 <span>Prio</span>
                 <div class="prio-selector-container">
-                  <!-- .prio-option class is fine -->
+                  <!-- .prio-option class -->
                   <div class="prio-option" data-prio="urgent">
                     <span>Urgent</span>
                     <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority" />
@@ -148,7 +144,6 @@
 
               <div class="input-category-container">
                 <label for="category" required>Category<span style="color: red;">*</span></label>
-                <!-- ADD ID HERE -->
                 <select class="focus" id="categorySelect" required>
                   <option value="" selected hidden>Select task category</option>
                   <option value="user-story">User Story</option>
@@ -226,7 +221,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
 
-        <!-- VIEW MODE (what you already have) -->
+        <!-- VIEW MODE -->
         <div id="viewModeContainer">
           <div class="card-header">
             <div class="user-story-label">
@@ -302,7 +297,7 @@
               </div>
             </div>
           </div>
-          <!-- We store the chosen priority in a hidden input: -->
+
           <input type="hidden" id="editPriorityInput" value="medium" />
 
           <!-- Assigned to -->
@@ -310,23 +305,23 @@
             <span>Assigned to</span>
             <div class="assigned-container">
               <div id="editSelectedContactsContainer" class="selected-contacts-container"></div>
-              <div class="dropdown-toggle-edit" id="editDropdownToggle">
-                <span id="editDropdownPlaceholder">Select contact(s)</span>
-                <img class="dropdown-arrow" id="editDropdownArrow" src="./assets/img/icons/addTask/arrow_drop_down.svg"
-                  alt="Dropdown arrow" />
+              <div class="dropdown-wrapper">
+                <div class="dropdown-toggle-edit" id="editDropdownToggle">
+                  <span id="editDropdownPlaceholder">Select contact(s)</span>
+                  <img class="dropdown-arrow" id="editDropdownArrow"
+                    src="./assets/img/icons/addTask/arrow_drop_down.svg" alt="Dropdown arrow" />
+                </div>
+                <div class="dropdown-list hidden" id="editContactsDropdownList"></div>
               </div>
             </div>
-            <div class="dropdown-list hidden" id="editContactsDropdownList"></div>
           </div>
 
-          <!-- Subtasks (edit style similar to "Add Task") -->
+          <!-- Subtasks -->
           <label for="editSubtaskInput">Subtasks</label>
           <div class="edit-subtask-container">
             <div class="input-subtask-wrapper">
               <input type="text" id="editSubtaskInput" placeholder="Add new subtask" />
               <div class="subtask-buttons">
-                <!-- Optional confirm/cancel hidden by default, 
-             like in your "Add Task" approach -->
                 <button id="editClearSubtaskBtn" class="hidden">✖</button>
                 <div id="editVector" class="hidden">|</div>
                 <button id="editConfirmSubtaskBtn" class="hidden">✔</button>
@@ -355,8 +350,6 @@
     </div>
   </div>
 
-
-  <!-- Scripts -->
   <script type="module" src="./shared/includeHTML.js"></script>
   <script type="module" src="./js/addTask.js"></script>
   <script type="module" src="./js/firebase.js"></script>
