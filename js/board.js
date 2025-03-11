@@ -5,23 +5,14 @@
 
 import { loadAllContacts } from './boardContacts.js';
 import { fixSubtaskFormat } from './boardSubtask.js';
-import {
-  addTask,
-  deleteTask,
-  updateTaskStatusInFirebase
-} from './boardTaskService.js';
+import { addTask, deleteTask, updateTaskStatusInFirebase } from './boardTaskService.js';
 import { createTaskCard } from './boardTaskCard.js';
 import { openTaskModal, getCurrentTask } from './boardTaskModal.js';
-import {
-  enterEditMode,
-  dismissEditMode,
-  saveEditMode,
-  toggleEditContactsDropdown
-} from './boardEditMode.js';
+import { enterEditMode, dismissEditMode, saveEditMode, toggleEditContactsDropdown } from './boardEditMode.js';
 import { addPlaceholdersToEmptyColumns } from './boardUtils.js';
 
 /**
- * Loads tasks from Firebase, populates board columns, ensures format, etc.
+ * Loads tasks from Firebase, populates board columns, ensures correct format, etc.
  */
 async function loadTasks() {
   const FIREBASE_TASKS_URL =
@@ -41,7 +32,7 @@ async function loadTasks() {
       ...task,
     }));
     tasks.forEach((t) => {
-      fixSubtaskFormat(t); // ensures subtasks are objects, not strings
+      fixSubtaskFormat(t);
       t.status = t.status || 'toDo';
       placeCardInColumn(createTaskCard(t), t.status);
     });
@@ -52,17 +43,18 @@ async function loadTasks() {
 }
 
 /**
- * Place card into the correct column by status.
+ * Places a task card into the appropriate column by status.
+ * @param {HTMLElement} card - The task card element.
+ * @param {string} status - The task status (toDo, inProgress, etc.).
  */
 function placeCardInColumn(card, status) {
   const col = document.getElementById(status) || document.getElementById('toDo');
-  const placeholder = col.querySelector('.board-task-element');
-  if (placeholder) placeholder.remove();
+  col.querySelector('.board-task-element')?.remove();
   col.appendChild(card);
 }
 
 /**
- * Initialize drag & drop events on each board column.
+ * Initializes drag & drop functionality for board columns.
  */
 function initDragAndDrop() {
   const columns = document.querySelectorAll('.board-list-column');
@@ -74,49 +66,92 @@ function initDragAndDrop() {
       e.preventDefault();
       column.classList.add('hovered');
     });
-    column.addEventListener('dragleave', () => {
-      column.classList.remove('hovered');
-    });
+    column.addEventListener('dragleave', () => column.classList.remove('hovered'));
     column.addEventListener('drop', (e) => {
       e.preventDefault();
       column.classList.remove('hovered');
       const cardId = e.dataTransfer.getData('text/plain');
       const card = document.getElementById(cardId);
       if (card) {
-        const placeholder = column.querySelector('.board-task-element');
-        if (placeholder) placeholder.remove();
+        column.querySelector('.board-task-element')?.remove();
         column.appendChild(card);
-
         if (originColumnId && originColumnId !== column.id) {
-          const oldCol = document.getElementById(originColumnId);
-          if (oldCol && oldCol.querySelectorAll('.card-body').length === 0) {
-            // If old column now empty, add placeholder
-            addPlaceholdersToEmptyColumns();
-          }
+          addPlaceholdersToEmptyColumns();
         }
-        const firebaseId = cardId.replace('card-', '');
-        updateTaskStatusInFirebase(firebaseId, column.id);
+        updateTaskStatusInFirebase(cardId.replace('card-', ''), column.id);
       }
     });
   });
 
   document.addEventListener('dragstart', (e) => {
     const card = e.target.closest('.card-body');
-    if (card) {
-      originColumnId = card.parentNode.id;
+    if (card) originColumnId = card.parentNode.id;
+  });
+}
+
+/**
+ * Filters tasks based on search input.
+ */
+function filterTasks() {
+  const searchText = getSearchText();
+  const allCards = document.querySelectorAll('.card-body');
+  let hasResults = false;
+
+  allCards.forEach(card => {
+    const match = matchesSearch(card, searchText);
+    card.style.display = match ? 'block' : 'none';
+    hasResults = hasResults || match;
+  });
+
+  toggleNoResultsMessage(hasResults, searchText);
+}
+
+/**
+ * Retrieves the search input value.
+ * @returns {string} The lowercase search text.
+ */
+function getSearchText() {
+  return document.querySelector('.input-container input').value.toLowerCase();
+}
+
+/**
+ * Checks if a card matches the search query.
+ * @param {HTMLElement} card - The task card element.
+ * @param {string} searchText - The search query.
+ * @returns {boolean} True if the card matches, otherwise false.
+ */
+function matchesSearch(card, searchText) {
+  return card.querySelector('.headline').textContent.toLowerCase().includes(searchText) ||
+    card.querySelector('.info').textContent.toLowerCase().includes(searchText);
+}
+
+/**
+ * Displays or removes the 'No results found' message.
+ * @param {boolean} hasResults - Whether tasks match the search.
+ * @param {string} searchText - The search query.
+ */
+function toggleNoResultsMessage(hasResults, searchText) {
+  document.querySelectorAll('.board-list-column').forEach(col => {
+    col.querySelector('.no-results')?.remove();
+    if (!hasResults && searchText) {
+      const msg = document.createElement('div');
+      msg.classList.add('no-results');
+      msg.textContent = 'No matching tasks found';
+      col.appendChild(msg);
     }
   });
 }
 
 /**
- * Entry point when the DOM is ready.
+ * Initializes event listeners on DOM load.
  */
 document.addEventListener('DOMContentLoaded', async () => {
   await loadAllContacts();
   await loadTasks();
   initDragAndDrop();
 
-  // Edit form: priority buttons
+  document.querySelector('.input-container input')?.addEventListener('input', filterTasks);
+
   document.getElementById('prioUrgentBtn').onclick = () => setPriorityInput('urgent');
   document.getElementById('prioMediumBtn').onclick = () => setPriorityInput('medium');
   document.getElementById('prioLowBtn').onclick = () => setPriorityInput('low');
@@ -125,27 +160,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('editPriorityInput').value = prio;
   }
 
-  // Edit form: subtask events are in editMode.js, but wire the Save/Dismiss here
   document.getElementById('dismissEditBtn').onclick = dismissEditMode;
   document.getElementById('saveEditBtn').onclick = saveEditMode;
-
-  // View mode: "Edit" & "Delete"
   document.getElementById('editTaskBtn').onclick = () => enterEditMode();
   document.getElementById('deleteTaskBtn').onclick = async () => {
     const task = getCurrentTask();
     if (task?.firebaseId) {
       await deleteTask(task.firebaseId);
-      const modal = document.getElementById('viewTaskModal');
-      modal.classList.add('hidden');
+      document.getElementById('viewTaskModal').classList.add('hidden');
       loadTasks();
     }
   };
-
-  // Toggle the assigned-contacts dropdown in edit mode
   document.getElementById('editDropdownToggle').onclick = toggleEditContactsDropdown;
-
-  // --------------- ADDED EVENT LISTENER FOR "taskUpdated" ---------------
-  document.addEventListener('taskUpdated', () => {
-    loadTasks();
-  });
+  document.addEventListener('taskUpdated', loadTasks);
 });
