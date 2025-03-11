@@ -99,6 +99,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+  width: 150px;
 }
 
 .chip {
@@ -118,8 +119,9 @@
 }
 
 .contact-chip {
-  margin-left: -15px;
+  margin-left: -20px;
   border: solid 1px white;
+  min-width: 32px;
 }
 
 .contact-chip:first-child {
