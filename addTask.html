@@ -27,12 +27,10 @@
                     <div class="left-input-fields">
                         <div class="input-title-container">
                             <span>Title<span style="color: red;">*</span></span>
-                            <!-- ADD ID HERE -->
                             <input type="text" class="focus" id="titleInput" required placeholder="Enter a title" />
                         </div>
                         <div class="input-description-container">
                             <span>Description</span>
-                            <!-- ADD ID HERE -->
                             <textarea class="focus" id="descriptionInput" placeholder="Enter a Description"></textarea>
                         </div>
 
@@ -46,7 +44,6 @@
                                         src="./assets/img/icons/addTask/arrow_drop_down.svg" alt="Dropdown arrow" />
                                 </div>
                                 <div class="dropdown-list hidden" id="contactsDropdownList">
-                                    <!-- JS adds contact items here -->
                                 </div>
                             </div>
                             <div class="selected-contacts-container" id="selectedContactsContainer"></div>
@@ -58,13 +55,12 @@
                     <div class="right-input-fields">
                         <div class="input-due-date-container">
                             <span>Due date<span style="color: red;">*</span></span>
-                            <!-- ADD ID HERE -->
                             <input type="date" class="focus" id="dueDateInput" required />
                         </div>
                         <div class="prio-selection-container">
                             <span>Prio</span>
                             <div class="prio-selector-container">
-                                <!-- .prio-option class is fine -->
+                                <!-- .prio-option class -->
                                 <div class="prio-option" data-prio="urgent">
                                     <span>Urgent</span>
                                     <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority" />
@@ -133,7 +129,6 @@
         </main>
     </div>
 
-    <!-- Link Scripts: use type="module" if you have imports in addTask.js -->
     <script src="./shared/includeHTML.js"></script>
     <script type="module" src="./js/addTask.js"></script>
     <script type="module" src="./js/firebase.js"></script>
