@@ -43,10 +43,8 @@
                         <img src="./assets/img/icons/signUp/avatar_icon.svg" alt="Avatar Icon">
                     </span>
                 </div>
-                <p class="error-message" id="name-error">Bitte geben Sie Ihren Namen ein. Der Name muss mindestens zwei
-                    Wörter enthalten, mit jeweils mindestens zwei Buchstaben.</p>
-                <p class="error-message" id="name-error">Bitte geben Sie Ihren Namen ein. Der Name muss mindestens zwei
-                    Wörter enthalten, mit jeweils mindestens zwei Buchstaben.</p>
+                <p class="error-message" id="name-error">Please enter your name. The name must contain at least two
+                    words, each with at least two letters.</p>
             </div>
 
 
@@ -57,7 +55,7 @@
                         <img src="./assets/img/icons/login/mail_icon.svg" alt="Email Icon">
                     </span>
                 </div>
-                <p class="error-message" id="email-error">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
+                <p class="error-message" id="email-error">Please enter a valid e-mail address.</p>
             </div>
 
 
@@ -68,10 +66,8 @@
                         <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
                     </span>
                 </div>
-                <p class="error-message" id="password-error">Bitte geben Sie ein Passwort ein. Das Passwort muss
-                    mindestens einen Großbuchstaben, eine Zahl und mindestens 8 Zeichen enthalten.</p>
-                <p class="error-message" id="password-error">Bitte geben Sie ein Passwort ein. Das Passwort muss
-                    mindestens einen Großbuchstaben, eine Zahl und mindestens 8 Zeichen enthalten.</p>
+                <p class="error-message" id="password-error">Please enter a password. The password must
+                    contain at least one capital letter, one number and at least 8 characters.</p>
             </div>
 
 
@@ -83,10 +79,7 @@
                         <img src="./assets/img/icons/login/lock_icon.svg" alt="Lock Icon">
                     </span>
                 </div>
-                <p class="error-message" id="confirmPassword-error">Bitte bestätigen Sie Ihr Passwort. Die Passwörter
-                    müssen übereinstimmen.</p>
-                <p class="error-message" id="confirmPassword-error">Bitte bestätigen Sie Ihr Passwort. Die Passwörter
-                    müssen übereinstimmen.</p>
+                <p class="error-message" id="confirmPassword-error">Please confirm your password. The passwords must match.</p>
             </div>
 
 
@@ -99,34 +92,14 @@
                 I accept the
                 <span class="privacy-policy" onclick="redirectTo('./privacyPolicyExternal.html')">Privacy Policy</span>
             </label>
-            <p class="error-message" id="termsCheckbox-error">Bitte akzeptieren Sie die Datenschutzrichtlinie.</p>
-        </div>
-        <!-- Terms and Conditions -->
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="termsCheckbox" onchange="validateCheckbox()">
-            <label class="form-check-label" for="termsCheckbox">
-                I accept the
-                <span class="privacy-policy" onclick="redirectTo('./privacyPolicyExternal.html')">Privacy Policy</span>
-            </label>
-            <p class="error-message" id="termsCheckbox-error">Bitte akzeptieren Sie die Datenschutzrichtlinie.</p>
+            <p class="error-message" id="termsCheckbox-error">Please accept the privacy policy.</p>
         </div>
 
-        <!-- Sign-Up Button -->
-        <div class="sign-in-btn-container">
-            <!-- Sign-Up Button -->
-            <div class="sign-in-btn-container">
-                <button onclick="signUp()" class="sign-in-btn dark-btn" id="signUpButton" disabled>Sign up</button>
-            </div>
-        <!-- Sign-Up Button -->
-        <div class="sign-in-btn-container">
-            <!-- Sign-Up Button -->
-            <div class="sign-in-btn-container">
-                <button onclick="signUp()" class="sign-in-btn dark-btn" id="signUpButton" disabled>Sign up</button>
-            </div>
+                <!-- Sign-Up Button -->
+                <div class="sign-in-btn-container">
+                    <button onclick="signUp()" class="sign-in-btn dark-btn" id="signUpButton" disabled>Sign up</button>
+                </div>
 
-        </div>
-        </div>
-        </div>
 
         <div id="popupSuccess" class="popup-success" style="display: none;">
             <div class="popup-content-success">
@@ -137,7 +110,6 @@
         <!-- Legal Information -->
         <div class="legal-btn-container">
             <button onclick="redirectTo('./legalNoticeExternal.html')" class="legal-btn">Legal Notice</button>
-            <button onclick="redirectTo('./privacyPolicyExternal.html')" class="legal-btn">Privacy Policy</button>
             <button onclick="redirectTo('./privacyPolicyExternal.html')" class="legal-btn">Privacy Policy</button>
         </div>
     </section>

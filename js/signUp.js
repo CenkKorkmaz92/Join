@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 function validateName(value) {
   const namePattern = /^([A-Za-z]{2,})\s+([A-Za-z]{2,})/;
-  return namePattern.test(value.trim()) ? "" : "Der Name muss mindestens zwei Wörter enthalten, mit jeweils mindestens zwei Buchstaben.";
+  return namePattern.test(value.trim()) ? "" : "The name must contain at least two words, each with at least two letters.";
 }
 
 /**
@@ -226,7 +226,7 @@ function validateName(value) {
 */
 function validateEmail(value) {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailPattern.test(value.trim()) ? "" : "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+  return emailPattern.test(value.trim()) ? "" : "Please enter a valid e-mail address.";
 }
 
 /**
@@ -237,7 +237,7 @@ function validateEmail(value) {
 */
 function validatePassword(value) {
   const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  return passwordPattern.test(value.trim()) ? "" : "Das Passwort muss mindestens einen Großbuchstaben, eine Zahl und mindestens 8 Zeichen enthalten.";
+  return passwordPattern.test(value.trim()) ? "" : "The password must contain at least one capital letter, one number and at least 8 characters.";
 }
 
 /**
@@ -248,7 +248,7 @@ function validatePassword(value) {
 * @returns {string} The error message or an empty string if valid.
 */
 function validateConfirmPassword(value, password) {
-  return value.trim() === password ? "" : "Die Passwörter müssen übereinstimmen.";
+  return value.trim() === password ? "" : "The passwords must match.";
 }
 
 /**
