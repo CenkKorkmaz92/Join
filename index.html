@@ -12,6 +12,11 @@
 </head>
 
 <body>
+  <!-- Landscape Warning -->
+  <div id="landscapeWarning">
+    <img src="./assets/img/mobile/rotateDevice.png" alt="" />
+</div>
+
   <!-- Loading Screen -->
   <div class="loading-screen">
     <img src="./assets/img/logos/join_logo_loading_screen.svg" alt="Loading Logo" class="loading-logo" />
@@ -66,8 +71,10 @@
   </section>
 
   <script src="./js/main.js"></script>
+  <script src="landscapeCheck.js" defer></script>
   <script type="module" src="./js/firebase.js"></script>
   <script type="module" src="./js/login.js"></script>
+  <script src="./shared/landscapeCheck.js" defer></script>
 </body>
 
 </html>
