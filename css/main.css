@@ -31,7 +31,7 @@ html {
 
     /* Scrollbar-Schieber (Thumb) */
     ::-webkit-scrollbar-thumb {
-        background: #888;
+        background: #29abe2;
         border-radius: 4px;
         /* Optional: Abrundung für ein weicheres Erscheinungsbild */
     }
