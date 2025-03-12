@@ -43,7 +43,10 @@ html {
 }
 
 #landscapeWarning {
-    display: none;
+    opacity: 0;
+    /* Make it invisible initially */
+    pointer-events: none;
+    /* Prevent it from interfering when invisible */
     position: fixed;
     top: 0;
     left: 0;
@@ -55,6 +58,8 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: opacity 0.3s ease-in-out;
+    /* Smooth transition */
 }
 
 #landscapeWarning img {
