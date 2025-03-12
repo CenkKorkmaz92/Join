@@ -93,12 +93,12 @@ function attachHelpIconListener() {
   if (document.body.classList.contains("legal-page")) {
     helpIcon.onclick = function(event) {
       event.preventDefault();
-      redirectTo("../helpExternal.html");
+      redirectTo("./helpExternal.html");
     };
   } else {
     helpIcon.onclick = function(event) {
       event.preventDefault();
-      redirectTo("../help.html");
+      redirectTo("./help.html");
     };
   }
 }

@@ -4,7 +4,7 @@
  */
 document.addEventListener("DOMContentLoaded", async function () {
   try {
-    const response = await fetch("../shared/navbar.html");
+    const response = await fetch("./shared/navbar.html");
     if (!response.ok) {
       throw new Error(`Failed to load navbar: ${response.statusText}`);
     }
@@ -51,7 +51,7 @@ function highlightActivePage() {
 
 document.addEventListener("DOMContentLoaded", async function () {
   try {
-    const response = await fetch("../shared/navbar.html");
+    const response = await fetch("./shared/navbar.html");
     if (!response.ok) {
       throw new Error(`Failed to load navbar: ${response.statusText}`);
     }
@@ -63,10 +63,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       const privacyBtn = document.getElementById("nav-privacy-policy");
       const legalBtn = document.getElementById("nav-legal-notice");
       if (privacyBtn) {
-        privacyBtn.setAttribute("onclick", "redirectTo('../privacyPolicyExternal.html')");
+        privacyBtn.setAttribute("onclick", "redirectTo('./privacyPolicyExternal.html')");
       }
       if (legalBtn) {
-        legalBtn.setAttribute("onclick", "redirectTo('../legalNoticeExternal.html')");
+        legalBtn.setAttribute("onclick", "redirectTo('./legalNoticeExternal.html')");
       }
     }
 
