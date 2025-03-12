@@ -33,8 +33,8 @@ async function includeHTML() {
 
     // Load the navbar and header
     await Promise.all([
-        loadContent("navbar-container", "/Join/shared/navbar.html"),
-        loadContent("header-container", "/Join/shared/header.html"),
+        loadContent("navbar-container", "../shared/navbar.html"),
+        loadContent("header-container", "../shared/header.html"),
     ]);
 }
 
