@@ -102,7 +102,7 @@ html,
 
 .board-subline-and-add-btn {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   gap: 44px;
   padding-top: 32px;
@@ -112,7 +112,6 @@ html,
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  width: 100%;
   gap: 8px;
   padding-bottom: 40px;
 }

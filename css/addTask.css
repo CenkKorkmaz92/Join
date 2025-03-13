@@ -43,6 +43,7 @@ html,
     padding-top: 60px;
     padding-left: 96px;
     padding-right: 96px;
+    max-width: 1208px;
 }
 
 .add-task-input-containers {

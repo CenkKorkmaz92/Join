@@ -1,6 +1,5 @@
  body,
  html {
-     max-width: 1440px;
      overflow: auto !important;
      scrollbar-width: none !important;
      -ms-overflow-style: none !important;

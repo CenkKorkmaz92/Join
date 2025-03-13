@@ -82,8 +82,7 @@ body {
     display: grid;
     grid-template-columns: 232px auto;
     grid-template-rows: 96px auto;
-    width: 1440px;
-    max-width: 100vw;
+    width: 100vw;
     height: 100vh;
     margin: 0 auto;
     background: white;
@@ -93,7 +92,6 @@ body {
     grid-column: 2;
     grid-row: 2;
     background-color: #f4f4f4;
-    width: 100%;
     height: calc(100vh - 96px);
     overflow-y: auto;
 }
