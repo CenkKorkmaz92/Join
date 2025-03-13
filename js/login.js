@@ -1,110 +1,100 @@
-// login.js
 import { getData } from './firebase.js';
 
 /**
- * Attempts to log in a user.
- * Retrieves the entered email and password, searches for the user in Firebase,
- * and if the credentials match, redirects to summary.html.
+ * Shows a single error message below the input field without shifting it.
+ * @param {string} inputId - The ID of the input field.
+ * @param {string} message - The error text to display.
  */
-async function login() {
-    const emailInput = document.getElementById("loginEmail");
-    const passwordInput = document.getElementById("loginPassword");
+function showError(inputId, message) {
+    const input = document.getElementById(inputId);
+    const container = input.closest('.input-container');
+    let errorSpan = container.querySelector('.error-message');
+    if (!errorSpan) {
+        errorSpan = document.createElement('span');
+        errorSpan.classList.add('error-message');
+        container.appendChild(errorSpan);
+    }
+    errorSpan.textContent = message;
+}
 
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
+/**
+ * Removes any existing error message for a given input field.
+ * @param {string} inputId - The ID of the input field.
+ */
+function clearError(inputId) {
+    const container = document.getElementById(inputId).closest('.input-container');
+    const errorSpan = container.querySelector('.error-message');
+    if (errorSpan) errorSpan.remove();
+}
 
-    // Basic validation (should be satisfied by the enabled button)
-    if (!email || !password) {
-        alert("Please fill in both email and password.");
-        return;
+/**
+ * Validates the email and password fields before login.
+ * @returns {boolean} True if valid, otherwise false.
+ */
+function validateInputs() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    let isValid = true;
+
+    if (!email) {
+        showError('loginEmail', 'Please enter your email.');
+        isValid = false;
+    } else {
+        clearError('loginEmail');
     }
 
+    if (!password) {
+        showError('loginPassword', 'Please enter your password.');
+        isValid = false;
+    } else {
+        clearError('loginPassword');
+    }
+
+    return isValid;
+}
+
+/**
+ * Attempts to log in the user and redirects if successful.
+ */
+async function login() {
+    if (!validateInputs()) return;
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
     try {
-        // Fetch all users from Firebase (assumes your users are stored under "users")
-        const users = await getData("users");
-        let foundUser = null;
-
-        if (users) {
-            // Iterate over the users to find a matching email
-            for (const key in users) {
-                if (users.hasOwnProperty(key)) {
-                    const user = users[key];
-                    if (user.email === email) {
-                        foundUser = user;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (!foundUser) {
-            alert("User does not exist!");
-            return;
-        }
-
-        if (foundUser.password !== password) {
-            alert("Incorrect password!");
-            return;
-        }
-
-        // Login successful: store user details in localStorage
-        localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
-
-        // Login successful; redirect to summary.html
-        window.location.href = "summary.html";
+        const users = await getData('users');
+        const foundUser = Object.values(users || {}).find(u => u.email === email);
+        if (!foundUser) return showError('loginEmail', 'User does not exist!');
+        if (foundUser.password !== password) return showError('loginPassword', 'Incorrect password!');
+        localStorage.setItem('loggedInUser', JSON.stringify(foundUser));
+        window.location.href = 'summary.html';
     } catch (error) {
-        console.error("Error during login:", error);
-        alert("An error occurred during login. Please try again.");
+        console.error('Login error:', error);
+        alert('An error occurred. Please try again.');
     }
 }
 
 /**
- * Checks if the login form is valid (both email and password are filled)
- * and enables/disables the login button accordingly.
+ * Enables or disables the login button based on non-empty input fields.
  */
 function checkLoginValidity() {
-    const emailInput = document.getElementById("loginEmail");
-    const passwordInput = document.getElementById("loginPassword");
-    const loginButton = document.getElementById("loginButton");
-
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-
-    if (email && password) {
-        loginButton.disabled = false;
-    } else {
-        loginButton.disabled = true;
-    }
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    document.getElementById('loginButton').disabled = !(email && password);
 }
 
-// Attach event listeners when the DOM is fully loaded.
-document.addEventListener("DOMContentLoaded", () => {
-    const emailInput = document.getElementById("loginEmail");
-    const passwordInput = document.getElementById("loginPassword");
-
-    emailInput.addEventListener("input", checkLoginValidity);
-    passwordInput.addEventListener("input", checkLoginValidity);
-
-    // Run the check once on page load.
+// Attach listeners on page load
+document.addEventListener('DOMContentLoaded', () => {
+    ['loginEmail', 'loginPassword'].forEach(id => {
+        document.getElementById(id).addEventListener('input', () => {
+            clearError(id);
+            checkLoginValidity();
+        });
+    });
     checkLoginValidity();
 });
 
-// Expose the login function globally so it can be called from the HTML.
+// Expose functions globally
 window.login = login;
-
-/**
- * Redirects the user to the specified page.
- * @param {string} page - The URL of the page to navigate to.
- */
-function redirectTo(page) {
-    window.location.href = page;
-}
-window.redirectTo = redirectTo;
-
-/**
- * Navigates back to the previous page.
- */
-function goBack() {
-    window.history.back();
-}
-window.goBack = goBack;
+window.redirectTo = page => window.location.href = page;
+window.goBack = () => window.history.back();

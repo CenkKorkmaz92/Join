@@ -278,6 +278,22 @@ body {
     color: #29ABE2;
 }
 
+.input-container {
+    position: relative; /* needed for absolute positioning of the error */
+    margin-bottom: 5px; /* extra space so they don't overlap the next field */
+  }
+  
+  .error-message {
+    position: absolute;
+    top: 100%;       /* place below the input container */
+    left: 0;
+    margin-top: 4px; /* small gap */
+    color: red;
+    font-size: 14px;
+  }
+  
+
+
 @media (max-width: 768px) {
     .main-logo {
         width: 64px !important;
