@@ -15,20 +15,14 @@ nameInput.addEventListener("input", function () {
     }
 });
   
-/**
- * Handles input validation for the email input field.
- */
+const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
 emailInput.addEventListener("input", function () {
     const emailError = document.getElementById("emailError");
-    if (emailInput.validity.valid) {
-      emailError.textContent = "";
+    if (emailRegex.test(emailInput.value)) {
+        emailError.textContent = "";
     } else {
-      if (emailInput.validity.valueMissing) {
-        emailError.textContent = "Bitte geben Sie eine E-Mail-Adresse ein.";
-      } else if (emailInput.validity.typeMismatch || emailInput.validity.patternMismatch) {
-        emailError.textContent =
-          "Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).";
-      }
+        emailError.textContent = "Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).";
     }
 });
   

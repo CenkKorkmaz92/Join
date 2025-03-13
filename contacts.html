@@ -85,18 +85,17 @@
                                                 <div class="input-group">
                                                     <input type="text" id="nameInput" placeholder="Name"
                                                         class="popup-input-field" required
-                                                        pattern="^[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$">
+                                                        pattern="[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$">
                                                     <span class="error-message" id="nameError"></span>
                                                 </div>
                                                 <div class="input-group">
                                                     <input type="email" id="emailInput" placeholder="E-Mail"
-                                                        class="popup-input-field" required
-                                                        pattern="^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A-Za-z]{2,}$">
+                                                        class="popup-input-field" required>
                                                     <span class="error-message" id="emailError"></span>
                                                 </div>
                                                 <div class="input-group">
                                                     <input type="tel" id="phoneInput" placeholder="Telefonnummer"
-                                                        class="popup-input-field" required pattern="^[0-9+\s]{6,}$">
+                                                        class="popup-input-field" required pattern="[0-9+\s]{6,}$">
                                                     <span class="error-message" id="phoneError"></span>
                                                 </div>
                                             </div>
@@ -200,19 +199,19 @@
                                                     <div class="input-group">
                                                         <input type="text" id="editNameInput" placeholder="Name"
                                                             class="popup-input-field" required
-                                                            pattern="^[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$">
+                                                            pattern="[A-Za-zÄäÖöÜü]+(?:\s[A-Za-zÄäÖöÜü]+){0,2}$">
                                                         <span class="error-message" id="editNameError"></span>
                                                     </div>
                                                     <div class="input-group">
                                                         <input type="email" id="editEmailInput" placeholder="E-Mail"
                                                             class="popup-input-field" required
-                                                            pattern="^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A-Za-z]{2,}$">
+                                                            pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}">
                                                         <span class="error-message" id="editEmailError"></span>
                                                     </div>
                                                     <div class="input-group">
                                                         <input type="tel" id="editPhoneInput"
                                                             placeholder="Telefonnummer" class="popup-input-field"
-                                                            required pattern="^[0-9+\s]{6,}$">
+                                                            required pattern="[0-9+\s]{6,}$">
                                                         <span class="error-message" id="editPhoneError"></span>
                                                     </div>
                                                 </div>
