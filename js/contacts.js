@@ -159,7 +159,7 @@ async function removeContactFromAllTasks(contactId) {
       body: JSON.stringify(updates),
     });
   }
-  location.reload()
+  // location.reload()
 }
 
 

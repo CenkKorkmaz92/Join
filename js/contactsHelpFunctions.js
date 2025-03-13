@@ -131,7 +131,7 @@ function showDeleteSuccessPopup() {
         popupDelete.style.display = "flex";
         setTimeout(() => {
             popupDelete.style.display = "none";
-            location.reload();
+            document.getElementById("detailedContactInfo").classList.add("hidden");
         }, 800);
     }
 }
