@@ -157,22 +157,54 @@ function showSuccessPopup() {
  */
 function toggleErrorMessage(errorMessage, errorText) {
   if (errorText) {
-    errorMessage.style.display = "block";
     errorMessage.textContent = errorText;
+    errorMessage.style.display = "block";
   } else {
     errorMessage.style.display = "none";
   }
 }
 
-/**
-* General input validation function that uses specific helper functions.
-* @param {HTMLInputElement} input The input element being validated.
-*/
-function validateInput(input) {
+function getValidationError(input) {
+  if (input.value.trim() === "") {
+    return "";
+  }
+  switch (input.id) {
+    case "name":
+      return validateName(input.value);
+    case "email":
+      return validateEmail(input.value);
+    case "password":
+      return validatePassword(input.value);
+    case "confirmPassword":
+      return validateConfirmPassword(input.value, document.getElementById("password").value.trim());
+    default:
+      return "";
+  }
+}
+
+function handleInput(event) {
+  const input = event.target;
   const errorMessage = document.getElementById(`${input.id}-error`);
+  errorMessage.style.display = "none";
+}
+
+function validateInputOnBlur(input) {
+  const errorMessage = document.getElementById(`${input.id}-error`);
+  if (input.value.trim() === "") {
+    errorMessage.style.display = "none";
+    return;
+  }
   const errorText = getValidationError(input);
   toggleErrorMessage(errorMessage, errorText);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach(input => {
+    input.addEventListener("input", handleInput);
+    input.addEventListener("blur", () => validateInputOnBlur(input));
+  });
+});
 
 /**
  * Validates the input field and shows or hides the error message.
@@ -183,21 +215,6 @@ window.validateInput = function (input) {
   const errorText = getValidationError(input);
   toggleErrorMessage(errorMessage, errorText);
 };
-
-/**
- * Returns the validation error message for a specific input field.
- * @param {HTMLInputElement} input - The input element to validate.
- * @returns {string} - The validation error message or an empty string if valid.
- */
-function getValidationError(input) {
-  switch (input.id) {
-    case "name": return validateName(input.value);
-    case "email": return validateEmail(input.value);
-    case "password": return validatePassword(input.value);
-    case "confirmPassword": return validateConfirmPassword(input.value, document.getElementById("password").value.trim());
-    default: return input.value.trim() === "" ? "This field cannot be empty." : "";
-  }
-}
 
 /**
  * Event listener for when the DOM content is loaded. It attaches 'input' event listeners to all input fields.
@@ -217,7 +234,9 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 function validateName(value) {
   const namePattern = /^([A-Za-z]{2,})\s+([A-Za-z]{2,})/;
-  return namePattern.test(value.trim()) ? "" : "The name must contain at least two words, each with at least two letters.";
+  return namePattern.test(value.trim()) 
+    ? "" 
+    : "The name must contain at least two words, each with at least two letters.";
 }
 
 /**
@@ -228,18 +247,23 @@ function validateName(value) {
 */
 function validateEmail(value) {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailPattern.test(value.trim()) ? "" : "Please enter a valid e-mail address.";
+  return emailPattern.test(value.trim()) 
+    ? "" 
+    : "Please enter a valid e-mail address.";
 }
 
 /**
-* Validates the password input.
-* Ensures the password contains at least one uppercase letter, one number, and is at least 8 characters long.
-* @param {string} value The value of the password input.
-* @returns {string} The error message or an empty string if valid.
-*/
+ * Validates the password input.
+ * Ensures the password contains at least one uppercase letter, one number,
+ * and is at least 8 characters long. Special characters are allowed.
+ * @param {string} value The value of the password input.
+ * @returns {string} The error message or an empty string if valid.
+ */
 function validatePassword(value) {
-  const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  return passwordPattern.test(value.trim()) ? "" : "The password must contain at least one capital letter, one number and at least 8 characters.";
+  const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
+  return passwordPattern.test(value.trim()) 
+    ? "" 
+    : "The password must contain at least one capital letter, one number, and be at least 8 characters long. Special characters are allowed.";
 }
 
 /**
@@ -250,8 +274,11 @@ function validatePassword(value) {
 * @returns {string} The error message or an empty string if valid.
 */
 function validateConfirmPassword(value, password) {
-  return value.trim() === password ? "" : "The passwords must match.";
+  return value.trim() === password 
+    ? "" 
+    : "The passwords must match.";
 }
+
 
 /**
  * Initializes event listeners for input fields to validate them when they lose focus.
