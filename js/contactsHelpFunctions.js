@@ -340,7 +340,8 @@ function updateContactDisplay(contact) {
     phoneEl.innerHTML = "";
     phoneEl.appendChild(createLinkElement(`tel:${contact.phone}`, contact.phone, "phone-link"));
     updateContactCircle(contact.initials, contact.color);
-}
+  }
+  
   
 /**
  * Sets the data attribute for the delete contact button with the given contact ID.

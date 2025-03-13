@@ -15,8 +15,28 @@ nameInput.addEventListener("input", function () {
     }
 });
   
+/**
+ * Regular expression to validate email addresses.
+ * The pattern checks that the email follows the standard format of:
+ * - Local part (username) with letters, digits, and special characters.
+ * - "@" symbol separating local and domain parts.
+ * - Domain part with letters, digits, and hyphens.
+ * - A dot separating the domain and top-level domain (TLD).
+ * - The TLD should be at least two letters long.
+ *
+ * @constant {RegExp} emailRegex - The regular expression used to validate email input.
+ */
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
+/**
+ * Event listener for the "input" event on the `emailInput` field.
+ * This function validates the email input against the `emailRegex` pattern every time the user types.
+ * - If the email is valid, it clears the error message.
+ * - If the email is invalid, it displays an error message prompting the user to enter a valid email address.
+ *
+ * @function
+ * @param {Event} event - The input event triggered by the user typing in the email input field.
+ */
 emailInput.addEventListener("input", function () {
     const emailError = document.getElementById("emailError");
     if (emailRegex.test(emailInput.value)) {
@@ -58,30 +78,31 @@ if (editNameInput) {
         editNameError.textContent = "";
       } else {
         if (editNameInput.validity.valueMissing) {
-          editNameError.textContent = "Bitte geben Sie einen Namen ein.";
+          editNameError.textContent = "Please enter a name.";
         } else if (editNameInput.validity.patternMismatch) {
           editNameError.textContent =
-            "Der Name darf maximal drei Wörter enthalten und nur Buchstaben sowie Leerzeichen beinhalten.";
+            "The name may contain a maximum of three words and only letters and spaces.";
         }
       }
     });
 }
   
 /**
- * Handles input validation for the edit email input field.
+ * Event listener for the "input" event on the `editEmailInput` field.
+ * This function checks if the email input value matches the `emailRegex` pattern.
+ * - If the email is valid, it clears the error message.
+ * - If the email is invalid, it displays an error message prompting the user to enter a valid email address.
+ *
+ * @function
+ * @param {Event} event - The input event triggered by the user typing in the email input field.
  */
-// const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
 if (editEmailInput) {
   editEmailInput.addEventListener("input", function () {
     const editEmailError = document.getElementById("editEmailError");
-
-    // Verwende die Regex, um die Eingabe zu validieren
     if (emailRegex.test(editEmailInput.value)) {
-      editEmailError.textContent = ""; // Keine Fehlermeldung
+      editEmailError.textContent = "";
     } else {
-      // Wenn die E-Mail ungültig ist, gebe die Fehlermeldung aus
-      editEmailError.textContent = "Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).";
+      editEmailError.textContent = "Please enter a valid e-mail address (e.g. name@domain.de).";
     }
   });
 }
@@ -96,10 +117,10 @@ if (editPhoneInput) {
         editPhoneError.textContent = "";
       } else {
         if (editPhoneInput.validity.valueMissing) {
-          editPhoneError.textContent = "Bitte geben Sie eine Telefonnummer ein.";
+          editPhoneError.textContent = "Please enter a telephone number.";
         } else if (editPhoneInput.validity.patternMismatch) {
           editPhoneError.textContent =
-            "Bitte geben Sie eine gültige Telefonnummer ein (mindestens 6 Zeichen, nur Zahlen, Leerzeichen und + erlaubt).";
+            "Please enter a valid phone number (at least 6 characters, only numbers, spaces and + allowed).";
         }
       }
     });
@@ -165,15 +186,30 @@ document.getElementById("editContactBtn").addEventListener("click", function () 
 });
 
 
+/**
+ * Event listener for the "add-new-contact-responsive" button click event.
+ * This function opens a generic popup when the button is clicked.
+ * It calls the `openPopupGeneric` function, passing the popup ID ("popup") 
+ * and the class of the popup form (".popup-form") as arguments.
+ *
+ * @function
+ */
 document.querySelector(".add-new-contact-responsive").addEventListener("click", function () {
   openPopupGeneric("popup", ".popup-form");
 });
 
 
+/**
+ * Event listener for the "back-to-contact-list-button" click event.
+ * This function performs the following actions:
+ * - Hides the contact details view by adding the "hidden" class to the element with the class "contact-detail".
+ * - Removes the "hidden" class from the contact list container (identified by the ID "containerContact"),
+ *   making it visible again.
+ *
+ * @function
+ */
 document.querySelector(".back-to-contact-list-button").addEventListener("click", function () {
-  // Detailansicht ausblenden
   document.querySelector(".contact-detail").classList.add("hidden");
-  // Kontaktliste wieder einblenden (hier wird angenommen, dass sie im Element mit der ID "containerContact" liegt)
   document.getElementById("containerContact").classList.remove("hidden");
 });
 
@@ -201,6 +237,21 @@ function handleResize() {
   }
 }
 
+/**
+ * Event listener for the "saveBtn" button click event.
+ * This function performs the following actions:
+ * - Validates the form input.
+ * - Creates a new contact object.
+ * - Adds the new contact to the contacts array.
+ * - Sorts the contacts array alphabetically by fullName.
+ * - Renders the updated list of contacts.
+ * - Pushes the new contact to an external API asynchronously.
+ * - Clears the form inputs.
+ * - Hides the popup and shows a success popup for 800 milliseconds.
+ *
+ * @async
+ * @function
+ */
 document.getElementById("saveBtn").addEventListener("click", async function () {
   if (!isFormValid()) return;
   const newContact = createContact();

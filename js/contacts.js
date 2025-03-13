@@ -63,18 +63,11 @@ let currentContact = null;
  */
 async function pushContactToAPI(contact) {
   try {
-    // 1) POST the new contact (without any "id" field)
     const response = await sendPostRequest(`${FIREBASE_BASE_URL}.json`, contact);
     await handleResponseErrors(response);
     const responseData = await response.json();
-
-    // 2) The new push key
     const firebaseKey = responseData.name;
-
-    // 3) Store that key in `contact.id`
     contact.id = firebaseKey;
-
-    // 4) Now PUT the contact again so that, in Firebase, it is stored with "id": "thePushKey"
     await fetch(`${FIREBASE_BASE_URL}/${firebaseKey}.json`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -86,7 +79,6 @@ async function pushContactToAPI(contact) {
     console.error("Fehler beim Senden des Kontakts an die API:", error.message);
   }
 }
-
 
 /**
  * Fetches all contacts from the Firebase API and processes the data.
@@ -111,17 +103,10 @@ async function fetchContactsFromAPI() {
  */
 async function deleteContactFromAPI(contactId) {
   try {
-    // 1) Delete the contact from Firebase (contacts node)
     const response = await sendDeleteRequest(contactId);
     await handleDeleteErrors(response);
-
-    // 2) Remove from local "contacts" array
     removeContactFromList(contactId);
-
-    // 3) Also remove that contact from any tasks referencing it
     await removeContactFromAllTasks(contactId);
-
-    // 4) Show success (which triggers reload or does a re-render)
     showDeleteSuccessPopup();
   } catch (error) {
     console.error("Error deleting contact:", error.message);
@@ -133,15 +118,10 @@ async function deleteContactFromAPI(contactId) {
  */
 async function removeContactFromAllTasks(contactId) {
   const tasksUrl = "https://join-cenk-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
-
-  // 1) Fetch all tasks
   const resp = await fetch(tasksUrl);
   const tasksData = await resp.json();
   if (!tasksData) return;
-
-  // 2) Build a PATCH object for tasks that changed
   const updates = {};
-
   for (const [taskKey, taskObj] of Object.entries(tasksData)) {
     if (Array.isArray(taskObj.assignedTo)) {
       const newAssigned = taskObj.assignedTo.filter(c => c.id !== contactId);
@@ -150,8 +130,6 @@ async function removeContactFromAllTasks(contactId) {
       }
     }
   }
-
-  // 3) If any tasks were changed, PATCH them all at once
   if (Object.keys(updates).length > 0) {
     await fetch(tasksUrl, {
       method: "PATCH",
@@ -159,7 +137,6 @@ async function removeContactFromAllTasks(contactId) {
       body: JSON.stringify(updates),
     });
   }
-  // location.reload()
 }
 
 
@@ -216,6 +193,13 @@ document.getElementById("addContactBtn").onclick = function () {
   popup.classList.add("fly-in");
 };
 
+/**
+ * Event handler for the "clearBtn" button click event.
+ * This function is triggered when the user clicks the "clearBtn" button.
+ * It calls the `closeWindow` function to close the current window or popup.
+ *
+ * @function
+ */
 document.getElementById("clearBtn").onclick = function () {
   closeWindow();
 };
@@ -234,7 +218,20 @@ document.getElementById("contactForm").addEventListener("submit", async function
   showSuccessPopup("popupSuccess", 800);
 });
 
-// Handling edit button click to save changes to a contact
+
+/**
+ * Event listener for the "saveEditBtn" button click event.
+ * This function handles the process of saving an edited contact. It performs the following actions:
+ * - Prevents the default form submission behavior.
+ * - Validates the edit form using `isEditFormValid()`.
+ * - If a contact is selected (i.e., `currentContact` is not null), it updates the current contact information.
+ * - Attempts to update the contact in the API, update the contact list, and refresh the display with the new contact data.
+ * - If an error occurs during the API update, it logs the error to the console.
+ *
+ * @async
+ * @function
+ * @param {Event} event - The click event triggered by the user clicking the "saveEditBtn" button.
+ */
 document.getElementById("saveEditBtn").addEventListener("click", async function (event) {
   event.preventDefault();
   if (!isEditFormValid()) return;
@@ -244,7 +241,7 @@ document.getElementById("saveEditBtn").addEventListener("click", async function 
       await updateContactInAPI();
       updateContactList();
       closeEditPopup();
-      // location.reload();
+      updateContactDisplay(currentContact);
     } catch (error) {
       console.error("Update error:", error);
     }
