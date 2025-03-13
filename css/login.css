@@ -279,15 +279,15 @@ body {
 }
 
 .input-container {
-    position: relative; /* needed for absolute positioning of the error */
-    margin-bottom: 5px; /* extra space so they don't overlap the next field */
+    position: relative;
+    margin-bottom: 5px;
   }
   
   .error-message {
     position: absolute;
-    top: 100%;       /* place below the input container */
+    top: 100%;
     left: 0;
-    margin-top: 4px; /* small gap */
+    margin-top: 4px;
     color: red;
     font-size: 14px;
   }
