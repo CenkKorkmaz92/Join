@@ -70,20 +70,20 @@ if (editNameInput) {
 /**
  * Handles input validation for the edit email input field.
  */
+// const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
 if (editEmailInput) {
-    editEmailInput.addEventListener("input", function () {
-      const editEmailError = document.getElementById("editEmailError");
-      if (editEmailInput.validity.valid) {
-        editEmailError.textContent = "";
-      } else {
-        if (editEmailInput.validity.valueMissing) {
-          editEmailError.textContent = "Bitte geben Sie eine E-Mail-Adresse ein.";
-        } else if (editEmailInput.validity.typeMismatch || editEmailInput.validity.patternMismatch) {
-          editEmailError.textContent =
-            "Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).";
-        }
-      }
-    });
+  editEmailInput.addEventListener("input", function () {
+    const editEmailError = document.getElementById("editEmailError");
+
+    // Verwende die Regex, um die Eingabe zu validieren
+    if (emailRegex.test(editEmailInput.value)) {
+      editEmailError.textContent = ""; // Keine Fehlermeldung
+    } else {
+      // Wenn die E-Mail ungültig ist, gebe die Fehlermeldung aus
+      editEmailError.textContent = "Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).";
+    }
+  });
 }
   
 /**
@@ -203,14 +203,11 @@ function handleResize() {
 
 document.getElementById("saveBtn").addEventListener("click", async function () {
   if (!isFormValid()) return;
-  
   const newContact = createContact();
   contacts.push(newContact);
   contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
-  
   renderContacts();
   await pushContactToAPI(newContact);
-  
   clearInputs();
   hidePopup("popup");
   showSuccessPopup("popupSuccess", 800);

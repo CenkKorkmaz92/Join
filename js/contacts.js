@@ -244,7 +244,7 @@ document.getElementById("saveEditBtn").addEventListener("click", async function 
       await updateContactInAPI();
       updateContactList();
       closeEditPopup();
-      location.reload();
+      // location.reload();
     } catch (error) {
       console.error("Update error:", error);
     }
