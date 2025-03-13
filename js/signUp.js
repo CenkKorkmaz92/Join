@@ -1,6 +1,8 @@
 // signUp.js
 import { saveData } from './firebase.js';
 
+let formSubmitted = false;
+
 /**
  * Generates a UUID (version 4).
  * Uses crypto.randomUUID if available, otherwise a fallback.
@@ -263,18 +265,46 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Validates the terms checkbox and displays or hides the error message accordingly.
- * This function checks if the checkbox is checked and shows or hides the error message.
+ * Wird beim Absenden des Formulars aufgerufen.
+ * Prüft, ob die Checkbox aktiviert ist.
+ * Falls nicht, wird die Fehlermeldung angezeigt und das Absenden verhindert.
  */
-function validateCheckbox() {
+function validateForm() {
   const termsCheckbox = document.getElementById("termsCheckbox");
   const errorMessage = document.getElementById("termsCheckbox-error");
-  if (termsCheckbox.checked) {
-    errorMessage.style.display = "none";
-  } else {
+
+  if (!termsCheckbox.checked) {
     errorMessage.style.display = "block";
+    formSubmitted = true;
+    return false; // Verhindert das Absenden
+  } else {
+    errorMessage.style.display = "none";
+    return true; // Formular kann abgeschickt werden
   }
 }
+
+/**
+ * Wird aufgerufen, wenn sich der Status der Checkbox ändert.
+ * Zeigt die Fehlermeldung nur, wenn bereits ein Absendeversuch stattgefunden hat.
+ */
+function validateCheckbox() {
+  if (!formSubmitted) return; // Falls noch kein Absendeversuch, tue nichts.
+
+  const termsCheckbox = document.getElementById("termsCheckbox");
+  const errorMessage = document.getElementById("termsCheckbox-error");
+
+  if (!termsCheckbox.checked) {
+    errorMessage.style.display = "block";
+  } else {
+    errorMessage.style.display = "none";
+  }
+}
+
+// Event-Listener hinzufügen – aber keine initiale Validierung beim Laden der Seite.
+document.addEventListener("DOMContentLoaded", () => {
+  const termsCheckbox = document.getElementById("termsCheckbox");
+  termsCheckbox.addEventListener("change", validateCheckbox);
+});
 
 /**
  * Initializes the checkbox validation by adding an event listener to the checkbox.

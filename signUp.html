@@ -85,14 +85,15 @@
 
         </div>
 
-        <!-- Terms and Conditions -->
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="termsCheckbox" onchange="validateCheckbox()">
+            <input class="form-check-input" type="checkbox" id="termsCheckbox">
             <label class="form-check-label" for="termsCheckbox">
-                I accept the
-                <span class="privacy-policy" onclick="redirectTo('./privacyPolicyExternal.html')">Privacy Policy</span>
+              I accept the  
+              <span class="privacy-policy" onclick="redirectTo('./privacyPolicyExternal.html')">Privacy Policy</span>
             </label>
-            <p class="error-message" id="termsCheckbox-error">Please accept the privacy policy.</p>
+            <p class="error-message" id="termsCheckbox-error" style="display: none;">
+              Please accept the privacy policy.
+            </p>
         </div>
 
                 <!-- Sign-Up Button -->
