@@ -61,26 +61,17 @@ document.addEventListener("DOMContentLoaded", () => { updateGreeting(); updateSu
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Aktuelle Zeit holen
   const now = new Date();
   const hours = now.getHours();
   const minutes = now.getMinutes();
-  // Gesamtminuten seit Mitternacht berechnen
   const totalMinutes = hours * 60 + minutes;
-  
   let greeting = "";
-  
   if (totalMinutes >= 240 && totalMinutes <= 720) { 
-    // 4:00 bis 12:00
     greeting = "Good morning,";
   } else if (totalMinutes >= 721 && totalMinutes <= 1020) { 
-    // 12:01 bis 17:00
     greeting = "Good afternoon,";
   } else {
-    // 17:01 bis 23:59 und 0:00 bis 3:59
     greeting = "Good evening,";
   }
-  
-  // Begrüßung in das Element einsetzen
   document.querySelector('.day-time').textContent = greeting;
 });

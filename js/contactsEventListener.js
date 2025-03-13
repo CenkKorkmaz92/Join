@@ -207,5 +207,20 @@ function handleResize() {
   }
 }
 
+document.getElementById("saveBtn").addEventListener("click", async function () {
+  if (!isFormValid()) return;
+  
+  const newContact = createContact();
+  contacts.push(newContact);
+  contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
+  
+  renderContacts();
+  await pushContactToAPI(newContact);
+  
+  clearInputs();
+  hidePopup("popup");
+  showSuccessPopup("popupSuccess", 800);
+});
+
 // Initial call to set the correct visibility based on the current window size
 handleResize();
