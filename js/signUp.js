@@ -1,17 +1,18 @@
-// signUp.js
 import { saveData } from './firebase.js';
 
+/** 
+ * Form submission flag; helps show/hide error messages for the terms checkbox after the user tries to submit.
+ */
 let formSubmitted = false;
 
-/**
+/** 
  * Generates a UUID (version 4).
- * Uses crypto.randomUUID if available, otherwise a fallback.
  */
 function generateUUID() {
   if (window.crypto && crypto.randomUUID) {
     return crypto.randomUUID();
   } else {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
       const r = Math.random() * 16 | 0;
       const v = c === 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
@@ -21,100 +22,41 @@ function generateUUID() {
 
 /**
  * Extracts initials from a full name.
- *
  * @param {string} name - The full name.
  * @returns {string} The initials.
  */
 function getInitials(name) {
-  const names = name.trim().split(" ");
-  if (names.length === 0) return "";
-  if (names.length === 1) return names[0].slice(0, 2).toUpperCase();
+  const names = name.trim().split(' ');
+  if (names.length === 1) {
+    return names[0].slice(0, 2).toUpperCase();
+  }
   return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
 }
 
 /**
- * Checks the validity of the form fields and enables/disables the sign-up button.
- */
-function checkFormValidity() {
-  const nameInput = document.getElementById("name");
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const confirmPasswordInput = document.getElementById("confirmPassword");
-  const termsCheckbox = document.getElementById("termsCheckbox");
-  const signUpButton = document.getElementById("signUpButton");
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-  const confirmPassword = confirmPasswordInput.value;
-  const termsChecked = termsCheckbox.checked;
-  if (name && email && password && confirmPassword && (password === confirmPassword) && termsChecked) {
-    signUpButton.disabled = false;
-  } else {
-    signUpButton.disabled = true;
-  }
-}
-
-/**
- * Handles the sign-up process, including gathering user inputs,
- * validating the password, creating a new user, and saving the user.
- * Shows a success popup if the user is successfully saved.
- */
-async function signUp() {
-  const name = getInputValue("name");
-  const email = getInputValue("email");
-  const password = getInputValue("password");
-  const confirmPassword = getInputValue("confirmPassword");
-  if (!validatePasswords(password, confirmPassword)) return;
-  const newUser = createNewUser(name, email, password);
-  if (await saveUser(newUser)) {
-    showSuccessPopup();
-  }
-}
-
-/**
  * Retrieves the value from an input element by its id.
- * 
  * @param {string} id - The id of the input element to retrieve the value from.
- * @returns {string} The value of the input element.
  */
 function getInputValue(id) {
-  return document.getElementById(id).value;
-}
-
-/**
- * Validates if the password and confirmPassword match.
- * 
- * @param {string} password - The password entered by the user.
- * @param {string} confirmPassword - The confirmation password entered by the user.
- * @returns {boolean} Returns true if passwords match, otherwise false.
- */
-function validatePasswords(password, confirmPassword) {
-  if (password !== confirmPassword) {
-    alert("Passwords do not match!");
-    return false;
-  }
-  return true;
+  return document.getElementById(id).value.trim();
 }
 
 /**
  * Creates a new user object with the provided details.
- * 
- * @param {string} name - The user's name.
- * @param {string} email - The user's email address.
- * @param {string} password - The user's password.
- * @returns {Object} The new user object with id, name, email, password, and initials.
  */
 function createNewUser(name, email, password) {
   const id = generateUUID();
-  const initials = getInitials(name);
-  return { id, name, email, password, initials };
+  return {
+    id,
+    name,
+    email,
+    password,
+    initials: getInitials(name)
+  };
 }
 
 /**
- * Saves the new user object to the data store (e.g., database or local storage).
- * 
- * @param {Object} newUser - The new user object to save.
- * @returns {Promise<boolean>} Returns a promise that resolves to true if the user is saved, otherwise false.
+ * Saves the new user object to the data store.
  */
 async function saveUser(newUser) {
   try {
@@ -122,7 +64,7 @@ async function saveUser(newUser) {
     clearInputs();
     return true;
   } catch (error) {
-    console.error("Error creating user:", error);
+    console.error('Error creating user:', error);
     return false;
   }
 }
@@ -131,243 +73,272 @@ async function saveUser(newUser) {
  * Clears the input fields for the sign-up form.
  */
 function clearInputs() {
-  document.getElementById("name").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("password").value = "";
-  document.getElementById("confirmPassword").value = "";
+  ['name', 'email', 'password', 'confirmPassword'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('termsCheckbox').checked = false;
+}
+
+/** 
+ * Shows/hides an error message text in the given element.
+ */
+function toggleErrorMessage(errorElement, message) {
+  if (!errorElement) return;
+  if (message) {
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+  } else {
+    errorElement.style.display = 'none';
+  }
 }
 
 /**
- * Displays a success popup for a short duration and redirects to the home page.
+ * Validates the name input (two words, each at least two letters).
+ */
+function validateName(value) {
+  // e.g. "John Doe"
+  const namePattern = /^([A-Za-z]{2,})\s+([A-Za-z]{2,})/;
+  return namePattern.test(value)
+    ? ''
+    : 'The name must contain at least two words, each with at least two letters.';
+}
+
+/**
+ * Validates email format using a simple pattern.
+ */
+function validateEmail(value) {
+  // This pattern ensures there's an '@' symbol,
+  // followed by a dot and at least two letters for the TLD.
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
+  return emailPattern.test(value.trim())
+    ? ''
+    : 'Please enter a valid e-mail address.';
+}
+
+
+/**
+ * Validates the password:
+ *   - Must contain at least one uppercase letter.
+ *   - Must contain at least one number.
+ *   - Minimum length of 8 characters.
+ *   - Allows special characters.
+ */
+function validatePassword(value) {
+  // If you don’t need complexity checks, remove/alter the pattern.
+  const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
+  return passwordPattern.test(value)
+    ? ''
+    : 'The password must contain at least one capital letter, one number, and be at least 8 characters long.';
+}
+
+/**
+ * Validates that confirmPassword matches password.
+ */
+function validateConfirmPassword(confirmValue, passwordValue) {
+  return confirmValue === passwordValue
+    ? ''
+    : 'The passwords must match.';
+}
+
+/**
+ * Returns the validation error text (if any) for a given input.
+ */
+function getValidationError(input) {
+  const value = input.value.trim();
+  if (!value) {
+    // If field is empty, do not show a complicated error. 
+    // We only show an error if user typed something invalid or mismatching.
+    return '';
+  }
+  switch (input.id) {
+    case 'name':
+      return validateName(value);
+    case 'email':
+      return validateEmail(value);
+    case 'password':
+      return validatePassword(value);
+    case 'confirmPassword':
+      const passwordValue = getInputValue('password');
+      return validateConfirmPassword(value, passwordValue);
+    default:
+      return '';
+  }
+}
+
+/**
+ * Shows validation error on blur (once user leaves the field).
+ */
+function validateOnBlur(event) {
+  const input = event.target;
+  const errorElement = document.getElementById(`${input.id}-error`);
+  if (!errorElement) return;
+
+  // If user left the field empty, hide the error.
+  if (!input.value.trim()) {
+    toggleErrorMessage(errorElement, '');
+    return;
+  }
+
+  const errorText = getValidationError(input);
+  toggleErrorMessage(errorElement, errorText);
+}
+
+/** 
+ * Hides the error message while the user is typing (on input).
+ */
+function handleOnInput(event) {
+  const input = event.target;
+  const errorElement = document.getElementById(`${input.id}-error`);
+
+  // Hide error message as soon as the user starts typing
+  if (errorElement) {
+    errorElement.style.display = 'none';
+  }
+
+  // If user is changing the password, re-check confirm password validity
+  if (input.id === 'password') {
+    const confirmInput = document.getElementById('confirmPassword');
+    if (confirmInput.value.trim()) {
+      // Confirm Password has something typed, so let's re-validate it
+      const confirmErrorElement = document.getElementById('confirmPassword-error');
+      const errorText = getValidationError(confirmInput);
+      toggleErrorMessage(confirmErrorElement, errorText);
+    }
+  }
+
+  // Finally, re-check overall form validity so the button
+  // can be enabled/disabled accordingly
+  checkFormValidity();
+}
+
+
+/** 
+ * Checks if the sign up button should be enabled or disabled.
+ * We do a final check of all fields + the checkbox here.
+ */
+function checkFormValidity() {
+  const name = getInputValue('name');
+  const email = getInputValue('email');
+  const password = getInputValue('password');
+  const confirmPassword = getInputValue('confirmPassword');
+  const termsChecked = document.getElementById('termsCheckbox').checked;
+
+  // Basic checks: no empty fields, 
+  // confirm password must match password,
+  // plus the checkbox.
+  // The advanced constraints (like password pattern) are enforced by final error checks if you want to be thorough.
+  const isFormValid = (
+    name.length > 0 &&
+    email.length > 0 &&
+    password.length > 0 &&
+    confirmPassword === password &&
+    termsChecked
+  );
+
+  document.getElementById('signUpButton').disabled = !isFormValid;
+}
+
+/** 
+ * Validates the terms checkbox. 
+ * If the user has tried to submit before and it's still unchecked, show an error.
+ */
+function validateCheckbox() {
+  const checkbox = document.getElementById('termsCheckbox');
+  const errorElement = document.getElementById('termsCheckbox-error');
+
+  if (!formSubmitted) return; // Only show the error if the user has already tried submitting.
+
+  if (!checkbox.checked) {
+    errorElement.style.display = 'block';
+  } else {
+    errorElement.style.display = 'none';
+  }
+}
+
+/**
+ * Final sign-up attempt. Called when user clicks "Sign Up" button.
+ */
+async function signUp() {
+  formSubmitted = true; // The user is attempting to submit
+  // Double-check that the form is still valid
+  if (document.getElementById('signUpButton').disabled) {
+    validateCheckbox(); // show/hide checkbox error if needed
+    return;
+  }
+
+  // Gather final input values
+  const name = getInputValue('name');
+  const email = getInputValue('email');
+  const password = getInputValue('password');
+  // confirmPassword is already known to match from checkFormValidity
+
+  // Create & save user
+  const newUser = createNewUser(name, email, password);
+  const success = await saveUser(newUser);
+  if (success) {
+    showSuccessPopup();
+  }
+}
+
+/**
+ * Displays a success popup, then redirects after a short delay.
  */
 function showSuccessPopup() {
-  const popupSuccess = document.getElementById("popupSuccess");
-  popupSuccess.style.display = "flex";
+  const popupSuccess = document.getElementById('popupSuccess');
+  popupSuccess.style.display = 'flex';
   setTimeout(() => {
-    popupSuccess.style.display = "none";
-    window.location.href = "index.html";
+    popupSuccess.style.display = 'none';
+    window.location.href = 'index.html';
   }, 2000);
 }
 
-
-/**
- * Displays or hides the error message based on the validation result.
- * @param {HTMLElement} errorMessage The error message element to show or hide.
- * @param {string} errorText The error message text to display.
+/** 
+ * Initialization: attach event listeners once the DOM is ready.
  */
-function toggleErrorMessage(errorMessage, errorText) {
-  if (errorText) {
-    errorMessage.textContent = errorText;
-    errorMessage.style.display = "block";
-  } else {
-    errorMessage.style.display = "none";
-  }
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const inputs = document.querySelectorAll('#name, #email, #password, #confirmPassword');
 
-function getValidationError(input) {
-  if (input.value.trim() === "") {
-    return "";
-  }
-  switch (input.id) {
-    case "name":
-      return validateName(input.value);
-    case "email":
-      return validateEmail(input.value);
-    case "password":
-      return validatePassword(input.value);
-    case "confirmPassword":
-      return validateConfirmPassword(input.value, document.getElementById("password").value.trim());
-    default:
-      return "";
-  }
-}
-
-function handleInput(event) {
-  const input = event.target;
-  const errorMessage = document.getElementById(`${input.id}-error`);
-  errorMessage.style.display = "none";
-}
-
-function validateInputOnBlur(input) {
-  const errorMessage = document.getElementById(`${input.id}-error`);
-  if (input.value.trim() === "") {
-    errorMessage.style.display = "none";
-    return;
-  }
-  const errorText = getValidationError(input);
-  toggleErrorMessage(errorMessage, errorText);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const inputs = document.querySelectorAll("input");
+  // 1) On blur => validate the field and show an error if invalid
   inputs.forEach(input => {
-    input.addEventListener("input", handleInput);
-    input.addEventListener("blur", () => validateInputOnBlur(input));
+    input.addEventListener('blur', validateOnBlur);
   });
-});
 
-/**
- * Validates the input field and shows or hides the error message.
- * @param {HTMLInputElement} input - The input element that needs validation.
- */
-window.validateInput = function (input) {
-  const errorMessage = document.getElementById(`${input.id}-error`);
-  const errorText = getValidationError(input);
-  toggleErrorMessage(errorMessage, errorText);
-};
-
-/**
- * Event listener for when the DOM content is loaded. It attaches 'input' event listeners to all input fields.
- */
-document.addEventListener("DOMContentLoaded", () => {
-  const inputs = document.querySelectorAll("input");
+  // 2) On input => hide error message and re-check form validity
   inputs.forEach(input => {
-    input.addEventListener("input", () => validateInput(input));
+    input.addEventListener('input', e => {
+      handleOnInput(e);
+      checkFormValidity();
+    });
   });
-});
 
-/**
- * Validates the name input.
- * Ensures the name contains at least two words, each with at least two letters.
- * @param {string} value The value of the name input.
- * @returns {string} The error message or an empty string if valid.
- */
-function validateName(value) {
-  const namePattern = /^([A-Za-z]{2,})\s+([A-Za-z]{2,})/;
-  return namePattern.test(value.trim()) 
-    ? "" 
-    : "The name must contain at least two words, each with at least two letters.";
-}
-
-/**
-* Validates the email input.
-* Ensures the email is in a valid format.
-* @param {string} value The value of the email input.
-* @returns {string} The error message or an empty string if valid.
-*/
-function validateEmail(value) {
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailPattern.test(value.trim()) 
-    ? "" 
-    : "Please enter a valid e-mail address.";
-}
-
-/**
- * Validates the password input.
- * Ensures the password contains at least one uppercase letter, one number,
- * and is at least 8 characters long. Special characters are allowed.
- * @param {string} value The value of the password input.
- * @returns {string} The error message or an empty string if valid.
- */
-function validatePassword(value) {
-  const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
-  return passwordPattern.test(value.trim()) 
-    ? "" 
-    : "The password must contain at least one capital letter, one number, and be at least 8 characters long. Special characters are allowed.";
-}
-
-/**
-* Validates the confirm password input.
-* Ensures the confirm password matches the password.
-* @param {string} value The value of the confirm password input.
-* @param {string} password The value of the original password input.
-* @returns {string} The error message or an empty string if valid.
-*/
-function validateConfirmPassword(value, password) {
-  return value.trim() === password 
-    ? "" 
-    : "The passwords must match.";
-}
-
-
-/**
- * Initializes event listeners for input fields to validate them when they lose focus.
- * This function runs when the DOM is fully loaded.
- */
-document.addEventListener("DOMContentLoaded", () => {
-  const inputs = document.querySelectorAll("input");
-  inputs.forEach(input => {
-    input.addEventListener("blur", () => validateInput(input));
+  // 3) Terms checkbox: watch for changes
+  const termsCheckbox = document.getElementById('termsCheckbox');
+  termsCheckbox.addEventListener('change', () => {
+    validateCheckbox();
+    checkFormValidity();
   });
-});
 
-/**
- * Wird beim Absenden des Formulars aufgerufen.
- * Prüft, ob die Checkbox aktiviert ist.
- * Falls nicht, wird die Fehlermeldung angezeigt und das Absenden verhindert.
- */
-function validateForm() {
-  const termsCheckbox = document.getElementById("termsCheckbox");
-  const errorMessage = document.getElementById("termsCheckbox-error");
-
-  if (!termsCheckbox.checked) {
-    errorMessage.style.display = "block";
-    formSubmitted = true;
-    return false; // Verhindert das Absenden
-  } else {
-    errorMessage.style.display = "none";
-    return true; // Formular kann abgeschickt werden
-  }
-}
-
-/**
- * Wird aufgerufen, wenn sich der Status der Checkbox ändert.
- * Zeigt die Fehlermeldung nur, wenn bereits ein Absendeversuch stattgefunden hat.
- */
-function validateCheckbox() {
-  if (!formSubmitted) return; // Falls noch kein Absendeversuch, tue nichts.
-
-  const termsCheckbox = document.getElementById("termsCheckbox");
-  const errorMessage = document.getElementById("termsCheckbox-error");
-
-  if (!termsCheckbox.checked) {
-    errorMessage.style.display = "block";
-  } else {
-    errorMessage.style.display = "none";
-  }
-}
-
-// Event-Listener hinzufügen – aber keine initiale Validierung beim Laden der Seite.
-document.addEventListener("DOMContentLoaded", () => {
-  const termsCheckbox = document.getElementById("termsCheckbox");
-  termsCheckbox.addEventListener("change", validateCheckbox);
-});
-
-/**
- * Initializes the checkbox validation by adding an event listener to the checkbox.
- * This function runs when the DOM is fully loaded.
- * It also performs an initial check to set the correct visibility of the error message.
- */
-document.addEventListener("DOMContentLoaded", () => {
-  const termsCheckbox = document.getElementById("termsCheckbox");
-  termsCheckbox.addEventListener("change", validateCheckbox);
-  validateCheckbox();
-});
-
-// Attach event listeners after DOM has loaded
-document.addEventListener("DOMContentLoaded", () => {
+  // 4) Initial button state check (in case fields are autofilled, etc.)
   checkFormValidity();
-  const nameInput = document.getElementById("name");
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const confirmPasswordInput = document.getElementById("confirmPassword");
-  const termsCheckbox = document.getElementById("termsCheckbox");
-  nameInput.addEventListener("input", checkFormValidity);
-  emailInput.addEventListener("input", checkFormValidity);
-  passwordInput.addEventListener("input", checkFormValidity);
-  confirmPasswordInput.addEventListener("input", checkFormValidity);
-  termsCheckbox.addEventListener("change", checkFormValidity);
 });
 
-// Expose functions to the global scope for HTML onclick attributes
-window.signUp = signUp;
-
+/**
+ * Helper to redirect to a page (used in HTML onclick).
+ */
 function redirectTo(page) {
   window.location.href = page;
 }
 window.redirectTo = redirectTo;
 
+/**
+ * Helper to go back in history (used in HTML onclick).
+ */
 function goBack() {
   window.history.back();
 }
 window.goBack = goBack;
+
+/** 
+ * Expose signUp function to the window so HTML can call it.
+ */
+window.signUp = signUp;
