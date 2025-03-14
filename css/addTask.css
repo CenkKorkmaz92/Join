@@ -404,6 +404,7 @@ select {
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 10px;
+    width: 100%;
 }
 
 .input-subtask-wrapper input:focus {
