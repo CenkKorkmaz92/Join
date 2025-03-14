@@ -32,8 +32,6 @@ function clearError(inputId) {
 
 /**
  * Basic email format check with a simple regex.
- * @param {string} email - The email string to validate.
- * @returns {boolean} True if valid email, false otherwise.
  */
 function isValidEmail(email) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,7 +40,6 @@ function isValidEmail(email) {
 
 /**
  * Validates an individual input field on blur.
- * @param {string} inputId - The ID of the input field to validate.
  */
 function validateField(inputId) {
     const value = document.getElementById(inputId).value.trim();
@@ -106,13 +103,20 @@ async function login() {
     }
 }
 
+/**
+ * Attach the blur validation to email/password fields once DOM is ready.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     ['loginEmail', 'loginPassword'].forEach(id => {
-        document.getElementById(id).addEventListener('blur', () => validateField(id));
+        const field = document.getElementById(id);
+        if (field) {
+            field.addEventListener('blur', () => validateField(id));
+        }
     });
     checkLoginValidity();
 });
 
+/** Make these globally accessible if you need them in HTML **/
 window.login = login;
-window.redirectTo = page => window.location.href = page;
+window.redirectTo = (page) => window.location.href = page;
 window.goBack = () => window.history.back();

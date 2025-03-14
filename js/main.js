@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(initLoadingAnimation, 1000);
+    setTimeout(initLoadingAnimation, 1000); // Wait briefly before starting animation
     setupBackArrow();
 });
 
@@ -8,32 +8,47 @@ function initLoadingAnimation() {
     const loadingLogo = document.querySelector(".loading-logo");
     const navbarLogo = document.querySelector(".main-logo");
 
-    if (!loadingLogo || !navbarLogo) {
-        console.error("🚨 Missing elements: loadingLogo or navbarLogo not found!");
+    if (!loadingScreen || !loadingLogo || !navbarLogo) {
+        console.error("🚨 Missing elements: loadingScreen, loadingLogo, or navbarLogo not found!");
         return;
     }
 
-    animateLogo(loadingLogo, navbarLogo);
-    fadeOutLoadingScreen(loadingScreen, navbarLogo);
+    animateLogo(loadingScreen, loadingLogo, navbarLogo);
 }
 
-function animateLogo(loadingLogo, navbarLogo) {
-    const targetPosition = navbarLogo.getBoundingClientRect();
-    const loadingPosition = loadingLogo.getBoundingClientRect();
-    const deltaX = targetPosition.left - loadingPosition.left;
-    const deltaY = targetPosition.top - loadingPosition.top;
+/**
+ * Translate & scale the "loadingLogo" until it aligns with the "navbarLogo."
+ * Then fade out the loading screen once the transition ends.
+ */
+function animateLogo(loadingScreen, loadingLogo, navbarLogo) {
+    // Get bounding boxes
+    const loadingRect = loadingLogo.getBoundingClientRect();
+    const navRect = navbarLogo.getBoundingClientRect();
 
-    loadingLogo.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(0.3)`;
+    // Calculate centers
+    const loadingCenterX = loadingRect.left + (loadingRect.width / 2);
+    const loadingCenterY = loadingRect.top + (loadingRect.height / 2);
+    const navCenterX = navRect.left + (navRect.width / 2);
+    const navCenterY = navRect.top + (navRect.height / 2);
+
+    // Translate difference
+    const translateX = navCenterX - loadingCenterX;
+    const translateY = navCenterY - loadingCenterY;
+
+    // Perform the animation
+    loadingLogo.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.3)`;
     loadingLogo.style.transition = "transform 1s ease-out";
-}
 
-function fadeOutLoadingScreen(loadingScreen, navbarLogo) {
-    setTimeout(() => {
+    // Once the logo finishes moving, fade out the loading screen and reveal the navbar logo
+    loadingLogo.addEventListener("transitionend", () => {
         loadingScreen.classList.add("fade-out");
         navbarLogo.classList.add("show");
-    }, 700);
+    }, { once: true });
 }
 
+/**
+ * If there's a back-arrow on the page, clicking it should go back one page.
+ */
 function setupBackArrow() {
     const backArrow = document.getElementById("back-arrow");
     if (backArrow) {
@@ -41,6 +56,9 @@ function setupBackArrow() {
     }
 }
 
+/**
+ * Simple redirect helper (if you need it).
+ */
 function redirectTo(url) {
     window.location.href = url;
 }

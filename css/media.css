@@ -233,6 +233,7 @@
 
     .task-summary {
         width: 290px;
+        margin-bottom: 20px !important;
     }
 
     .headline-container {
