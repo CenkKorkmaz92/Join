@@ -178,6 +178,7 @@ body.legal-page .login {
       width: 100%;
       padding: 0;
       gap: 8px;
+      padding-right: 8px;
     }
 
     body.legal-page .navbar-menu .navbar-item:not(.login) {

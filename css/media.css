@@ -187,10 +187,6 @@
         font-size: 32px;
     }
 
-    span {
-        font-size: 14px !important;
-    }
-
     .summary-task-status {
         width: 320px;
         height: auto;
