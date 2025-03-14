@@ -13,10 +13,10 @@ nameInput.addEventListener("input", function () {
     nameError.textContent = "";
   } else {
     if (nameInput.validity.valueMissing) {
-      nameError.textContent = "Bitte geben Sie einen Namen ein.";
+      nameError.textContent = "Please enter a name.";
     } else if (nameInput.validity.patternMismatch) {
       nameError.textContent =
-        "Der Name darf maximal drei Wörter enthalten und nur Buchstaben sowie Leerzeichen beinhalten.";
+        "The name may contain a maximum of three words and only letters and spaces.";
     }
   }
   checkFormValidity();
@@ -42,7 +42,7 @@ emailInput.addEventListener("input", function () {
     emailError.textContent = "";
   } else {
     emailError.textContent =
-      "Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).";
+      "Please enter a valid e-mail address (e.g. name@domain.de).";
   }
   checkFormValidity();
 });
@@ -56,10 +56,10 @@ phoneInput.addEventListener("input", function () {
     phoneError.textContent = "";
   } else {
     if (phoneInput.validity.valueMissing) {
-      phoneError.textContent = "Bitte geben Sie eine Telefonnummer ein.";
+      phoneError.textContent = "Please enter a telephone number.";
     } else if (phoneInput.validity.patternMismatch) {
       phoneError.textContent =
-        "Bitte geben Sie eine gültige Telefonnummer ein (mindestens 6 Zeichen, nur Zahlen, Leerzeichen und + erlaubt).";
+        "Please enter a valid phone number (at least 6 characters, only numbers, spaces and + allowed).";
     }
   }
   checkFormValidity();
