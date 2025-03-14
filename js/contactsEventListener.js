@@ -19,6 +19,7 @@ nameInput.addEventListener("input", function () {
         "Der Name darf maximal drei Wörter enthalten und nur Buchstaben sowie Leerzeichen beinhalten.";
     }
   }
+  checkFormValidity();
 });
 
 /**
@@ -31,7 +32,7 @@ const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
 /**
  * Event listener for the "input" event on the email input field.
- * Validates the email input against the emailRegex pattern.
+ * Validates the email input against the emailRegex pattern and updates the button state.
  *
  * @param {Event} event - The input event triggered by the user.
  */
@@ -43,6 +44,7 @@ emailInput.addEventListener("input", function () {
     emailError.textContent =
       "Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.de).";
   }
+  checkFormValidity();
 });
 
 /**
@@ -60,6 +62,7 @@ phoneInput.addEventListener("input", function () {
         "Bitte geben Sie eine gültige Telefonnummer ein (mindestens 6 Zeichen, nur Zahlen, Leerzeichen und + erlaubt).";
     }
   }
+  checkFormValidity();
 });
 
 // Edit contact input fields
@@ -236,13 +239,20 @@ function checkFormValidity() {
       emailRegex.test(emailInput.value));
 }
 
+/**
+ * Clears the create contact input fields and updates the button state.
+ */
+function clearInputs() {
+  nameInput.value = "";
+  emailInput.value = "";
+  phoneInput.value = "";
+  checkFormValidity();
+}
+
 // Add real-time validation for enabling/disabling the "Create Contact" button.
 nameInput.addEventListener("input", checkFormValidity);
 emailInput.addEventListener("input", checkFormValidity);
 phoneInput.addEventListener("input", checkFormValidity);
-
-// Initialize the "Create Contact" button state once the DOM content is fully loaded.
-document.addEventListener("DOMContentLoaded", checkFormValidity);
 
 /**
  * Event listener for the "saveBtn" button click event.
@@ -264,5 +274,5 @@ document.getElementById("saveBtn").addEventListener("click", async function () {
   showSuccessPopup("popupSuccess", 800);
 });
 
-// Initial call to set the correct layout based on the current window size
-handleResize();
+// Ensure the "Create Contact" button is disabled initially when the DOM is ready.
+document.addEventListener("DOMContentLoaded", checkFormValidity);
