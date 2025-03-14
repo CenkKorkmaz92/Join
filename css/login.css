@@ -60,11 +60,6 @@ body {
     pointer-events: none;
 }
 
-/* Remove the forced transform here so JS can set it exactly */
-.loading-screen.fade-out .loading-logo {
-    /* transform: translate(-650px, -250px) scale(0.3); */
-}
-
 .main-logo {
     opacity: 1;
     transition: opacity 0.5s ease-in;
