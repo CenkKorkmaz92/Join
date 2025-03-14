@@ -1,7 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(initLoadingAnimation, 1000); // Wait briefly before starting animation
+    // Only run the loading animation if all required elements exist
+    if (
+      document.querySelector(".loading-screen") &&
+      document.querySelector(".loading-logo") &&
+      document.querySelector(".main-logo")
+    ) {
+      setTimeout(initLoadingAnimation, 1000); // Wait briefly before starting animation
+    }
     setupBackArrow();
 });
+
 
 function initLoadingAnimation() {
     const loadingScreen = document.querySelector(".loading-screen");
