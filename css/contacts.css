@@ -17,19 +17,18 @@ body {
 
 #contactList {
     margin-top: 100px;
-    margin-bottom: 100px;
     width: 100%;
-    height: 100vh;
+    height: 90vh;
     overflow-y: auto;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 90vh;
     align-items: center;
     background: white;
-    padding: 20px;
+    padding-left: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     width: 352px;
@@ -49,7 +48,7 @@ body {
     z-index: 2;
     background-color: white;
     height: 100px;
-    width: 362px;
+    width: 345px;
     margin-top: -30px
 }
 
@@ -59,7 +58,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 56px;
-    width: 352px;
+    width: 330px;
     padding: 10px;
     background-color: #2A3647;
     color: white;
@@ -70,7 +69,7 @@ body {
     font-size: 21px;
     font-weight: 700;
     line-height: 25.2px;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .add-contact-btn:hover {
@@ -421,7 +420,7 @@ body {
 }
 
 .letter-divider {
-    width: 100%;
+    width: 85%;
     border: 0;
     height: 1px;
     background: #ccc;
@@ -457,7 +456,8 @@ body {
 
 .contact-header {
     display: flex;
-    align-items: center;
+    align-items: start;
+    width: 100%;
     justify-content: start;
     text-align: center;
     margin-bottom: 20px;
@@ -731,7 +731,14 @@ body {
 .back-to-contact-list-button {
     border: none;
     background-color: transparent;
-    width: 300px;
+    /* width: 300px; */
+}
+
+.contact-header-headline-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
 }
 
 .back-to-contact-list-button:hover {
@@ -989,6 +996,12 @@ body {
         margin: 0;
     }
 
+    .contact-header-headline-box {
+        flex-direction: column !important;
+        align-items: center;
+        gap: 15px;
+    }
+
     .content-header-separator {
         display: none !important;
     }
@@ -1018,16 +1031,16 @@ body {
         left: 0;
         width: calc(100% - 30px) !important;
     }
+
+    #contactList {
+        height: 75vh;
+    }
 }
 
 @media (max-width: 620px) {
 
     .contact-detailed-name {
         font-size: 32px;
-    }
-
-    .back-to-contact-list-button {
-        right: -100px !important;
     }
 }
 
@@ -1036,13 +1049,13 @@ body {
     .contact-detailed-name {
         font-size: 24px;
     }
-
-    .back-to-contact-list-button {
-        right: -40px !important;
-    }
 }
 
 @media (max-width: 425px) {
+
+    .contact-detail {
+        min-width: 320px;
+    }
 
     .popup-header {
         width: 300px;
@@ -1119,6 +1132,36 @@ body {
 }
 
 @media (max-width: 390px) {
+
+    .contact-detail {
+        min-width: 270px;
+        /* padding: 0;
+        padding-left: 5px; */
+    }
+
+    .contact-details-headline {
+        margin-bottom: 0;
+    }
+
+    .contact-information-mail {
+        margin: 0;
+    }
+
+    .contact-information-phone {
+        margin: 0;
+    }
+
+    .contact-info-section {
+        margin: 0;
+    }
+
+    .contact-header {
+        margin: 0;
+    }
+
+    .contact-details {
+        margin: 0;
+    }
 
     .contact-detailed-name {
         font-size: 18px;
