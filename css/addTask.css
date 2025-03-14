@@ -415,7 +415,7 @@ select {
     border: none;
     outline: none;
     height: 32px;
-    width: 390px;
+    width: 366px;
     padding: 8px;
     border-radius: 10px;
     font-size: 20px;
@@ -444,7 +444,8 @@ select {
 
 #subtask-list {
     margin-top: 10px;
-    padding-left: 20px;
+    width: 100%;
+    padding: 0;
 }
 
 .subtask-list-wrapper {
