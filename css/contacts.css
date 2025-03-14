@@ -384,9 +384,9 @@ body {
     display: flex;
     align-items: center;
     padding: 10px;
-    margin: 5px 15px;
+    margin: 5px 13px;
     border-radius: 10px;
-    width: 300px;
+    width: 300px !important;
 }
 
 .contact-info {
