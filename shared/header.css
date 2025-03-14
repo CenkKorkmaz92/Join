@@ -102,7 +102,7 @@ body.legal-page .user-profile {
     }
 
     .help-icon {
-        display: none;
+        display: flex;
     }
 
     .help-button-responsive {
