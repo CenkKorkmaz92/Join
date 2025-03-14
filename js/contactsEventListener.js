@@ -1,8 +1,10 @@
 /**
  * File: contactsEventListener.js
- * Description: Contains event listeners for validating contact form inputs, handling popups,
- * managing contact operations, and adapting the layout on resize.
+ * Description: Contains event listeners for validating contact form inputs (both create and edit),
+ * handling popups, managing contact operations, and adapting the layout on resize.
  */
+
+/* ===================== Create Contact Section ===================== */
 
 /**
  * Handles input validation for the name input field.
@@ -65,7 +67,55 @@ phoneInput.addEventListener("input", function () {
   checkFormValidity();
 });
 
-// Edit contact input fields
+/**
+ * Checks the validity of the create form fields and updates the state of the "Create Contact" button.
+ * The email field is validated using both its built-in validity check and the custom emailRegex.
+ */
+function checkFormValidity() {
+  const saveBtn = document.getElementById("saveBtn");
+  saveBtn.disabled =
+    !(nameInput.checkValidity() &&
+      phoneInput.checkValidity() &&
+      emailInput.checkValidity() &&
+      emailRegex.test(emailInput.value));
+}
+
+/**
+ * Clears the create contact input fields and updates the button state.
+ */
+function clearInputs() {
+  nameInput.value = "";
+  emailInput.value = "";
+  phoneInput.value = "";
+  checkFormValidity();
+}
+
+/**
+ * Event listener for the "saveBtn" button click event.
+ * Validates the create form, creates a new contact, updates the contacts list,
+ * pushes the new contact to the API, clears the inputs, hides the popup, and shows a success popup.
+ *
+ * @async
+ * @listens click
+ */
+document.getElementById("saveBtn").addEventListener("click", async function () {
+  if (!isFormValid()) return;
+  const newContact = createContact();
+  contacts.push(newContact);
+  contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
+  renderContacts();
+  await pushContactToAPI(newContact);
+  clearInputs();
+  hidePopup("popup");
+  showSuccessPopup("popupSuccess", 800);
+});
+
+/* Ensure the "Create Contact" button is disabled initially when the DOM is ready. */
+document.addEventListener("DOMContentLoaded", checkFormValidity);
+
+/* ===================== Edit Contact Section ===================== */
+
+// Grab references for the edit contact input fields
 const editNameInput = document.getElementById("editNameInput");
 const editEmailInput = document.getElementById("editEmailInput");
 const editPhoneInput = document.getElementById("editPhoneInput");
@@ -86,6 +136,7 @@ if (editNameInput) {
           "The name may contain a maximum of three words and only letters and spaces.";
       }
     }
+    checkEditFormValidity();
   });
 }
 
@@ -104,6 +155,7 @@ if (editEmailInput) {
       editEmailError.textContent =
         "Please enter a valid e-mail address (e.g. name@domain.de).";
     }
+    checkEditFormValidity();
   });
 }
 
@@ -123,8 +175,59 @@ if (editPhoneInput) {
           "Please enter a valid phone number (at least 6 characters, only numbers, spaces and + allowed).";
       }
     }
+    checkEditFormValidity();
   });
 }
+
+/**
+ * Checks the validity of the edit form fields and updates the state of the "Save" button in the edit form.
+ * The email field is validated using both its built-in validity check and the custom emailRegex.
+ */
+function checkEditFormValidity() {
+  const saveEditBtn = document.getElementById("saveEditBtn");
+  saveEditBtn.disabled =
+    !(editNameInput.checkValidity() &&
+      editPhoneInput.checkValidity() &&
+      editEmailInput.checkValidity() &&
+      emailRegex.test(editEmailInput.value));
+}
+
+/**
+ * (Optional) Checks if the edit form is valid.
+ *
+ * @returns {boolean} True if the edit form is valid.
+ */
+function isEditFormValid() {
+  return (
+    editNameInput.checkValidity() &&
+    editPhoneInput.checkValidity() &&
+    editEmailInput.checkValidity() &&
+    emailRegex.test(editEmailInput.value)
+  );
+}
+
+/**
+ * Event listener for the "saveEditBtn" button click event.
+ * Validates the edit form, updates the contact (update logic to be implemented),
+ * pushes the updated contact to the API, hides the edit popup, and shows a success popup.
+ *
+ * @async
+ * @listens click
+ */
+document.getElementById("saveEditBtn").addEventListener("click", async function (event) {
+  event.preventDefault();
+  if (!isEditFormValid()) return;
+  // Replace the following with your update logic:
+  const updatedContact = updateContact(); // assume updateContact() creates an updated contact object
+  await pushEditContactToAPI(updatedContact); // assume this function pushes the update to the API
+  hidePopup("editPopup");
+  showSuccessPopup("popupSuccess", 800);
+});
+
+/* Ensure the "Save" button in the edit form is disabled initially when the DOM is ready. */
+document.addEventListener("DOMContentLoaded", checkEditFormValidity);
+
+/* ===================== Other Event Listeners & Functions ===================== */
 
 /**
  * Opens the edit popup and populates it with the current contact's details.
@@ -142,6 +245,7 @@ document.getElementById("editContactBtn").addEventListener("click", function () 
     let profileCircle = document.getElementById("selectedContactProfile");
     profileCircle.innerText = currentContact.initials;
     profileCircle.style.backgroundColor = currentContact.color;
+    checkEditFormValidity();
   }
 });
 
@@ -163,6 +267,7 @@ document.getElementById("deleteBtn").addEventListener("click", function (event) 
   editNameInput.value = "";
   editEmailInput.value = "";
   editPhoneInput.value = "";
+  checkEditFormValidity();
 });
 
 /**
@@ -176,17 +281,7 @@ document.getElementById("addContactBtn").addEventListener("click", function () {
 });
 
 /**
- * Adds a click event listener to the "Edit Contact" button.
- * Opens the "Edit Contact" popup with a fly-in animation.
- *
- * @listens click
- */
-document.getElementById("editContactBtn").addEventListener("click", function () {
-  openPopupGeneric("editPopup", ".popup-content");
-});
-
-/**
- * Event listener for the "add-new-contact-responsive" button click event.
+ * Adds a click event listener to the "add-new-contact-responsive" button.
  * Opens a generic popup when the button is clicked.
  *
  * @listens click
@@ -225,54 +320,3 @@ function handleResize() {
     document.querySelector(".contact-header").classList.add("hidden");
   }
 }
-
-/**
- * Checks the validity of the form fields and updates the state of the "Create Contact" button.
- * The email field is validated using both its built-in validity check and the custom emailRegex.
- */
-function checkFormValidity() {
-  const saveBtn = document.getElementById("saveBtn");
-  saveBtn.disabled =
-    !(nameInput.checkValidity() &&
-      phoneInput.checkValidity() &&
-      emailInput.checkValidity() &&
-      emailRegex.test(emailInput.value));
-}
-
-/**
- * Clears the create contact input fields and updates the button state.
- */
-function clearInputs() {
-  nameInput.value = "";
-  emailInput.value = "";
-  phoneInput.value = "";
-  checkFormValidity();
-}
-
-// Add real-time validation for enabling/disabling the "Create Contact" button.
-nameInput.addEventListener("input", checkFormValidity);
-emailInput.addEventListener("input", checkFormValidity);
-phoneInput.addEventListener("input", checkFormValidity);
-
-/**
- * Event listener for the "saveBtn" button click event.
- * Validates the form, creates a new contact, updates the contacts list, pushes the new contact to the API,
- * clears the inputs, hides the popup, and shows a success popup.
- *
- * @async
- * @listens click
- */
-document.getElementById("saveBtn").addEventListener("click", async function () {
-  if (!isFormValid()) return;
-  const newContact = createContact();
-  contacts.push(newContact);
-  contacts.sort((a, b) => a.fullName.localeCompare(b.fullName));
-  renderContacts();
-  await pushContactToAPI(newContact);
-  clearInputs();
-  hidePopup("popup");
-  showSuccessPopup("popupSuccess", 800);
-});
-
-// Ensure the "Create Contact" button is disabled initially when the DOM is ready.
-document.addEventListener("DOMContentLoaded", checkFormValidity);
