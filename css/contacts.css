@@ -28,7 +28,6 @@ body {
     height: 90vh;
     align-items: center;
     background: white;
-    padding-left: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     width: 352px;
@@ -385,7 +384,7 @@ body {
     display: flex;
     align-items: center;
     padding: 10px;
-    margin: 5px 0;
+    margin: 5px 15px;
     border-radius: 10px;
     width: 315px;
 }
@@ -1029,7 +1028,7 @@ body {
 
     .contact-wrapper {
         left: 0;
-        width: calc(100% - 30px) !important;
+        width: 100% !important;
     }
 
     #contactList {
