@@ -27,15 +27,6 @@ html {
     }
 }
 
-.drop-down-assignt-to-container,
-body,
-html,
-.layout,
-.content,
-.add-task-main-container {
-    filter: none !important;
-}
-
 .add-task-main-container {
     display: flex;
     flex-direction: column;
