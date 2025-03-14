@@ -1053,6 +1053,31 @@ body {
 
 @media (max-width: 425px) {
 
+    .popup-sub-section {
+        margin: 0;
+    }
+
+    .error-message-name {
+        top: 342px;
+        font-size: 10px;
+        width: 100%;
+        padding-left: 0px;
+    }
+    
+    .error-message-mail {
+        top: 413px;
+        font-size: 10px;
+        width: 100%;
+        padding-left: 0px;
+    }
+    
+    .error-message-phone {
+        top: 481px;
+        font-size: 10px;
+        width: 95%;
+        padding-left: 0px;
+    }
+
     .contact-detail {
         min-width: 320px;
     }
@@ -1066,7 +1091,6 @@ body {
         width: 300px;
         height: 350px;
     }
-
 
     .popup-header-logo-box {
         display: none;
@@ -1127,7 +1151,7 @@ body {
     }
 
     .popup-buttons {
-        margin-top: 12px;
+        margin-top: 30px;
     }
 }
 
@@ -1135,8 +1159,6 @@ body {
 
     .contact-detail {
         min-width: 270px;
-        /* padding: 0;
-        padding-left: 5px; */
     }
 
     .contact-details-headline {
