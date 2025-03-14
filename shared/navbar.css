@@ -168,3 +168,36 @@ body.legal-page .login {
         display: none !important;
     }
 }
+
+@media (max-width: 850px) {
+    body.legal-page .navbar-footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      padding: 0;
+      gap: 8px;
+    }
+
+    body.legal-page .navbar-menu .navbar-item:not(.login) {
+        display: none !important;
+    }
+    
+    body.legal-page .login {
+        display: flex !important;
+    }
+
+    .navbar-item {
+        width: 100px !important;
+    }
+
+    .navbar-item.active {
+        width: 100px !important;
+    }
+
+    .navbar-item:hover {
+        width: 100px !important;
+    }
+  }
+  
