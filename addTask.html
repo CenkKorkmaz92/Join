@@ -3,140 +3,139 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Add Task</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon/join_logo_dark.svg" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/addTask.css" />
     <link rel="stylesheet" href="./css/media.css" />
     <link rel="stylesheet" href="./shared/navbar.css" />
     <link rel="stylesheet" href="./shared/header.css" />
-    <link rel="stylesheet" href="./css/main.css" />
-    <link rel="stylesheet" href="./css/addTask.css" />
+
 </head>
 
 <body>
+    <div class="layout">
+        <!-- Sidebar (Navbar) -->
+        <div id="navbar-container" class="navbar"></div>
+        <!-- Header -->
+        <div id="header-container" class="top-header"></div>
 
-    <body>
-        <div class="layout">
-            <!-- Sidebar (Navbar) -->
-            <div id="navbar-container" class="navbar"></div>
-            <!-- Header -->
-            <div id="header-container" class="top-header"></div>
-
-            <!-- Main Content -->
-            <main class="content">
-                <div class="add-task-main-container">
-                    <h1 class="headline-add-task">Add Task</h1>
-                    <div class="add-task-input-containers">
-                        <div class="left-input-fields">
-                            <div class="input-title-container">
-                                <span>Title<span style="color: red;">*</span></span>
-                                <input type="text" class="focus" id="titleInput" required placeholder="Enter a title" />
-                            </div>
-                            <div class="input-description-container">
-                                <span>Description</span>
-                                <textarea class="focus" id="descriptionInput"
-                                    placeholder="Enter a Description"></textarea>
-                            </div>
-
-                            <!-- Assigned to -->
-                            <div class="drop-down-assignt-to-container">
-                                <span>Assigned to</span>
-                                <div class="dropdown-wrapper">
-                                    <div class="dropdown-toggle" id="dropdownToggle">
-                                        <span id="dropdownPlaceholder">Select contact(s)</span>
-                                        <img class="dropdown-arrow" id="dropdownArrow"
-                                            src="./assets/img/icons/addTask/arrow_drop_down.svg" alt="Dropdown arrow" />
-                                    </div>
-                                    <div class="dropdown-list hidden" id="contactsDropdownList">
-                                    </div>
-                                </div>
-                                <div class="selected-contacts-container" id="selectedContactsContainer"></div>
-                            </div>
+        <!-- Main Content -->
+        <main class="content">
+            <div class="add-task-main-container">
+                <h1 class="headline-add-task">Add Task</h1>
+                <div class="add-task-input-containers">
+                    <div class="left-input-fields">
+                        <div class="input-title-container">
+                            <span>Title<span style="color: red;">*</span></span>
+                            <input type="text" class="focus" id="titleInput" required placeholder="Enter a title" />
+                        </div>
+                        <div class="input-description-container">
+                            <span>Description</span>
+                            <textarea class="focus" id="descriptionInput" placeholder="Enter a Description"></textarea>
                         </div>
 
-                        <div class="grey-vector"></div>
-
-                        <div class="right-input-fields">
-                            <div class="input-due-date-container">
-                                <span>Due date<span style="color: red;">*</span></span>
-                                <input type="date" class="focus" id="dueDateInput" required />
-                            </div>
-                            <div class="prio-selection-container">
-                                <span>Prio</span>
-                                <div class="prio-selector-container">
-                                    <!-- .prio-option class -->
-                                    <div class="prio-option" data-prio="urgent">
-                                        <span>Urgent</span>
-                                        <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority" />
-                                    </div>
-                                    <!-- Start with "selected" on medium -->
-                                    <div class="prio-option selected" data-prio="medium">
-                                        <span>Medium</span>
-                                        <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority" />
-                                    </div>
-                                    <div class="prio-option" data-prio="low">
-                                        <span>Low</span>
-                                        <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority" />
-                                    </div>
+                        <!-- Assigned to -->
+                        <div class="drop-down-assignt-to-container">
+                            <span>Assigned to</span>
+                            <div class="dropdown-wrapper">
+                                <div class="dropdown-toggle" id="dropdownToggle">
+                                    <span id="dropdownPlaceholder">Select contact(s)</span>
+                                    <img class="dropdown-arrow" id="dropdownArrow"
+                                        src="./assets/img/icons/addTask/arrow_drop_down.svg" alt="Dropdown arrow" />
+                                </div>
+                                <div class="dropdown-list hidden" id="contactsDropdownList">
                                 </div>
                             </div>
-
-                            <div class="input-category-container">
-                                <label for="category" required>Category<span style="color: red;">*</span></label>
-                                <!-- ADD ID HERE -->
-                                <select class="focus" id="categorySelect" required>
-                                    <option value="" selected hidden>Select task category</option>
-                                    <option value="user-story">User Story</option>
-                                    <option value="technical-task">Technical Task</option>
-                                </select>
-                            </div>
-
-                            <!-- Subtasks -->
-                            <div class="subtask-container">
-                                <label for="subtask">Subtasks</label>
-                                <div class="input-subtask-wrapper">
-                                    <input type="text" id="subtask-input" placeholder="Add new subtask" />
-                                    <div class="subtask-buttons">
-                                        <button id="clear-subtask" class="hidden">✖</button>
-                                        <div id="vector" class="hidden">|</div>
-                                        <button id="confirm-subtask" class="hidden">✔</button>
-                                        <button id="add-subtask-btn">+</button>
-                                    </div>
-                                </div>
-                                <div class="subtask-list-wrapper">
-                                    <ul id="subtask-list"></ul>
-                                </div>
-                            </div>
+                            <div class="selected-contacts-container" id="selectedContactsContainer"></div>
                         </div>
                     </div>
 
-                    <div class="add-task-bottom-container">
-                        <span><span style="color: red;">*</span> This field is required</span>
-                        <div class="add-task-create-btn-container">
-                            <button id="clear-all-fields-btn" class="clear-btn">
-                                Clear
-                                <img src="./assets/img/icons/addTask/add_task_x_icon.svg" alt="" />
-                            </button>
-                            <button class="create-btn">
-                                Create Task
-                                <img src="./assets/img/icons/addTask/add_task_check_icon.svg" alt="" />
-                            </button>
-                        </div>
-                    </div>
+                    <div class="grey-vector"></div>
 
-                    <div id="popupSuccess" class="popup-success" style="display: none;">
-                        <div class="popup-content-success">
-                            <p>Your task was created successfully!</p>
+                    <div class="right-input-fields">
+                        <div class="input-due-date-container">
+                            <span>Due date<span style="color: red;">*</span></span>
+                            <input type="date" class="focus" id="dueDateInput" required />
+                        </div>
+                        <div class="prio-selection-container">
+                            <span>Prio</span>
+                            <div class="prio-selector-container">
+                                <!-- .prio-option class -->
+                                <div class="prio-option" data-prio="urgent">
+                                    <span>Urgent</span>
+                                    <img src="./assets/img/icons/addTask/arrow_up_icon.svg" alt="High Priority" />
+                                </div>
+                                <!-- Start with "selected" on medium -->
+                                <div class="prio-option selected" data-prio="medium">
+                                    <span>Medium</span>
+                                    <img src="./assets/img/icons/addTask/equal_icon.svg" alt="Medium Priority" />
+                                </div>
+                                <div class="prio-option" data-prio="low">
+                                    <span>Low</span>
+                                    <img src="./assets/img/icons/addTask/arrow_down_icon.svg" alt="Low Priority" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-category-container">
+                            <label for="category" required>Category<span style="color: red;">*</span></label>
+                            <!-- ADD ID HERE -->
+                            <select class="focus" id="categorySelect" required>
+                                <option value="" selected hidden>Select task category</option>
+                                <option value="user-story">User Story</option>
+                                <option value="technical-task">Technical Task</option>
+                            </select>
+                        </div>
+
+                        <!-- Subtasks -->
+                        <div class="subtask-container">
+                            <label for="subtask">Subtasks</label>
+                            <div class="input-subtask-wrapper">
+                                <input type="text" id="subtask-input" placeholder="Add new subtask" />
+                                <div class="subtask-buttons">
+                                    <button id="clear-subtask" class="hidden">✖</button>
+                                    <div id="vector" class="hidden">|</div>
+                                    <button id="confirm-subtask" class="hidden">✔</button>
+                                    <button id="add-subtask-btn">+</button>
+                                </div>
+                            </div>
+                            <div class="subtask-list-wrapper">
+                                <ul id="subtask-list"></ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
 
-        <script src="./shared/includeHTML.js"></script>
-        <script type="module" src="./js/addTask.js"></script>
-        <script type="module" src="./js/firebase.js"></script>
-        <script src="./shared/navbar.js"></script>
-        <script src="./shared/header.js"></script>
-    </body>
+                <div class="add-task-bottom-container">
+                    <span><span style="color: red;">*</span> This field is required</span>
+                    <div class="add-task-create-btn-container">
+                        <button id="clear-all-fields-btn" class="clear-btn">
+                            Clear
+                            <img src="./assets/img/icons/addTask/add_task_x_icon.svg" alt="" />
+                        </button>
+                        <button class="create-btn">
+                            Create Task
+                            <img src="./assets/img/icons/addTask/add_task_check_icon.svg" alt="" />
+                        </button>
+                    </div>
+                </div>
+
+                <div id="popupSuccess" class="popup-success" style="display: none;">
+                    <div class="popup-content-success">
+                        <p>Your task was created successfully!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="./shared/includeHTML.js"></script>
+    <script type="module" src="./js/addTask.js"></script>
+    <script type="module" src="./js/firebase.js"></script>
+    <script src="./shared/navbar.js"></script>
+    <script src="./shared/header.js"></script>
+</body>
 
 </html>
