@@ -697,7 +697,7 @@ select {
 
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
     .add-task-main-container {
         padding-left: 0 !important;
         padding-right: 0 !important;
