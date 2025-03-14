@@ -60,18 +60,29 @@ function updateGreeting() {
 document.addEventListener("DOMContentLoaded", () => { updateGreeting(); updateSummaryMetrics(); });
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const now = new Date();
   const hours = now.getHours();
   const minutes = now.getMinutes();
   const totalMinutes = hours * 60 + minutes;
   let greeting = "";
-  if (totalMinutes >= 240 && totalMinutes <= 720) { 
+  if (totalMinutes >= 240 && totalMinutes <= 720) {
     greeting = "Good morning,";
-  } else if (totalMinutes >= 721 && totalMinutes <= 1020) { 
+  } else if (totalMinutes >= 721 && totalMinutes <= 1020) {
     greeting = "Good afternoon,";
   } else {
     greeting = "Good evening,";
   }
   document.querySelector('.day-time').textContent = greeting;
 });
+
+/**
+ * Simple redirect helper (if you need it).
+ */
+function redirectTo(url, sectionId) {
+  if (sectionId) {
+    window.location.href = `${url}#${sectionId}`;
+  } else {
+    window.location.href = url;
+  }
+}
