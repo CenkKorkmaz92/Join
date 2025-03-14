@@ -276,7 +276,7 @@ body {
 .popup-input {
     display: flex;
     flex-direction: column;
-    gap: 20px
+    gap: 34px
 }
 
 .popup-input-field {
@@ -299,15 +299,34 @@ body {
     justify-content: flex-start;
 }
 
-.error-message {
-    display: flex;
-    justify-content: flex-start;
-    align-items: start;
-    margin-left: 10px;
-    margin-top: 10px;
+.error-message-name {
+    position: absolute;
+    top: 185px;
     font-size: 12px;
     color: red;
     width: 422px;
+    text-align: start;
+    padding-left: 15px;
+}
+
+.error-message-mail {
+    position: absolute;
+    top: 287px;
+    font-size: 12px;
+    color: red;
+    width: 422px;
+    text-align: start;
+    padding-left: 15px;
+}
+
+.error-message-phone {
+    position: absolute;
+    top: 387px;
+    font-size: 12px;
+    color: red;
+    width: 422px;
+    text-align: start;
+    padding-left: 15px;
 }
 
 .popup-buttons {
@@ -315,6 +334,13 @@ body {
     justify-content: center;
     margin-top: 30px;
     gap: 36px;
+}
+
+.popup-button-check:disabled {
+    background-color: #cccccc;
+    border-color: #aaaaaa;
+    color: #666666;
+    cursor: not-allowed;
 }
 
 .popup-buttons button {
@@ -794,6 +820,26 @@ body {
 }
 
 @media (max-width: 1275px) {
+    .error-message-name {
+        top: 492px;
+        font-size: 12px;
+        width: 100%;
+        padding-left: 0px;
+    }
+    
+    .error-message-mail {
+        top: 562px;
+        font-size: 12px;
+        width: 100%;
+        padding-left: 0px;
+    }
+    
+    .error-message-phone {
+        top: 632px;
+        font-size: 12px;
+        width: 100%;
+        padding-left: 0px;
+    }
 
     .contact-wrapper {
         width: calc(100% - 267px) !important;
@@ -851,8 +897,7 @@ body {
     }
 
     .popup-input {
-        width: 384px;
-        gap: 10px;
+        gap: 34px;
     }
 
     .popup-input-field {
@@ -971,7 +1016,7 @@ body {
 
     .contact-wrapper {
         left: 0;
-        width: calc(100% - 30px)!important;
+        width: calc(100% - 30px) !important;
     }
 }
 
