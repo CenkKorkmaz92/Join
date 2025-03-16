@@ -1,33 +1,90 @@
 /**
  * addTaskValidation.js
- * Form validation and clearing logic.
+ * Manages form validation and clearing logic without using native "disabled".
  */
 
 import { updateSelectedContactsUI, getSelectedContacts } from './addTaskContacts.js';
 import { initSubtaskEvents } from './addTaskSubtasks.js';
 
-export function initFormValidation() {
-    ['titleInput', 'dueDateInput', 'categorySelect'].forEach((id) => {
-        const el = document.getElementById(id);
-        el.addEventListener('input', validateForm);
-        el.addEventListener('change', validateForm);
-    });
-    validateForm();
-}
-
 /**
- * Disables/enables the "Create Task" button based on required fields.
+ * Initializes validation by attaching event listeners to required fields,
+ * toggling a "disabled" class on the Create Task button,
+ * and highlighting empty fields if the button is clicked while "disabled."
  */
-function validateForm() {
-    const title = document.getElementById('titleInput').value.trim();
-    const date = document.getElementById('dueDateInput').value;
-    const category = document.getElementById('categorySelect').value;
-    const createBtn = document.querySelector('.create-btn');
-    createBtn.disabled = !(title && date && category);
+export function initFormValidation() {
+    const requiredFields = ['titleInput', 'dueDateInput', 'categorySelect'];
+
+    requiredFields.forEach((id) => {
+        const el = document.getElementById(id);
+        el.addEventListener('input', toggleCreateButtonState);
+        el.addEventListener('change', toggleCreateButtonState);
+    });
+
+    // Initial check
+    toggleCreateButtonState();
+
+    // Handle clicks on the container (or the button itself)
+    const container = document.getElementById('create-btn-container');
+    container.addEventListener('click', (e) => {
+        const createBtn = document.querySelector('.create-btn');
+        // If the button has our "disabled" class, highlight empty fields
+        if (createBtn.classList.contains('disabled')) {
+            e.preventDefault();
+            highlightEmptyFields();
+        } else {
+        }
+    });
+    removeErrorOnInput(requiredFields);
 }
 
 /**
- * Clears all form fields, subtasks, and selected contacts.
+ * Toggles the .disabled class on the button based on required fields.
+ */
+function toggleCreateButtonState() {
+    const title = document.getElementById('titleInput').value.trim();
+    const date = document.getElementById('dueDateInput').value.trim();
+    const category = document.getElementById('categorySelect').value.trim();
+    const createBtn = document.querySelector('.create-btn');
+
+    if (title && date && category) {
+        createBtn.classList.remove('disabled');
+    } else {
+        createBtn.classList.add('disabled');
+    }
+}
+
+/**
+ * Highlights empty fields by adding a red border.
+ */
+function highlightEmptyFields() {
+    const titleInput = document.getElementById('titleInput');
+    const dueDateInput = document.getElementById('dueDateInput');
+    const categorySelect = document.getElementById('categorySelect');
+
+    if (!titleInput.value.trim()) {
+        titleInput.classList.add('error');
+    }
+    if (!dueDateInput.value.trim()) {
+        dueDateInput.classList.add('error');
+    }
+    if (!categorySelect.value.trim()) {
+        categorySelect.classList.add('error');
+    }
+}
+
+/**
+ * Removes the red border once the user starts typing or changes a field.
+ */
+function removeErrorOnInput(fields) {
+    fields.forEach((id) => {
+        const el = document.getElementById(id);
+        el.addEventListener('input', () => el.classList.remove('error'));
+        el.addEventListener('change', () => el.classList.remove('error'));
+    });
+}
+
+/**
+ * Clears all form fields, subtasks, and selected contacts, then re-checks validation.
  */
 export function clearAllFields() {
     document.getElementById('titleInput').value = '';
@@ -40,7 +97,7 @@ export function clearAllFields() {
     hideSubtaskEditingButtons();
     resetPrioritySelection();
     resetContacts();
-    validateForm(); // re-check form
+    toggleCreateButtonState();
 }
 
 function hideSubtaskEditingButtons() {
@@ -58,16 +115,17 @@ function resetPrioritySelection() {
 }
 
 function resetContacts() {
-    getSelectedContacts().length = 0; // clear array in place
+    getSelectedContacts().length = 0;
     updateSelectedContactsUI();
 }
 
+/**
+ * Initializes subtask events and sets up the clear fields button.
+ */
 export function initFieldClearing() {
-    document
-        .getElementById('clear-all-fields-btn')
-        .addEventListener('click', (e) => {
-            e.preventDefault();
-            clearAllFields();
-        });
+    document.getElementById('clear-all-fields-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        clearAllFields();
+    });
     initSubtaskEvents();
 }

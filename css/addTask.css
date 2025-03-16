@@ -574,24 +574,40 @@ select {
     font-weight: 700;
     line-height: 25.2px;
     transition: filter 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 .create-btn:hover {
-    cursor: pointer;
     background-color: #29ABE2;
     border: #29ABE2;
 }
 
-.create-btn:disabled {
+.create-btn.disabled {
     background-color: #cccccc;
     border-color: #aaaaaa;
     color: #666666;
-}
-
-.create-btn:disabled:hover {
     cursor: not-allowed !important;
+    pointer-events: none; 
 }
 
+@keyframes pulseBorder {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.5);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+  }
+  
+  .error {
+    border: 1px solid red !important;
+    /* Add the pulse animation */
+    animation: pulseBorder 2s infinite ease-out;
+  }
+  
 .popup-success {
     position: fixed;
     top: 0;
@@ -660,15 +676,15 @@ select {
     }
 
     .left-input-fields {
-        width: 450px !important;
+        width: 400px !important;
     }
 
     .dropdown-toggle {
-        width: 424px !important;
+        width: 374px !important;
     }
 
     .right-input-fields {
-        width: 450px !important;
+        width: 400px !important;
     }
 
     .prio-option {
@@ -685,7 +701,12 @@ select {
         width: 90px !important;
         height: 40px !important;
     }
+}
 
+@media (max-width: 850px) {
+    .add-task-create-btn-container {
+        flex-direction: column-reverse !important;
+    }
 }
 
 @media (max-width: 650px) {
@@ -697,9 +718,13 @@ select {
 }
 
 @media (max-width: 460px) {
+    .prio-option span {
+        font-size: 13px;
+    }
+
     h1 {
         font-weight: 700 !important;
-        font-size: 47px !important;
+        font-size: 36px !important;
     }
 
     .add-task-bottom-container {

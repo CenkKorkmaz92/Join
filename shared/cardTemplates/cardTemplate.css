@@ -129,6 +129,7 @@ body {
 }
 
 .assigned-to p {
+  margin-bottom: 8px;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
@@ -146,7 +147,7 @@ body {
   display: flex;
   align-items: center;
   width: 216px;
-  height: 42px;
+  height: 24px;
   gap: 16px;
   border-radius: 10px;
   padding-bottom: 8px;
@@ -218,6 +219,13 @@ body {
   margin-right: 8px;
 }
 
+@media (max-width: 850px) {
+  .card-title {
+    font-size: 36px !important;
+    line-height: 36.8px;
+  }
+}
+
 @media (max-width: 600px) {
   .modal-content {
     width: 440px !important;
@@ -231,23 +239,24 @@ body {
     display: none !important;
   }
 
-  .card-title {
-    font-size: 47px !important;
+  .assignees-list li {
+    width: auto !important;
   }
 }
 
 @media (max-width: 500px) {
   .modal-content {
-    width: 400px !important;
-  }
-
-  .assignees-list li {
-    width: auto !important;
+    width: 380px !important;
   }
 }
 
 @media (max-width: 460px) {
   .modal-content {
     width: 260px !important;
+  }
+
+  .card-title {
+    font-size: 28px !important;
+    line-height: 28.8px;
   }
 }

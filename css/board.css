@@ -510,7 +510,7 @@ html,
 
 @media (max-width: 650px) {
   .add-task-modal-content {
-    width: 460px !important;
+    width: 440px !important;
   }
 }
 

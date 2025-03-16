@@ -50,6 +50,18 @@ html {
   cursor: pointer;
 }
 
+@media (max-width: 850px) {
+  .headline {
+    font-size: 36px;
+    line-height: 36.8px;
+  }
+
+  .subtitle-p {
+    font-size: 24px;
+    line-height: 24.8px;
+}
+}
+
 @media (max-width: 580px) {
 
   .content {
@@ -57,15 +69,11 @@ html {
   }
 
   .headline {
-    padding-right: 20px !important;
+    padding-right: 40px !important;
   }
 
   .pl {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-
-  .privacy-policy {
-    width: 300px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
   }
 }

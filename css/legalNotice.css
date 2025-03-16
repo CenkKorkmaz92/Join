@@ -1,6 +1,15 @@
 body,
 html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.privacy-policy {
   max-width: 1440px;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .pl {
@@ -60,6 +69,18 @@ a:hover {
   overflow: auto;
 }
 
+@media (max-width: 850px) {
+  .headline {
+    font-size: 36px;
+    line-height: 36.8px;
+  }
+
+  .subtitle-p {
+    font-size: 24px;
+    line-height: 24.8px;
+  }
+}
+
 @media (max-width: 580px) {
 
   .content {
@@ -67,11 +88,11 @@ a:hover {
   }
 
   .headline {
-    padding-right: 20px !important;
+    padding-right: 40px !important;
   }
 
   .pl {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
   }
 }
