@@ -453,6 +453,33 @@ select {
     outline: none;
 }
 
+.editing-subtask .subtask-edit-input {
+    flex: 1;
+    height: 100%;
+    border: none;
+    margin: 0;
+    padding: 0 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.editing-subtask .subtask-buttons {
+    position: static;
+    display: flex;
+    gap: 8px;
+}
+
+.editing-subtask {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none;
+}
+
 .editing-subtask input:focus {
     border: none;
     border-bottom: 2px solid #29ABE2;
@@ -465,6 +492,7 @@ select {
     padding: 8px 12px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    height: 32px;
 }
 
 #vector {
@@ -587,27 +615,29 @@ select {
     border-color: #aaaaaa;
     color: #666666;
     cursor: not-allowed !important;
-    pointer-events: none; 
+    pointer-events: none;
 }
 
 @keyframes pulseBorder {
     0% {
-      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.5);
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.5);
     }
+
     70% {
-      box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+        box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
     }
+
     100% {
-      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
     }
-  }
-  
-  .error {
+}
+
+.error {
     border: 1px solid red !important;
     /* Add the pulse animation */
     animation: pulseBorder 2s infinite ease-out;
-  }
-  
+}
+
 .popup-success {
     position: fixed;
     top: 0;

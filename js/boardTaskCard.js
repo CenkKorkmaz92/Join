@@ -47,17 +47,33 @@ function setSubtaskProgress(card, subtasks) {
 }
 
 function setAssignedChips(card, assigned) {
-    const chips = card.querySelector('.chips');
-    chips.innerHTML = '';
+    const chipsContainer = card.querySelector('.chips');
+    chipsContainer.innerHTML = '';
     if (!assigned || assigned.length === 0) return;
-    assigned.forEach((contact) => {
+
+    // Maximum number of visible chips
+    const maxVisibleChips = 4;
+
+    // Show up to 4 chips
+    assigned.slice(0, maxVisibleChips).forEach((contact) => {
         const chip = document.createElement('div');
         chip.classList.add('contact-chip');
         chip.style.backgroundColor = contact.color || '#999';
         chip.textContent = contact.initials || '?';
-        chips.appendChild(chip);
+        chipsContainer.appendChild(chip);
     });
+
+    // If there are more than 4 contacts, add a "+X" chip
+    if (assigned.length > maxVisibleChips) {
+        const remaining = assigned.length - maxVisibleChips;
+        const plusChip = document.createElement('div');
+        plusChip.classList.add('contact-chip');
+        plusChip.style.backgroundColor = '#999';
+        plusChip.textContent = `+${remaining}`;
+        chipsContainer.appendChild(plusChip);
+    }
 }
+
 
 /**
  * Creates and returns a draggable task card element.
