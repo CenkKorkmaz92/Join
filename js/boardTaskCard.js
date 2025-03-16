@@ -50,11 +50,7 @@ function setAssignedChips(card, assigned) {
     const chipsContainer = card.querySelector('.chips');
     chipsContainer.innerHTML = '';
     if (!assigned || assigned.length === 0) return;
-
-    // Maximum number of visible chips
     const maxVisibleChips = 4;
-
-    // Show up to 4 chips
     assigned.slice(0, maxVisibleChips).forEach((contact) => {
         const chip = document.createElement('div');
         chip.classList.add('contact-chip');
@@ -62,8 +58,6 @@ function setAssignedChips(card, assigned) {
         chip.textContent = contact.initials || '?';
         chipsContainer.appendChild(chip);
     });
-
-    // If there are more than 4 contacts, add a "+X" chip
     if (assigned.length > maxVisibleChips) {
         const remaining = assigned.length - maxVisibleChips;
         const plusChip = document.createElement('div');
@@ -83,18 +77,12 @@ export function createTaskCard(task) {
     const card = template.content.firstElementChild.cloneNode(true);
     card.id = 'card-' + task.firebaseId;
     card.draggable = true;
-
-    // Title & description
     card.querySelector('.headline').textContent = task.title || 'No title';
     card.querySelector('.info').textContent = task.description || '';
-
-    // Category, priority, subtasks, assigned
     setCategoryBadge(card, task.category);
     setPriorityIcon(card, task.priority);
     setSubtaskProgress(card, task.subtasks || []);
     setAssignedChips(card, task.assignedTo);
-
-    // Drag events
     card.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text/plain', card.id);
         card.classList.add('dragging');
@@ -102,10 +90,7 @@ export function createTaskCard(task) {
     card.addEventListener('dragend', () => {
         card.classList.remove('dragging');
     });
-
-    // Click -> open modal
     card.addEventListener('click', () => openTaskModal(task));
-
     return card;
 }
 

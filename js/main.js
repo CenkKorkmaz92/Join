@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Only run the loading animation if all required elements exist
     if (
       document.querySelector(".loading-screen") &&
       document.querySelector(".loading-logo") &&
       document.querySelector(".main-logo")
     ) {
-      setTimeout(initLoadingAnimation, 1000); // Wait briefly before starting animation
+      setTimeout(initLoadingAnimation, 1000);
     }
     setupBackArrow();
 });
@@ -29,25 +28,16 @@ function initLoadingAnimation() {
  * Then fade out the loading screen once the transition ends.
  */
 function animateLogo(loadingScreen, loadingLogo, navbarLogo) {
-    // Get bounding boxes
     const loadingRect = loadingLogo.getBoundingClientRect();
     const navRect = navbarLogo.getBoundingClientRect();
-
-    // Calculate centers
     const loadingCenterX = loadingRect.left + (loadingRect.width / 2);
     const loadingCenterY = loadingRect.top + (loadingRect.height / 2);
     const navCenterX = navRect.left + (navRect.width / 2);
     const navCenterY = navRect.top + (navRect.height / 2);
-
-    // Translate difference
     const translateX = navCenterX - loadingCenterX;
     const translateY = navCenterY - loadingCenterY;
-
-    // Perform the animation
     loadingLogo.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.3)`;
     loadingLogo.style.transition = "transform 1s ease-out";
-
-    // Once the logo finishes moving, fade out the loading screen and reveal the navbar logo
     loadingLogo.addEventListener("transitionend", () => {
         loadingScreen.classList.add("fade-out");
         navbarLogo.classList.add("show");

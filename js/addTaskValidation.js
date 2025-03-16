@@ -19,15 +19,11 @@ export function initFormValidation() {
         el.addEventListener('input', toggleCreateButtonState);
         el.addEventListener('change', toggleCreateButtonState);
     });
-
-    // Initial check
     toggleCreateButtonState();
 
-    // Handle clicks on the container (or the button itself)
     const container = document.getElementById('create-btn-container');
     container.addEventListener('click', (e) => {
         const createBtn = document.querySelector('.create-btn');
-        // If the button has our "disabled" class, highlight empty fields
         if (createBtn.classList.contains('disabled')) {
             e.preventDefault();
             highlightEmptyFields();

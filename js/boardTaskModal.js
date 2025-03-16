@@ -30,7 +30,6 @@ async function fetchTaskFromFirebase(firebaseId) {
         const response = await fetch(url);
         const data = await response.json();
         if (!data) return null;
-        // Put firebaseId back into the object
         return { firebaseId, ...data };
     } catch (err) {
         console.error('Error fetching single task:', err);
@@ -42,26 +41,20 @@ async function fetchTaskFromFirebase(firebaseId) {
  * Opens the big card in view mode, always fetching the latest task from Firebase.
  */
 export async function openTaskModal(task) {
-    // 1) Fetch the latest data from Firebase by this task's ID
     const latestTask = await fetchTaskFromFirebase(task.firebaseId);
     if (!latestTask) {
         console.warn('Task not found in Firebase. Possibly deleted?');
         return;
     }
     setCurrentTask(latestTask);
-
-    // 2) Fill the big card UI (view mode)
     document.getElementById('viewModeContainer').style.display = 'block';
     document.getElementById('editFormContainer').style.display = 'none';
-
     setCategoryBadge(latestTask.category);
     setTitleDescription(latestTask.title, latestTask.description);
     setDueDate(latestTask.dueDate);
     setPriority(latestTask.priority);
     setAssigned(latestTask.assignedTo);
     setSubtasks(latestTask);
-
-    // 3) Show the modal
     openModal('viewTaskModal');
 }
 

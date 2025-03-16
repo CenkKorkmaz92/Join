@@ -10,17 +10,20 @@ import {
   updateSelectedContactsUI,
   toggleContactsDropdown,
   closeDropdownIfClickedOutside,
-  getSelectedContacts,
+  getSelectedContacts
 } from './addTaskContacts.js';
-import { initSubtaskEvents, addSubtask } from './addTaskSubtasks.js';
+import { initSubtaskEvents } from './addTaskSubtasks.js';
 import {
   initFormValidation,
   initFieldClearing,
-  clearAllFields,
+  clearAllFields
 } from './addTaskValidation.js';
 
+/**
+ * Initializes the Add Task page once the DOM is ready,
+ * fetching contacts and setting up UI/event handlers.
+ */
 document.addEventListener('DOMContentLoaded', async () => {
-  // 1) Initialize references & events
   setupDOMReferences();
   initFormValidation();
   initFieldClearing();
@@ -28,7 +31,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   initDropdownEvents();
   initSubtaskEvents();
 
-  // 2) Fetch contacts, render dropdown
   try {
     const data = await fetchAllContacts();
     const contactsArray = mapContactsData(data);
@@ -38,44 +40,46 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('dropdownPlaceholder')
     );
   } catch (error) {
-    console.warn('No contacts found or error fetching contacts:', error);
   }
 });
 
+/**
+ * Sets up DOM references or event listeners for various UI elements.
+ */
 function setupDOMReferences() {
-  // Just rename the HTML inputs with IDs, if needed.
   document.getElementById('titleInput').addEventListener('input', () => { });
-  // ...any other small rebindings...
 }
 
 /**
- * Converts the Firebase contact object into an array for rendering,
- * storing the Firebase key as "id".
+ * Maps the raw Firebase contacts data into an array of contact objects
+ * with 'id' instead of the Firebase push key.
+ * @param {Object} data - The raw data from Firebase.
+ * @returns {Array} An array of contact objects.
  */
 function mapContactsData(data) {
   return Object.entries(data).map(([pushKey, obj]) => ({
-    id: pushKey,            // <-- use "id" as the field name (instead of "firebaseId")
+    id: pushKey,
     fullName: obj.fullName,
     color: obj.color,
-    initials: obj.initials,
+    initials: obj.initials
   }));
 }
 
 /**
- * Priority button selection logic.
+ * Initializes click handlers for priority selection buttons.
  */
 function initPriorityButtons() {
   const prioOptions = document.querySelectorAll('.prio-option');
-  prioOptions.forEach((option) => {
+  prioOptions.forEach(option => {
     option.addEventListener('click', () => {
-      prioOptions.forEach((o) => o.classList.remove('selected'));
+      prioOptions.forEach(o => o.classList.remove('selected'));
       option.classList.add('selected');
     });
   });
 }
 
 /**
- * Dropdown toggle and close-on-outside-click logic.
+ * Initializes dropdown toggle and outside-click close logic.
  */
 function initDropdownEvents() {
   const toggleEl = document.getElementById('dropdownToggle');
@@ -87,13 +91,16 @@ function initDropdownEvents() {
     toggleContactsDropdown(listEl, arrowEl, placeholderEl);
   });
 
-  window.addEventListener('click', (e) => {
+  window.addEventListener('click', e => {
     closeDropdownIfClickedOutside(e, toggleEl, listEl, arrowEl);
   });
 }
 
 /**
- * Gathers form data and pushes new task to Firebase.
+ * Handles the "Create Task" button click event.
+ * Prevents default form action, validates the form,
+ * and creates a new task if valid.
+ * @param {Event} e - The click event.
  */
 function createTaskBtnClicked(e) {
   e.preventDefault();
@@ -103,12 +110,13 @@ function createTaskBtnClicked(e) {
   }
   const newTask = buildTaskData();
   postNewTask(newTask)
-    .then((res) => showSuccessAndRedirect(res))
-    .catch((err) => alert('Error adding task. Please try again.'));
+    .then(res => showSuccessAndRedirect(res))
+    .catch(() => alert('Error adding task. Please try again.'));
 }
 
 /**
- * Checks required fields before attempting to create the task.
+ * Checks if the required fields (title, due date, category) are filled.
+ * @returns {boolean} True if valid, otherwise false.
  */
 function isFormValid() {
   const title = document.getElementById('titleInput').value.trim();
@@ -118,8 +126,9 @@ function isFormValid() {
 }
 
 /**
- * Builds the task object from form input values,
- * storing assigned contacts with "id" (not "firebaseId").
+ * Builds a task object from the form fields, including
+ * assigned contacts and subtasks.
+ * @returns {Object} A new task object ready to be sent to the server.
  */
 function buildTaskData() {
   const title = document.getElementById('titleInput').value.trim();
@@ -127,17 +136,17 @@ function buildTaskData() {
   const dueDate = document.getElementById('dueDateInput').value;
   const category = document.getElementById('categorySelect').value;
   const selectedPrio = document.querySelector('.prio-option.selected')?.dataset.prio || 'medium';
+
   const subtaskItems = document.querySelectorAll('#subtask-list li .subtask-text');
-  const subtasks = Array.from(subtaskItems).map((el) =>
+  const subtasks = Array.from(subtaskItems).map(el =>
     el.textContent.replace(/^•\s*/, '').trim()
   );
 
-  // Now each selected contact is .id, not .firebaseId
-  const assignedTo = getSelectedContacts().map((c) => ({
-    id: c.id,                 // <-- store c.id
+  const assignedTo = getSelectedContacts().map(c => ({
+    id: c.id,
     fullName: c.fullName,
     initials: c.initials,
-    color: c.color,
+    color: c.color
   }));
 
   return {
@@ -148,12 +157,13 @@ function buildTaskData() {
     priority: selectedPrio,
     category,
     subtasks,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date().toISOString()
   };
 }
 
 /**
- * Show success popup, then redirect to board.
+ * Displays a success popup, then redirects the user to the board page.
+ * @param {Object} responseData - The response data from the server (optional).
  */
 function showSuccessAndRedirect(responseData) {
   const popup = document.getElementById('popupSuccess');
@@ -165,7 +175,9 @@ function showSuccessAndRedirect(responseData) {
   clearAllFields();
 }
 
-// Attach click listener for "Create Task" button
+/**
+ * Attaches the "Create Task" button click handler if the button exists.
+ */
 const createBtn = document.querySelector('.create-btn');
 if (createBtn) {
   createBtn.addEventListener('click', createTaskBtnClicked);

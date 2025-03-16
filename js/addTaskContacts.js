@@ -41,10 +41,7 @@ function createContactListItem(contact) {
     item.appendChild(avatar);
     item.appendChild(label);
     item.appendChild(checkbox);
-
-    // Add click event listener to the whole item
     item.addEventListener('click', (e) => {
-        // Prevent toggling twice if the click originates on the checkbox itself
         if (e.target !== checkbox) {
             checkbox.checked = !checkbox.checked;
             toggleContact(contact, checkbox);

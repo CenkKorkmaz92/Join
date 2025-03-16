@@ -184,7 +184,6 @@ function resetContactDetail() {
   document.getElementById("contactCircle").style.backgroundColor = "";
 }
 
-// Event listeners for buttons
 document.getElementById("addContactBtn").onclick = function () {
   const popup = document.getElementById("popup");
   popup.style.display = "flex";
@@ -204,7 +203,6 @@ document.getElementById("clearBtn").onclick = function () {
   closeWindow();
 };
 
-// Handling form submission to add a new contact
 document.getElementById("contactForm").addEventListener("submit", async function (event) {
   event.preventDefault();
   if (!isFormValid()) return;
@@ -296,7 +294,6 @@ function closePopupGeneric(popupId, animatedSelector) {
   }, 250);
 }
 
-// Fetching contacts from the API when the window loads
 window.onload = function () {
   fetchContactsFromAPI();
 };

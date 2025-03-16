@@ -31,7 +31,9 @@ function clearError(inputId) {
 }
 
 /**
- * Basic email format check with a simple regex.
+ * Checks if the provided email string matches a basic pattern.
+ * @param {string} email - The email string to validate.
+ * @returns {boolean} True if the email is valid, otherwise false.
  */
 function isValidEmail(email) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -40,10 +42,10 @@ function isValidEmail(email) {
 
 /**
  * Validates an individual input field on blur.
+ * @param {string} inputId - The ID of the input field to validate.
  */
 function validateField(inputId) {
     const value = document.getElementById(inputId).value.trim();
-
     switch (inputId) {
         case 'loginEmail':
             if (!value) {
@@ -54,7 +56,6 @@ function validateField(inputId) {
                 clearError(inputId);
             }
             break;
-
         case 'loginPassword':
             if (!value) {
                 showError(inputId, 'Please enter your password.');
@@ -67,26 +68,26 @@ function validateField(inputId) {
 }
 
 /**
- * Enables or disables the login button based on basic checks
- * (email is not empty, valid format; password is not empty).
+ * Enables or disables the login button based on whether
+ * the email and password are valid.
  */
 function checkLoginValidity() {
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value;
     const isEmailValid = email && isValidEmail(email);
     const isPasswordValid = !!password;
-
     document.getElementById('loginButton').disabled = !(isEmailValid && isPasswordValid);
 }
 
 /**
  * Attempts to log in the user and redirects if successful.
+ * Uses data from Firebase to verify the email and password.
+ * @async
  */
 async function login() {
     if (document.getElementById('loginButton').disabled) return;
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value;
-
     try {
         const users = await getData('users');
         const foundUser = Object.values(users || {}).find(u => u.email === email);
@@ -98,13 +99,12 @@ async function login() {
         localStorage.setItem('loggedInUser', JSON.stringify(foundUser));
         window.location.href = 'summary.html';
     } catch (error) {
-        console.error('Login error:', error);
         alert('An error occurred. Please try again.');
     }
 }
 
 /**
- * Attach the blur validation to email/password fields once DOM is ready.
+ * Attaches blur validation to email/password fields and checks login validity once DOM is ready.
  */
 document.addEventListener('DOMContentLoaded', () => {
     ['loginEmail', 'loginPassword'].forEach(id => {
@@ -116,7 +116,18 @@ document.addEventListener('DOMContentLoaded', () => {
     checkLoginValidity();
 });
 
-/** Make these globally accessible if you need them in HTML **/
+/**
+ * Makes the login function accessible globally.
+ */
 window.login = login;
-window.redirectTo = (page) => window.location.href = page;
+
+/**
+ * Redirects to the specified page.
+ * @param {string} page - The URL or page to redirect to.
+ */
+window.redirectTo = page => window.location.href = page;
+
+/**
+ * Navigates one step back in the browser history.
+ */
 window.goBack = () => window.history.back();

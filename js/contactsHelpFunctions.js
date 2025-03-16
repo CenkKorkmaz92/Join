@@ -235,7 +235,6 @@ function createContact() {
     const email = emailInput.value.trim();
     const phone = phoneInput.value.trim();
     return {
-      // No random "id" here!
       fullName,
       email,
       phone,

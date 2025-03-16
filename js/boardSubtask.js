@@ -23,5 +23,5 @@ export async function toggleSubtaskDone(task, index, isDone, updateCardCb) {
     task.subtasks[index].done = isDone;
     const updated = task.subtasks.map((s) => ({ text: s.text, done: s.done }));
     await patchSubtasks(task.firebaseId, updated);
-    updateCardCb(task.firebaseId, updated); // e.g. update the small card progress
+    updateCardCb(task.firebaseId, updated);
 }

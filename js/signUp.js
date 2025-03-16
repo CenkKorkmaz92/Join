@@ -96,7 +96,6 @@ function toggleErrorMessage(errorElement, message) {
  * Validates the name input (two words, each at least two letters).
  */
 function validateName(value) {
-  // e.g. "John Doe"
   const namePattern = /^([A-Za-z]{2,})\s+([A-Za-z]{2,})/;
   return namePattern.test(value)
     ? ''
@@ -107,8 +106,6 @@ function validateName(value) {
  * Validates email format using a simple pattern.
  */
 function validateEmail(value) {
-  // This pattern ensures there's an '@' symbol,
-  // followed by a dot and at least two letters for the TLD.
   const emailPattern = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
   return emailPattern.test(value.trim())
     ? ''
@@ -124,7 +121,6 @@ function validateEmail(value) {
  *   - Allows special characters.
  */
 function validatePassword(value) {
-  // If you don’t need complexity checks, remove/alter the pattern.
   const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,}$/;
   return passwordPattern.test(value)
     ? ''
@@ -146,8 +142,6 @@ function validateConfirmPassword(confirmValue, passwordValue) {
 function getValidationError(input) {
   const value = input.value.trim();
   if (!value) {
-    // If field is empty, do not show a complicated error. 
-    // We only show an error if user typed something invalid or mismatching.
     return '';
   }
   switch (input.id) {
@@ -172,8 +166,6 @@ function validateOnBlur(event) {
   const input = event.target;
   const errorElement = document.getElementById(`${input.id}-error`);
   if (!errorElement) return;
-
-  // If user left the field empty, hide the error.
   if (!input.value.trim()) {
     toggleErrorMessage(errorElement, '');
     return;
@@ -189,25 +181,17 @@ function validateOnBlur(event) {
 function handleOnInput(event) {
   const input = event.target;
   const errorElement = document.getElementById(`${input.id}-error`);
-
-  // Hide error message as soon as the user starts typing
   if (errorElement) {
     errorElement.style.display = 'none';
   }
-
-  // If user is changing the password, re-check confirm password validity
   if (input.id === 'password') {
     const confirmInput = document.getElementById('confirmPassword');
     if (confirmInput.value.trim()) {
-      // Confirm Password has something typed, so let's re-validate it
       const confirmErrorElement = document.getElementById('confirmPassword-error');
       const errorText = getValidationError(confirmInput);
       toggleErrorMessage(confirmErrorElement, errorText);
     }
   }
-
-  // Finally, re-check overall form validity so the button
-  // can be enabled/disabled accordingly
   checkFormValidity();
 }
 
@@ -222,11 +206,6 @@ function checkFormValidity() {
   const password = getInputValue('password');
   const confirmPassword = getInputValue('confirmPassword');
   const termsChecked = document.getElementById('termsCheckbox').checked;
-
-  // Basic checks: no empty fields, 
-  // confirm password must match password,
-  // plus the checkbox.
-  // The advanced constraints (like password pattern) are enforced by final error checks if you want to be thorough.
   const isFormValid = (
     name.length > 0 &&
     email.length > 0 &&
@@ -245,9 +224,6 @@ function checkFormValidity() {
 function validateCheckbox() {
   const checkbox = document.getElementById('termsCheckbox');
   const errorElement = document.getElementById('termsCheckbox-error');
-
-  if (!formSubmitted) return; // Only show the error if the user has already tried submitting.
-
   if (!checkbox.checked) {
     errorElement.style.display = 'block';
   } else {
@@ -259,20 +235,14 @@ function validateCheckbox() {
  * Final sign-up attempt. Called when user clicks "Sign Up" button.
  */
 async function signUp() {
-  formSubmitted = true; // The user is attempting to submit
-  // Double-check that the form is still valid
+  formSubmitted = true;
   if (document.getElementById('signUpButton').disabled) {
-    validateCheckbox(); // show/hide checkbox error if needed
+    validateCheckbox();
     return;
   }
-
-  // Gather final input values
   const name = getInputValue('name');
   const email = getInputValue('email');
   const password = getInputValue('password');
-  // confirmPassword is already known to match from checkFormValidity
-
-  // Create & save user
   const newUser = createNewUser(name, email, password);
   const success = await saveUser(newUser);
   if (success) {
@@ -297,13 +267,9 @@ function showSuccessPopup() {
  */
 document.addEventListener('DOMContentLoaded', () => {
   const inputs = document.querySelectorAll('#name, #email, #password, #confirmPassword');
-
-  // 1) On blur => validate the field and show an error if invalid
   inputs.forEach(input => {
     input.addEventListener('blur', validateOnBlur);
   });
-
-  // 2) On input => hide error message and re-check form validity
   inputs.forEach(input => {
     input.addEventListener('input', e => {
       handleOnInput(e);
@@ -311,14 +277,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3) Terms checkbox: watch for changes
   const termsCheckbox = document.getElementById('termsCheckbox');
   termsCheckbox.addEventListener('change', () => {
     validateCheckbox();
     checkFormValidity();
   });
-
-  // 4) Initial button state check (in case fields are autofilled, etc.)
   checkFormValidity();
 });
 
