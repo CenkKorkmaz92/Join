@@ -159,6 +159,10 @@
   cursor: pointer;
 }
 
+.drag-n-drop-helper {
+  width: 24px;
+}
+
 @media (max-width: 850px) {
   .modal-dialog {
     top: 46% !important;

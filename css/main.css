@@ -12,8 +12,9 @@
     font-style: italic;
 }
 
-body,
+
 html {
+    overflow-y: scroll;
     scroll-behavior: smooth;
 
     /* Gesamter Scrollbar */
@@ -42,11 +43,6 @@ html {
     }
 }
 
-#landscapeWarning img {
-    max-width: 80%;
-    max-height: 80%;
-}
-
 body {
     font-family: 'Inter', sans-serif;
     margin: 0 auto;
@@ -65,7 +61,6 @@ body {
     height: 100vh;
     margin: 0 auto;
     background: white;
-    overflow: hidden;
 }
 
 .content {
@@ -74,6 +69,7 @@ body {
     background-color: #f4f4f4;
     height: calc(100vh - 96px);
     overflow-y: auto;
+    overflow: auto !important;
 }
 
 button:hover {

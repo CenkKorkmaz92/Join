@@ -512,6 +512,10 @@ html,
   .add-task-modal-content {
     width: 440px !important;
   }
+
+  .board-list-column {
+    overflow: visible;
+  }
 }
 
 @media (max-width: 500px) {

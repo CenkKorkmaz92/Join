@@ -3,6 +3,10 @@ html {
     max-width: 1208px;
 }
 
+.content {
+    overflow: auto;
+}
+
 .headline-container {
     display: flex;
     align-items: center;
@@ -191,4 +195,32 @@ html {
     font-weight: 700;
     line-height: 76.8px;
     color: #29ABE2;
+}
+
+@media (max-width: 850px) {
+    .count-number-span span {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 24px;
+        text-align: center;
+        padding-bottom: 20px !important;
+    }
+
+    .to-do-number-span span {
+        padding-bottom: 8px !important;
+    }
+
+    .summary-task-count-containers {
+        padding-bottom: 20px !important;
+    }
+
+    .task-summary {
+        gap: 15px !important;
+    }
+}
+
+@media (max-width: 525px) {
+    .icon-and-span-task-status {
+        gap: 0px !important;
+    }
 }
