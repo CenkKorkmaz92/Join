@@ -12,36 +12,15 @@
     font-style: italic;
 }
 
-
-html {
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-
-    /* Gesamter Scrollbar */
-    ::-webkit-scrollbar {
-        width: 4px;
-        /* Breite des vertikalen Scrollbars */
-        height: 4px;
-        /* Höhe des horizontalen Scrollbars */
-    }
-
-    /* Hintergrund des Scrollbar-Tracks */
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-
-    /* Scrollbar-Schieber (Thumb) */
-    ::-webkit-scrollbar-thumb {
-        background: #29abe2;
-        border-radius: 4px;
-        /* Optional: Abrundung für ein weicheres Erscheinungsbild */
-    }
-
-    /* Optional: Hover-Effekt für den Schieber */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
+html, body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
 
 body {
     font-family: 'Inter', sans-serif;

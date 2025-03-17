@@ -87,6 +87,8 @@ body.legal-page .login {
 
 @media (max-width: 850px) {
     .navbar {
+        display: flex;
+        justify-content: center !important;
         position: fixed;
         bottom: 0;
         left: 0;
@@ -129,6 +131,7 @@ body.legal-page .login {
         flex-direction: column;
         color: white;
     }
+    
 
     .navbar-item.active {
         background-color: #091931;
@@ -171,20 +174,20 @@ body.legal-page .login {
 
 @media (max-width: 850px) {
     body.legal-page .navbar-footer {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 100%;
-      padding: 0;
-      gap: 8px;
-      padding-right: 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+        gap: 8px;
+        padding-right: 8px;
     }
 
     body.legal-page .navbar-menu .navbar-item:not(.login) {
         display: none !important;
     }
-    
+
     body.legal-page .login {
         display: flex !important;
     }
@@ -200,5 +203,4 @@ body.legal-page .login {
     .navbar-item:hover {
         width: 100px !important;
     }
-  }
-  
+}
