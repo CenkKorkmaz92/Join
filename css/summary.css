@@ -223,4 +223,8 @@ html {
     .icon-and-span-task-status {
         gap: 0px !important;
     }
+
+    .task-summary {
+        align-items: center !important;
+    }
 }
