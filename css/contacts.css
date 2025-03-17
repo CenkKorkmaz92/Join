@@ -848,7 +848,7 @@ body {
     }
 
     .contact-wrapper {
-        width: calc(100%) !important;
+        width: calc(100% - 232px) !important;
     }
 
     .popup-input-field {
