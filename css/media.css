@@ -214,7 +214,7 @@
     }
 
     .count-number-span {
-        width: 90px;
+        width: 100px;
         height: auto;
         gap: 0;
     }
@@ -237,16 +237,16 @@
     }
 
     .to-do-task {
-        width: 290px;
+        width: 310px;
     }
 
     .summary-task-status {
-        width: 290px;
+        width: 310px;
         gap: 5;
     }
 
     .summary-task-count-containers {
-        width: 290px;
+        width: 310px;
     }
 
     .contact {

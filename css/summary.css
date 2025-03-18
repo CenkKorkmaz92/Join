@@ -199,7 +199,7 @@ html {
 
 @media (max-width: 850px) {
     .count-number-span span {
-        font-size: 13px;
+        font-size: 16px;
         font-weight: 500;
         line-height: 24px;
         text-align: center;
