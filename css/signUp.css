@@ -29,6 +29,19 @@ body {
     overflow: auto;
 }
 
+.sign-up-main {
+    overflow: auto;
+    scrollbar-width: none;
+    /* Hides scrollbar in Firefox */
+    -ms-overflow-style: none;
+    /* Hides scrollbar in IE/Edge */
+}
+
+.sign-up-main::-webkit-scrollbar {
+    display: none;
+    /* Hides scrollbar in Chrome/Safari */
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
