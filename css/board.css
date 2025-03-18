@@ -135,6 +135,7 @@ html,
 .board-list-column {
   width: 100%;
   min-width: 214px;
+  max-width: 214px;
   height: 688px;
   display: flex;
   flex-direction: column;
