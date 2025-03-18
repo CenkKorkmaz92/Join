@@ -134,11 +134,11 @@ html,
 
 .board-list-column {
   width: 100%;
+  min-width: 214px;
   height: 688px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow: auto;
 }
 
 .board-list-column.hovered {
@@ -446,6 +446,8 @@ html,
 
   .board-list-column {
     flex-direction: row !important;
+    overflow-x: auto !important; /* Enable horizontal scrolling */
+    overflow-y: clip !important; /* Prevent vertical scrollbars */
     height: 100% !important;
   }
 }
