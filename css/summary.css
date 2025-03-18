@@ -206,6 +206,21 @@ html {
         padding-bottom: 20px !important;
     }
 
+    .count-number-span:hover {
+        cursor: pointer;
+        transform: scale(1.0) !important;
+    }
+
+    .summary-task-status:hover {
+        cursor: pointer;
+        transform: scale(1.0) !important;
+    }
+
+    .to-do:hover {
+        cursor: pointer;
+        transform: scale(1.0) !important; 
+    }
+
     .to-do-number-span span {
         padding-bottom: 8px !important;
     }
