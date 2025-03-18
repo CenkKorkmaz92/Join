@@ -506,15 +506,15 @@ html,
     padding: 0 !important;
     top: 46% !important;
   }
+
+  .board-list-column {
+    max-width: calc(100vw - 40px) !important;
+  }
 }
 
 @media (max-width: 650px) {
   .add-task-modal-content {
     width: 440px !important;
-  }
-
-  .board-list-column {
-    overflow: visible;
   }
 }
 
@@ -539,6 +539,9 @@ html,
 }
 
 @media (max-width: 460px) {
+  .board-list-column {
+    max-width: 100vw !important;
+  }
   .board-main-content {
     width: 300px !important;
   }
